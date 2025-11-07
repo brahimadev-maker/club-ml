@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Machine Learning - ESATIC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1c6487;
+            --secondary: #d98547;
+            --blue: #337ab7;
+            --black: #000000;
+            --gray-light: #f0f0f0;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--gray-light);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a8db5 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideInLeft 0.8s ease;
+        }
+
+      .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 60px;
+  width: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            animation: slideInRight 0.8s ease;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.75rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #c17539;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(217, 133, 71, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: #2968a3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(51, 122, 183, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--white);
+            padding: 3rem 2rem;
+            margin-top: -4rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .module-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--blue));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .module-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .module-card:hover .module-image {
+            transform: scale(1.1);
+        }
+
+        .module-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .module-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .module-content {
+            padding: 2rem;
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .module-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .module-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .module-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .module-meta-item i {
+            color: var(--blue);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .team-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .team-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            border: 5px solid var(--gray-light);
+            transition: all 0.4s ease;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+        }
+
+        .team-card:hover .team-image {
+            border-color: var(--secondary);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .team-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .team-class {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            max-width: 500px;
+            margin: 5rem auto;
+            background: var(--white);
+            padding: 3.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .auth-container h2 {
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(28, 100, 135, 0.1);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .form-footer a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2.5rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            background: var(--white);
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.7rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .main-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .progress-card {
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            color: var(--white);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 35px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1rem;
+            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(217, 133, 71, 0.5);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-light);
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .locked-message {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .locked-message i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), #0d4a5f);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .modules-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* File Download Section */
+        .file-section {
+            background: var(--gray-light);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .file-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Admin Page */
+        .admin-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .admin-stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .admin-stat-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .admin-stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .admin-table {
+            width: 100%;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .admin-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .admin-table tr:hover {
+            background: var(--gray-light);
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.edit {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .action-btn.delete {
+            background: #dc3545;
+            color: var(--white);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo">
+                   <img src="/src/images/icon.png" alt="" srcset="">
+                </div>
+
+            </div>
+            <nav id="mainNav">
+                <a href="#" onclick="showPage('home')">
+                    <i class="fas fa-home"></i> Accueil
+                </a>
+                <a href="#" onclick="showPage('program')">
+                    <i class="fas fa-book"></i> Programme
+                </a>
+                <a href="#" onclick="showPage('team')">
+                    <i class="fas fa-users"></i> Bureau
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="showPage('login')" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Connexion
+                </a>
+                <a href="#" class="btn btn-primary" onclick="showPage('register')" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> S'inscrire
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Bienvenue au Club Machine Learning</h1>
+                <p>Maîtrisez l'Intelligence Artificielle et le Machine Learning avec ESATIC</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showPage('register')">
+                        <i class="fas fa-rocket"></i> Je m'inscrit dès maintenant
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="scrollToProgram()">
+                        <i class="fas fa-book-open"></i> Découvrir le programme
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <div class="container">
+            <div class="stats">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-layer-group stat-icon"></i>
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Modules de Formation</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-alt stat-icon"></i>
+                        <div class="stat-number">+15</div>
+                        <div class="stat-label">Semaines de Formation</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-user-graduate stat-icon"></i>
+                        <div class="stat-number">+30+</div>
+                        <div class="stat-label">Étudiants Inscrits</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-project-diagram stat-icon"></i>
+                        <div class="stat-number">+5</div>
+                        <div class="stat-label">Projets Pratiques</div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECTION BUREAU - Page complète -->
+
+    <!-- Team Page -->
+    <div id="teamPage" class="hidde">
+        <div class="container">
+            <div class="section-title">
+                <h2>Bureau du Club 2025-2026</h2>
+                <p>Rencontrez l'équipe passionnée qui dirige le Club Machine Learning</p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Président -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Diarrassouba Brahima</h3>
+                    <p class="team-role"><i class="fas fa-crown"></i> Président</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        Passionné d'IA et de Deep Learning, il dirige le club avec vision et détermination.
+                    </p>
+                </div>
+
+                <!-- Vice-Président -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Tuo Yénékpeya</h3>
+                    <p class="team-role"><i class="fas fa-star"></i> Vice-Président</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL3</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        Expert en développement logiciel et formateur principal du programme Python.
+                    </p>
+                </div>
+
+                <!-- Secrétaire Général -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Kouassi Marie</h3>
+                    <p class="team-role"><i class="fas fa-pen"></i> Secrétaire Général</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL2</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        Gère toute l'administration du club et coordonne les activités.
+                    </p>
+                </div>
+
+                <!-- Trésorier -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Koné Abdoul</h3>
+                    <p class="team-role"><i class="fas fa-coins"></i> Trésorier</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT2</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        Responsable de la gestion financière et des partenariats du club.
+                    </p>
+                </div>
+
+                <!-- Responsable Communication -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Bamba Fatou</h3>
+                    <p class="team-role"><i class="fas fa-bullhorn"></i> Responsable Communication</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL3</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        En charge de la communication digitale et des réseaux sociaux du club.
+                    </p>
+                </div>
+
+                <!-- Responsable Technique -->
+                <div class="team-card">
+                    <div class="team-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="team-name">Yao Jean</h3>
+                    <p class="team-role"><i class="fas fa-code"></i> Responsable Technique</p>
+                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
+                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
+                        Supervise les projets techniques et la plateforme d'apprentissage.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section Rejoindre le bureau -->
+            <div style="margin-top: 5rem; text-align: center; background: linear-gradient(135deg, var(--primary), var(--blue)); padding: 4rem 2rem; border-radius: 15px; color: var(--white);">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
+                    <i class="fas fa-users"></i> Rejoignez notre équipe !
+                </h2>
+                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Vous êtes passionné(e) par le Machine Learning et souhaitez contribuer au développement du club ? 
+                    Les candidatures pour le bureau 2026-2027 ouvriront en juin 2026.
+                </p>
+                <a href="#" onclick="showPage('register')" class="btn btn-primary" style="font-size: 1.1rem;">
+                    <i class="fas fa-handshake"></i> Restez informé(e)
+                </a>
+            </div>
+        </div>
+    </div>
+            <!-- SECTION PROGRAMME - À ajouter après les stats -->
+
+        <!-- Program Section -->
+        <section class="container" id="programSection">
+            <div class="section-title">
+                <h2>Programme de Formation 2025-2026</h2>
+                <p>Un parcours complet pour devenir expert en Machine Learning</p>
+            </div>
+
+            <div class="modules-grid">
+                <!-- Module 0 -->
+                <div class="module-card" onclick="openModal('module0')">
+                    <div class="module-image-container">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&h=300&fit=crop" alt="Introduction ML" class="module-image">
+                        <div class="module-badge">Module 0</div>
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">Introduction et Concepts du ML</h3>
+                        <p class="module-description">Découvrez l'histoire de l'IA, l'avènement du ML et ses applications pratiques comme les voitures autonomes et ChatGPT</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines 0-4</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>5 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 1 -->
+                <div class="module-card" onclick="openModal('module1')">
+                    <div class="module-image-container">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop" alt="Apprentissage Supervisé" class="module-image">
+                        <div class="module-badge">Module 1</div>
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">Apprentissage Supervisé</h3>
+                        <p class="module-description">Maîtrisez les algorithmes de régression et classification: KNN, SVM, Random Forest et plus encore</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines 5-9</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>5 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-card" onclick="openModal('module2')">
+                    <div class="module-image-container">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop" alt="Apprentissage Non Supervisé" class="module-image">
+                        <div class="module-badge">Module 2</div>
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">Apprentissage Non Supervisé</h3>
+                        <p class="module-description">Systèmes de recommandation et clustering: Content Based, Collaborative Filtering, K-Means</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines 10-12</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>3 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-card" onclick="openModal('module3')">
+                    <div class="module-image-container">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500&h=300&fit=crop" alt="NLP" class="module-image">
+                        <div class="module-badge">Module 3</div>
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">NLP & Projets Pratiques</h3>
+                        <p class="module-description">Traitement du langage naturel et réalisation de 4 projets d'IA (prédiction, chatbot, recommandation, détection de fraudes)</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines 13-16</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>4 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="module-card" onclick="openModal('module4')">
+                    <div class="module-image-container">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&h=300&fit=crop" alt="Déploiement" class="module-image">
+                        <div class="module-badge">Module 4</div>
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">Déploiement de Modèles</h3>
+                        <p class="module-description">Déployez vos modèles ML en production avec FastAPI et passez le test final (IA Challenge)</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines 17-18</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>2 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- About Section -->
+        <section class="container" style="background: var(--white); padding: 4rem 2rem; border-radius: 15px; margin-top: 4rem; box-shadow: 0 5px 25px rgba(0,0,0,0.1);">
+            <div class="section-title">
+                <h2>À propos du Club</h2>
+                <p>Notre mission et notre vision</p>
+            </div>
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.2rem; line-height: 2; color: #666; margin-bottom: 2rem;">
+                    Le Club Machine Learning d'ESATIC est une initiative étudiante passionnée par l'Intelligence Artificielle et ses applications. 
+                    Notre objectif est de former la prochaine génération d'experts en IA en Côte d'Ivoire à travers un programme structuré, 
+                    des projets pratiques et un accompagnement personnalisé.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div>
+                        <i class="fas fa-bullseye" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Notre Mission</h3>
+                        <p style="color: #666;">Former des experts en IA capables de résoudre les défis technologiques africains</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-eye" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Notre Vision</h3>
+                        <p style="color: #666;">Devenir le hub de référence pour l'apprentissage du ML en Afrique de l'Ouest</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-heart" style="font-size: 3rem; color: var(--blue); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Nos Valeurs</h3>
+                        <p style="color: #666;">Excellence, Innovation, Collaboration et Partage de connaissances</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+<!-- FOOTER COMPLET - À remplacer avant </body> -->
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <!-- Colonne 1 : À propos -->
+                <div>
+                    <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-brain"></i> Club ML ESATIC
+                    </h3>
+                    <p style="opacity: 0.9; line-height: 1.8;">
+                        Le Club Machine Learning d'ESATIC forme la nouvelle génération d'experts en Intelligence Artificielle. 
+                        Rejoignez-nous pour maîtriser le ML et créer l'avenir de la tech en Afrique.
+                    </p>
+                </div>
+
+                <!-- Colonne 2 : Liens rapides -->
+                <div>
+                    <h3 style="margin-bottom: 1rem;">
+                        <i class="fas fa-link"></i> Liens Rapides
+                    </h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li><a href="#" onclick="showPage('home')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
+                            <i class="fas fa-chevron-right"></i> Accueil
+                        </a></li>
+                        <li><a href="#" onclick="showPage('program')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
+                            <i class="fas fa-chevron-right"></i> Programme de Formation
+                        </a></li>
+                        <li><a href="#" onclick="showPage('team')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
+                            <i class="fas fa-chevron-right"></i> Bureau du Club
+                        </a></li>
+                        <li><a href="#" onclick="showPage('register')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
+                            <i class="fas fa-chevron-right"></i> S'inscrire
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 3 : Contact -->
+                <div>
+                    <h3 style="margin-bottom: 1rem;">
+                        <i class="fas fa-envelope"></i> Contact
+                    </h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>ESATIC, Abidjan, Côte d'Ivoire</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:contact@clubml-esatic.ci" style="color: var(--white); text-decoration: none;">contact@clubml-esatic.ci</a>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
+                            <i class="fas fa-phone"></i>
+                            <span>+225 27 XX XX XX XX</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 4 : Réseaux sociaux -->
+                <div>
+                    <h3 style="margin-bottom: 1rem;">
+                        <i class="fas fa-share-alt"></i> Suivez-nous
+                    </h3>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="opacity: 0.9; margin-bottom: 0.5rem; font-weight: 600;">Newsletter</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="email" placeholder="Votre email" style="flex: 1; padding: 0.7rem; border: none; border-radius: 5px; background: rgba(255,255,255,0.2); color: var(--white);">
+                            <button style="padding: 0.7rem 1.2rem; border: none; border-radius: 5px; background: var(--secondary); color: var(--white); cursor: pointer; font-weight: 600;">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barre de séparation -->
+            <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; text-align: center;">
+                <p style="margin-bottom: 0.5rem; opacity: 0.9;">
+                    &copy; 2025-2026 Club Machine Learning ESATIC. Tous droits réservés.
+                </p>
+                <p style="opacity: 0.8;">
+                    <i class="fas fa-crown"></i> Président: <strong>Diarrassouba Brahima</strong> | 
+                    Vice-Président: <strong>Tuo Yénékpeya</strong>
+                </p>
+                <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
+                    Développé avec <i class="fas fa-heart" style="color: #e74c3c;"></i> par le Club ML ESATIC
+                </p>
+            </div>
+        </div>
+    </footer>
+<html>
