@@ -7,23 +7,23 @@ import postgres from 'postgres';
 const sql = postgres(process.env.DATABASE_URL);
 
 const app = express();
-const PORT = process.env.PORT||3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
 app.post('/register', async (req, res) => {
-    const { name, email, whatsapp, classe, password } = req.body;
+    const { name, whatsapp, email, classe, password } = req.body;
 
     if (!name || !email || !whatsapp || !classe || !password) {
         return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
 
-
-    const whatsappRegex = /^(\+225|225)?(0[1|5|7])\d{8}$/;
+    // Validation du numéro WhatsApp (format ivoirien)
+    const whatsappRegex = /^(0[1|5|7])\d{8}$/;
     if (!whatsappRegex.test(whatsapp)) {
         return res.status(400).json({ 
-            message: 'Numéro WhatsApp invalide. Format attendu: +225 07/05/01 XX XX XX XX' 
+            message: 'Numéro WhatsApp invalide. Format attendu: 07/05/01 XX XX XX XX' 
         });
     }
 
@@ -51,4 +51,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});
