@@ -1655,7 +1655,7 @@ async function handleRegister(event) {
     const password = document.getElementById('regPassword').value;
 
     // Validation du numéro WhatsApp
-    const whatsappRegex = /^(\+225|225)?\s?(0[1|5|7])\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}$/;
+    const whatsappRegex = /^(0[1|5|7])\d{8}$/;
     if (!whatsappRegex.test(whatsapp)) {
         alert('Veuillez entrer un numéro WhatsApp ivoirien valide (+225 07/05/01 XX XX XX XX)');
         return;
