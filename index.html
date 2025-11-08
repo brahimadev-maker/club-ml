@@ -1666,7 +1666,7 @@ async function handleRegister(event) {
     // Validation du numéro WhatsApp
     const whatsappRegex = /^(0[1|5|7])\d{8}$/;
     if (!whatsappRegex.test(whatsapp)) {
-        alert('Veuillez entrer un numéro WhatsApp ivoirien valide (+225 07/05/01 XX XX XX XX)');
+        alert('Veuillez entrer un numéro WhatsApp ivoirien valide (07/05/01 XX XX XX XX)');
         return;
     }
     
