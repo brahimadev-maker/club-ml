@@ -1193,8 +1193,15 @@
                 <input type="text" id="regName" required placeholder="Prénom Nom">
             </div>
             <div class="form-group">
-                <label for="regEmail"><i class="fas fa-envelope"></i> Email ESATIC</label>
-                <input type="email" id="regEmail" required placeholder="prenom.nom@esatic.ci">
+    <label for="regWhatsapp"><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label>
+    <input type="tel" id="regWhatsapp" required placeholder="+225 07 12 34 56 78" pattern="(\+225|225)?\s?(0[1|5|7])\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}">
+    <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.3rem;">
+        Format: +225 XXXXXXXXXX
+    </small>
+</div>
+            <div class="form-group">
+                <label for="regEmail"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="regEmail" required placeholder="jean@gmail.com">
             </div>
             <div class="form-group">
                 <label for="regClass"><i class="fas fa-graduation-cap"></i> Classe</label>
@@ -1638,50 +1645,53 @@ function handleLogin(event) {
 }
 
 
-    async function handleRegister(event) {
-        event.preventDefault(); // Empêche le rechargement de la page
-        
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-        const classe = document.getElementById('regClass').value;
-        const password = document.getElementById('regPassword').value;
+async function handleRegister(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const whatsapp = document.getElementById('regWhatsapp').value;
+    const classe = document.getElementById('regClass').value;
+    const password = document.getElementById('regPassword').value;
 
-        
-        const formData = {
-            name,
-            email,
-            classe,
-            password
-        };
-
-        try {
-            
-            const response = await fetch('https://club-ml.onrender.com/register', {
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(formData) 
-            });
-
-        
-            const result = await response.json();
-
-            if (!response.ok) {
-               
-                throw new Error(result.message || 'Une erreur est survenue.');
-            }
-
-            
-            alert(result.message);
-         location.reload()
-
-        } catch (error) {
-           
-            console.error('Erreur lors de l\'inscription:', error);
-            alert(`Erreur d'inscription: ${error.message}`);
-        }
+    // Validation du numéro WhatsApp
+    const whatsappRegex = /^(\+225|225)?\s?(0[1|5|7])\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}$/;
+    if (!whatsappRegex.test(whatsapp)) {
+        alert('Veuillez entrer un numéro WhatsApp ivoirien valide (+225 07/05/01 XX XX XX XX)');
+        return;
     }
+    
+    const formData = {
+        name,
+        email,
+        whatsapp: whatsapp.replace(/\s/g, ''), // Enlever les espaces
+        classe,
+        password
+    };
+
+    try {
+        const response = await fetch('https://club-ml.onrender.com/register', {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(formData) 
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Une erreur est survenue.');
+        }
+
+        alert(result.message);
+        location.reload();
+
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription:', error);
+        alert(`Erreur d'inscription: ${error.message}`);
+    }
+}
 
     function handleLogin(event) {
         event.preventDefault();
