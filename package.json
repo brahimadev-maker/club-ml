@@ -1,0 +1,27 @@
+{
+  "name": "projet-club-ml",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/brahimadev-maker/club-ml#readme",
+  "bugs": {
+    "url": "https://github.com/brahimadev-maker/club-ml/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brahimadev-maker/club-ml.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "postgres": "^3.4.7"
+  }
+}

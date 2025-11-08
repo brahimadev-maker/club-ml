@@ -14,7 +14,7 @@
 
         :root {
             --primary: #1c6487;
-            --secondary: #d98547;
+            --secondary: #ff6b35;
             --blue: #337ab7;
             --black: #000000;
             --gray-light: #f0f0f0;
@@ -23,22 +23,22 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--black);
             background-color: var(--gray-light);
             overflow-x: hidden;
+            font-size: 14px;
         }
 
         /* Header */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, #2a8db5 100%);
             color: var(--white);
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
         }
 
         .header-content {
@@ -53,37 +53,36 @@
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             animation: slideInLeft 0.8s ease;
         }
 
-      .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.logo img {
-  height: 60px;
-  width: 60px;
-  border-radius: 10px;
-  object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        .logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
 
-.logo img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
+        .logo img:hover {
+            transform: scale(1.1);
+        }
 
         .logo-text {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: bold;
         }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
             animation: slideInRight 0.8s ease;
         }
@@ -93,8 +92,9 @@
             text-decoration: none;
             transition: all 0.3s;
             font-weight: 500;
+            font-size: 0.9rem;
             position: relative;
-            padding: 0.5rem 0;
+            padding: 0.4rem 0;
         }
 
         nav a::after {
@@ -113,16 +113,17 @@
         }
 
         .btn {
-            padding: 0.75rem 1.8rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.85rem;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             position: relative;
             overflow: hidden;
         }
@@ -151,9 +152,9 @@
         }
 
         .btn-primary:hover {
-            background: #c17539;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(217, 133, 71, 0.4);
+            background: #e65a2b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
         }
 
         .btn-secondary {
@@ -163,47 +164,27 @@
 
         .btn-secondary:hover {
             background: #2968a3;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(51, 122, 183, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(51, 122, 183, 0.4);
         }
 
-        /* Hero Section */
+        /* Hero Section avec Particles */
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, var(--blue) 100%);
             color: var(--white);
-            padding: 8rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        #particles-canvas {
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
 
         .hero-content {
@@ -212,77 +193,45 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
             opacity: 0.95;
             animation: fadeInUp 0.8s ease 0.2s both;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
             animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            flex-wrap: wrap;
         }
 
         /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 3rem 2rem;
         }
 
         /* Section Title */
         .section-title {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             animation: fadeInUp 0.8s ease;
         }
 
         .section-title h2 {
-            font-size: 3rem;
+            font-size: 2rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             position: relative;
             display: inline-block;
         }
@@ -290,26 +239,26 @@
         .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
+            width: 80px;
+            height: 3px;
             background: linear-gradient(90deg, var(--secondary), var(--primary));
             border-radius: 2px;
         }
 
         .section-title p {
             color: #666;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         /* Stats Section */
         .stats {
             background: var(--white);
-            padding: 3rem 2rem;
-            margin-top: -4rem;
-            border-radius: 15px;
+            padding: 2rem;
+            margin-top: -3rem;
+            border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             position: relative;
             z-index: 10;
@@ -317,24 +266,24 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
             text-align: center;
         }
 
         .stat-item {
-            padding: 2rem;
+            padding: 1.5rem;
             transition: transform 0.3s ease;
         }
 
         .stat-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
         }
 
         .stat-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: inline-block;
             animation: pulse 2s ease-in-out infinite;
         }
@@ -345,34 +294,34 @@
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: bold;
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .stat-label {
             color: #666;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
         }
 
         /* Modules Grid */
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .module-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             position: relative;
@@ -384,7 +333,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--blue));
             transform: scaleX(0);
             transform-origin: left;
@@ -396,13 +345,13 @@
         }
 
         .module-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
         .module-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
@@ -418,283 +367,331 @@
 
         .module-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: var(--secondary);
             color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
         .module-content {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .module-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--primary);
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .module-description {
             color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
         }
 
         .module-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
+            padding-top: 0.8rem;
             border-top: 2px solid var(--gray-light);
         }
 
         .module-meta-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .module-meta-item i {
             color: var(--blue);
         }
 
-        /* Team Section */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
+        /* Team Section - Structure hiérarchique */
+        .team-hierarchy {
+            max-width: 1200px;
+            margin: 3rem auto;
         }
 
-        .team-card {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 2.5rem;
-            text-align: center;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
+        .hierarchy-level {
+            margin-bottom: 3rem;
             position: relative;
-            overflow: hidden;
         }
 
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+        .hierarchy-title {
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
         }
 
-        .team-card:hover::before {
-            transform: scaleX(1);
+
+
+
+        /* Auth Forms */
+.auth-container {
+    max-width: 500px;
+    margin: 5rem auto;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    animation: fadeInUp 0.6s ease;
+}
+
+.auth-container h2 {
+    color: var(--primary);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(28, 100, 135, 0.1);
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.form-footer a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+@media (max-width: 968px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    nav {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        background: var(--primary);
+        flex-direction: column;
+        padding: 2rem;
+        transition: left 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+
+    nav.active {
+        left: 0;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    nav .btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    .auth-container {
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+}
+
+        .team-row {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 0;
+            flex-wrap: wrap;
         }
 
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+   .team-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 280px;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    border-radius: 12px 12px 0 0;
+}
+
+.team-card:hover::before {
+    transform: scaleX(1);
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.team-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    border: 4px solid var(--gray-light);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Pour les vraies images */
+.team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Pour les icônes de fallback */
+.team-image.icon-placeholder {
+    background: var(--gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-image.icon-placeholder i {
+    font-size: 3rem;
+    color: var(--primary);
+}
+
+/* Si l'image ne charge pas, masquer l'img et afficher l'icône */
+.team-image img[src=""],
+.team-image img:not([src]) {
+    display: none;
+}
+
+.team-card:hover .team-image {
+    border-color: var(--secondary);
+    transform: scale(1.08);
+}
+        .vertical-separator {
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+            margin: 0 1rem;
+            min-height: 200px;
         }
 
         .team-image {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
             object-fit: cover;
-            border: 5px solid var(--gray-light);
+            border: 4px solid var(--gray-light);
             transition: all 0.4s ease;
+        }
+
+        .team-image.icon-placeholder {
             background: var(--gray-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
+            font-size: 3rem;
             color: var(--primary);
         }
 
         .team-card:hover .team-image {
             border-color: var(--secondary);
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.08);
         }
 
         .team-name {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .team-role {
             color: var(--secondary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
         }
 
         .team-class {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
         }
 
-        /* Auth Forms */
-        .auth-container {
-            max-width: 500px;
-            margin: 5rem auto;
-            background: var(--white);
-            padding: 3.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .auth-container h2 {
-            color: var(--primary);
-            margin-bottom: 2.5rem;
-            text-align: center;
-            font-size: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.7rem;
-            color: var(--black);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(28, 100, 135, 0.1);
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .form-footer a {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .form-footer a:hover {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2.5rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        .sidebar {
-            background: var(--white);
-            padding: 2rem 1rem;
-            border-radius: 15px;
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.7rem;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.2rem;
-            color: var(--black);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .sidebar-menu a i {
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
-        }
-
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: linear-gradient(135deg, var(--primary), var(--blue));
-            color: var(--white);
-            transform: translateX(5px);
-        }
-
-        .main-content {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-
-        .progress-card {
-            background: linear-gradient(135deg, var(--primary), var(--blue));
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 3rem;
-            color: var(--white);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 35px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 1.5rem 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: bold;
-            font-size: 1rem;
-            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 20px rgba(217, 133, 71, 0.5);
+        .team-description {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.85rem;
         }
 
         /* Modal */
@@ -724,8 +721,8 @@
 
         .modal-content {
             background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
+            padding: 2.5rem;
+            border-radius: 15px;
             max-width: 700px;
             max-height: 85vh;
             overflow-y: auto;
@@ -747,9 +744,9 @@
 
         .modal-close {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 2rem;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: #666;
             width: 40px;
@@ -767,191 +764,177 @@
             transform: rotate(90deg);
         }
 
-        .locked-message {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            border-left: 4px solid var(--secondary);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .modal h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
         }
 
-        .locked-message i {
-            font-size: 2rem;
+        .modal h3 {
             color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .modal ul {
+            margin-left: 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .modal p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
         }
 
         /* Footer */
         footer {
             background: linear-gradient(135deg, var(--primary), #0d4a5f);
             color: var(--white);
-            text-align: center;
             padding: 3rem 2rem;
             margin-top: 5rem;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-            .sidebar {
-                position: relative;
-                top: 0;
-            }
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
 
-            .modules-grid,
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
+        .footer-section p,
+        .footer-section li {
+            opacity: 0.9;
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .footer-section ul {
+            list-style: none;
+        }
 
-            nav {
-                flex-wrap: wrap;
-                gap: 1rem;
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 0.7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 2rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
         .hidden {
             display: none !important;
         }
 
-        /* File Download Section */
-        .file-section {
-            background: var(--gray-light);
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-
-        .file-item {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .file-item:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: translateX(5px);
-        }
-
-        .file-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .file-icon {
-            font-size: 2rem;
-            color: var(--primary);
-        }
-
-        /* Admin Page */
-        .admin-header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .admin-stat-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .admin-stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .admin-stat-card i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .admin-stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--secondary);
-        }
-
-        .admin-table {
-            width: 100%;
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .admin-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .admin-table th {
-            background: var(--primary);
-            color: var(--white);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .admin-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .admin-table tr:hover {
-            background: var(--gray-light);
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn.edit {
-            background: var(--blue);
-            color: var(--white);
-        }
-
-        .action-btn.delete {
-            background: #dc3545;
-            color: var(--white);
-        }
-
-        .action-btn:hover {
-            transform: scale(1.05);
+        @media (max-width: 968px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+         
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .team-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .vertical-separator {
+                display: none;
+            }
+            
+            .team-card {
+                max-width: 100%;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -961,27 +944,31 @@
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo">
-                   <img src="/src/images/icon.png" alt="" srcset="">
+                   <img src="/src/images/icon.png" alt="Club ML" onerror="this.style.display='none'">
+                   <!--<span class="logo-text">Club ML ESATIC</span>-->
                 </div>
-
             </div>
-            <nav id="mainNav">
-                <a href="#" onclick="showPage('home')">
-                    <i class="fas fa-home"></i> Accueil
-                </a>
-                <a href="#" onclick="showPage('program')">
-                    <i class="fas fa-book"></i> Programme
-                </a>
-                <a href="#" onclick="showPage('team')">
-                    <i class="fas fa-users"></i> Bureau
-                </a>
-                <a href="#" class="btn btn-secondary" onclick="showPage('login')" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i> Connexion
-                </a>
-                <a href="#" class="btn btn-primary" onclick="showPage('register')" id="registerBtn">
-                    <i class="fas fa-user-plus"></i> S'inscrire
-                </a>
-            </nav>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav id="mainNav">
+            <a href="#" onclick="showPage('home')">
+                <i class="fas fa-home"></i> Accueil
+            </a>
+            <a href="#" onclick="showPage('program')">
+                <i class="fas fa-book"></i> Programme
+            </a>
+            <a href="#" onclick="showPage('team')">
+                <i class="fas fa-users"></i> Bureau
+            </a>
+            <a href="#"  class="btn btn-secondary" onclick="showPage('login')" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Connexion
+            </a>
+            <a href="#" class="btn btn-primary" onclick="showPage('register')" id="registerBtn">
+                <i class="fas fa-user-plus"></i> S'inscrire
+            </a>
+        </nav>
         </div>
     </header>
 
@@ -989,12 +976,13 @@
     <div id="homePage">
         <!-- Hero Section -->
         <section class="hero">
+            <canvas id="particles-canvas"></canvas>
             <div class="hero-content">
                 <h1>Bienvenue au Club Machine Learning</h1>
-                <p>Maîtrisez l'Intelligence Artificielle et le Machine Learning avec ESATIC</p>
+                <p>Maîtrisez l'Intelligence Artificielle et le Machine Learning avec le club ML  ESATIC</p>
                 <div class="hero-buttons">
                     <a href="#" class="btn btn-primary" onclick="showPage('register')">
-                        <i class="fas fa-rocket"></i> Je m'inscrit dès maintenant
+                        <i class="fas fa-rocket"></i> Je m'inscris dès maintenant !
                     </a>
                     <a href="#" class="btn btn-secondary" onclick="scrollToProgram()">
                         <i class="fas fa-book-open"></i> Découvrir le programme
@@ -1009,138 +997,34 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <i class="fas fa-layer-group stat-icon"></i>
-                        <div class="stat-number">5</div>
+                        <div class="stat-number">5+</div>
                         <div class="stat-label">Modules de Formation</div>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-calendar-alt stat-icon"></i>
-                        <div class="stat-number">+15</div>
+                        <div class="stat-number">15+</div>
                         <div class="stat-label">Semaines de Formation</div>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-user-graduate stat-icon"></i>
-                        <div class="stat-number">+30+</div>
+                        <div class="stat-number">30+</div>
                         <div class="stat-label">Étudiants Inscrits</div>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-project-diagram stat-icon"></i>
-                        <div class="stat-number">+5</div>
+                        <div class="stat-number">5+</div>
                         <div class="stat-label">Projets Pratiques</div>
                     </div>
                 </div>
             </div>
-            <!-- SECTION BUREAU - Page complète -->
-
-    <!-- Team Page -->
-    <div id="teamPage" class="hidde">
-        <div class="container">
-            <div class="section-title">
-                <h2>Bureau du Club 2025-2026</h2>
-                <p>Rencontrez l'équipe passionnée qui dirige le Club Machine Learning</p>
-            </div>
-
-            <div class="team-grid">
-                <!-- Président -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Diarrassouba Brahima</h3>
-                    <p class="team-role"><i class="fas fa-crown"></i> Président</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        Passionné d'IA et de Deep Learning, il dirige le club avec vision et détermination.
-                    </p>
-                </div>
-
-                <!-- Vice-Président -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Tuo Yénékpeya</h3>
-                    <p class="team-role"><i class="fas fa-star"></i> Vice-Président</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL3</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        Expert en développement logiciel et formateur principal du programme Python.
-                    </p>
-                </div>
-
-                <!-- Secrétaire Général -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Kouassi Marie</h3>
-                    <p class="team-role"><i class="fas fa-pen"></i> Secrétaire Général</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL2</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        Gère toute l'administration du club et coordonne les activités.
-                    </p>
-                </div>
-
-                <!-- Trésorier -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Koné Abdoul</h3>
-                    <p class="team-role"><i class="fas fa-coins"></i> Trésorier</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT2</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        Responsable de la gestion financière et des partenariats du club.
-                    </p>
-                </div>
-
-                <!-- Responsable Communication -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Bamba Fatou</h3>
-                    <p class="team-role"><i class="fas fa-bullhorn"></i> Responsable Communication</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SIGL3</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        En charge de la communication digitale et des réseaux sociaux du club.
-                    </p>
-                </div>
-
-                <!-- Responsable Technique -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <h3 class="team-name">Yao Jean</h3>
-                    <p class="team-role"><i class="fas fa-code"></i> Responsable Technique</p>
-                    <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
-                    <p style="color: #666; margin-top: 1rem; line-height: 1.6;">
-                        Supervise les projets techniques et la plateforme d'apprentissage.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Section Rejoindre le bureau -->
-            <div style="margin-top: 5rem; text-align: center; background: linear-gradient(135deg, var(--primary), var(--blue)); padding: 4rem 2rem; border-radius: 15px; color: var(--white);">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">
-                    <i class="fas fa-users"></i> Rejoignez notre équipe !
-                </h2>
-                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-                    Vous êtes passionné(e) par le Machine Learning et souhaitez contribuer au développement du club ? 
-                    Les candidatures pour le bureau 2026-2027 ouvriront en juin 2026.
-                </p>
-                <a href="#" onclick="showPage('register')" class="btn btn-primary" style="font-size: 1.1rem;">
-                    <i class="fas fa-handshake"></i> Restez informé(e)
-                </a>
-            </div>
         </div>
-    </div>
-            <!-- SECTION PROGRAMME - À ajouter après les stats -->
 
         <!-- Program Section -->
         <section class="container" id="programSection">
             <div class="section-title">
                 <h2>Programme de Formation 2025-2026</h2>
                 <p>Un parcours complet pour devenir expert en Machine Learning</p>
+                <p style="text-decoration: underline;text-decoration-color:#ff6b35 ;text-decoration-thickness: 2px;" >Cliquez sur chaque case pour en savoir plus</p>
             </div>
 
             <div class="modules-grid">
@@ -1152,7 +1036,7 @@
                     </div>
                     <div class="module-content">
                         <h3 class="module-title">Introduction et Concepts du ML</h3>
-                        <p class="module-description">Découvrez l'histoire de l'IA, l'avènement du ML et ses applications pratiques comme les voitures autonomes et ChatGPT</p>
+                        <p class="module-description">Découvrez l'histoire de l'IA, l'avènement du ML et ses applications pratiques</p>
                         <div class="module-meta">
                             <div class="module-meta-item">
                                 <i class="fas fa-clock"></i>
@@ -1174,7 +1058,7 @@
                     </div>
                     <div class="module-content">
                         <h3 class="module-title">Apprentissage Supervisé</h3>
-                        <p class="module-description">Maîtrisez les algorithmes de régression et classification: KNN, SVM, Random Forest et plus encore</p>
+                        <p class="module-description">Maîtrisez les algorithmes de régression et classification: KNN, SVM, Random Forest</p>
                         <div class="module-meta">
                             <div class="module-meta-item">
                                 <i class="fas fa-clock"></i>
@@ -1196,7 +1080,7 @@
                     </div>
                     <div class="module-content">
                         <h3 class="module-title">Apprentissage Non Supervisé</h3>
-                        <p class="module-description">Systèmes de recommandation et clustering: Content Based, Collaborative Filtering, K-Means</p>
+                        <p class="module-description">Systèmes de recommandation et clustering: Content Based, Collaborative Filtering</p>
                         <div class="module-meta">
                             <div class="module-meta-item">
                                 <i class="fas fa-clock"></i>
@@ -1218,7 +1102,7 @@
                     </div>
                     <div class="module-content">
                         <h3 class="module-title">NLP & Projets Pratiques</h3>
-                        <p class="module-description">Traitement du langage naturel et réalisation de 4 projets d'IA (prédiction, chatbot, recommandation, détection de fraudes)</p>
+                        <p class="module-description">Traitement du langage naturel et réalisation de 4 projets d'IA</p>
                         <div class="module-meta">
                             <div class="module-meta-item">
                                 <i class="fas fa-clock"></i>
@@ -1240,7 +1124,7 @@
                     </div>
                     <div class="module-content">
                         <h3 class="module-title">Déploiement de Modèles</h3>
-                        <p class="module-description">Déployez vos modèles ML en production avec FastAPI et passez le test final (IA Challenge)</p>
+                        <p class="module-description">Déployez vos modèles ML en production avec FastAPI</p>
                         <div class="module-meta">
                             <div class="module-meta-item">
                                 <i class="fas fa-clock"></i>
@@ -1255,149 +1139,673 @@
                 </div>
             </div>
         </section>
-        
+    </div>
+<!-- Login Page -->
+<div id="loginPage" class="hidden">
+    <div class="auth-container">
+        <h2><i class="fas fa-sign-in-alt"></i> Connexion</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="loginEmail" required placeholder="votre.email@esatic.ci">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword"><i class="fas fa-lock"></i> Mot de passe</label>
+                <input type="password" id="loginPassword" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <i class="fas fa-sign-in-alt"></i> Se connecter
+            </button>
+            <div class="form-footer">
+                <p>Pas encore de compte ? <a href="#" onclick="showPage('register')">S'inscrire ici</a></p>
+            </div>
+        </form>
+    </div>
+</div>
 
-        <!-- About Section -->
-        <section class="container" style="background: var(--white); padding: 4rem 2rem; border-radius: 15px; margin-top: 4rem; box-shadow: 0 5px 25px rgba(0,0,0,0.1);">
+<!-- Register Page -->
+<div id="registerPage" class="hidden">
+    <div class="auth-container">
+        <h2><i class="fas fa-user-plus"></i> Inscription</h2>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="regName"><i class="fas fa-user"></i> Nom complet</label>
+                <input type="text" id="regName" required placeholder="Prénom Nom">
+            </div>
+            <div class="form-group">
+                <label for="regEmail"><i class="fas fa-envelope"></i> Email ESATIC</label>
+                <input type="email" id="regEmail" required placeholder="prenom.nom@esatic.ci">
+            </div>
+            <div class="form-group">
+                <label for="regClass"><i class="fas fa-graduation-cap"></i> Classe</label>
+                <select id="regClass" required style="width: 100%; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    <option value="">Sélectionnez votre classe</option>
+                    <option value="SRIT3">SRIT3</option>
+                    <option value="SIGL3">SIGL3</option>
+                    <option value="RTEL3">RTEL3</option>
+                    <option value="M1 CSIA">M1 CSIA</option>
+                    <option value="M1 BIHAR">M1 BIHAR</option>
+                    <option value="M1 SIGL">M1 SIGL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="regPassword"><i class="fas fa-lock"></i> Mot de passe</label>
+                <input type="password" id="regPassword" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                <i class="fas fa-rocket"></i> Créer mon compte
+            </button>
+            <div class="form-footer">
+                <p>Déjà inscrit ? <a href="#" onclick="showPage('login')">Se connecter</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- Team Page -->
+    <div id="teamPage" 
+>
+        <div class="container">
             <div class="section-title">
-                <h2>À propos du Club</h2>
-                <p>Notre mission et notre vision</p>
+                <h2>Bureau du Club 2025-2026</h2>
+                <p>Rencontrez l'équipe passionnée qui dirige le Club Machine Learning</p>
             </div>
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <p style="font-size: 1.2rem; line-height: 2; color: #666; margin-bottom: 2rem;">
-                    Le Club Machine Learning d'ESATIC est une initiative étudiante passionnée par l'Intelligence Artificielle et ses applications. 
-                    Notre objectif est de former la prochaine génération d'experts en IA en Côte d'Ivoire à travers un programme structuré, 
-                    des projets pratiques et un accompagnement personnalisé.
+<div class="team-hierarchy">
+
+  <!-- Niveau 1 : Direction -->
+  <div class="hierarchy-level">
+    <div class="hierarchy-title">
+      <i class="fas fa-crown"></i> Direction
+    </div>
+    <div class="team-row">
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/president.jpg" alt="Président" />
+        </div>
+        <h3 class="team-name">Diarrassouba Brahima</h3>
+        <p class="team-role"><i class="fas fa-crown"></i> Président</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> M1 CSIA</p>
+        <p class="team-description">
+          Pilote la vision du club et oriente les projets d’innovation en IA.
+        </p>
+      </div>
+
+      <div class="vertical-separator"></div>
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/vice-presidente.jpg" alt="Vice-Présidente" />
+        </div>
+        <h3 class="team-name">Rabi Ouedraogo</h3>
+        <p class="team-role"><i class="fas fa-star"></i> Vice-Présidente</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> M1 BIHAR</p>
+        <p class="team-description">
+          Coordonne les activités et soutient la direction dans la stratégie du club.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Niveau 2 : Administration -->
+  <div class="hierarchy-level">
+    <div class="hierarchy-title">
+      <i class="fas fa-briefcase"></i> Administration
+    </div>
+    <div class="team-row">
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/secretaire.jpg" alt="Secrétaire Général" />
+        </div>
+        <h3 class="team-name">Assandé Christ Yoxan</h3>
+        <p class="team-role"><i class="fas fa-pen"></i> Secrétaire Général</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> M1 CSIA</p>
+        <p class="team-description">
+          Assure la gestion administrative et la coordination interne du club.
+        </p>
+      </div>
+
+      <div class="vertical-separator"></div>
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/adjoint-secretaire.jpg" alt="Secrétaire Adjoint" />
+        </div>
+        <h3 class="team-name">Chann Fealoh Goho</h3>
+        <p class="team-role"><i class="fas fa-user-edit"></i> Secrétaire Adjoint</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
+        <p class="team-description">
+          Soutient le secrétariat général et assure le suivi des activités quotidiennes.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="hierarchy-level">
+    <div class="hierarchy-title">
+      <i class="fas fa-users"></i> Responsables
+    </div>
+    <div class="team-row">
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/tresorier.jpg" alt="Tresorier" />
+        </div>
+        <h3 class="team-name">Christ Maël Kouakou</h3>
+        <p class="team-role"><i class="fas fa-coins"></i></i> Tresorier</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i>RTEL3</p>
+        <p class="team-description">
+          Assure la gestion financière du club et veille à la bonne utilisation des ressources.
+        </p>
+      </div>
+
+      <div class="vertical-separator"></div>
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/tresorier-adjoint.jpg" alt="Tresorier Adjoint" />
+        </div>
+        <h3 class="team-name">Dadi Yann</h3>
+        <p class="team-role"><i class="fas fa-coins"></i> Tresorier Adjoint</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> SRIT3</p>
+        <p class="team-description">
+         Assiste le trésorier dans le suivi des dépenses et la planification budgétaire.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Niveau 4 : Formation -->
+  <div class="hierarchy-level">
+    <div class="hierarchy-title">
+      <i class="fas fa-chalkboard-teacher"></i>
+ Formation
+    </div>
+    <div class="team-row">
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/president.jpg" alt="Formateur" />
+        </div>
+        <h3 class="team-name">Diarrassouba Brahima</h3>
+        <p class="team-role"><i class="fas fa-code"></i>Formateur</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> M1 CSIA</p>
+        <p class="team-description">
+          Anime les séances pratiques et encadre les étudiants dans les projets ML.
+        </p>
+      </div>
+
+      <div class="vertical-separator"></div>
+
+      <div class="team-card">
+        <div class="team-image icon-placeholder">
+          <img src="/src/images/formateur.jpg" alt="Responsable Formation" />
+        </div>
+        <h3 class="team-name">Habib Bernoulli</h3>
+        <p class="team-role"><i class="fas fa-brain"></i> Resp. Formation</p>
+        <p class="team-class"><i class="fas fa-graduation-cap"></i> M1 SIGL</p>
+        <p class="team-description">
+          Conçoit et supervise les programmes de formation en IA et Machine Learning.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+            <!-- CTA Rejoindre -->
+            <div style="margin-top: 4rem; text-align: center; background: linear-gradient(135deg, var(--primary), var(--blue)); padding: 3rem 2rem; border-radius: 12px; color: var(--white);">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">
+                    <i class="fas fa-users"></i> Rejoignez notre équipe !
+                </h2>
+                <p style="font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Vous êtes passionné(e) par le Machine Learning et souhaitez contribuer au développement du club ? 
+                    Les candidatures pour le bureau 2026-2027 ouvriront en juin 2026.
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                    <div>
-                        <i class="fas fa-bullseye" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Notre Mission</h3>
-                        <p style="color: #666;">Former des experts en IA capables de résoudre les défis technologiques africains</p>
-                    </div>
-                    <div>
-                        <i class="fas fa-eye" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
-                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Notre Vision</h3>
-                        <p style="color: #666;">Devenir le hub de référence pour l'apprentissage du ML en Afrique de l'Ouest</p>
-                    </div>
-                    <div>
-                        <i class="fas fa-heart" style="font-size: 3rem; color: var(--blue); margin-bottom: 1rem;"></i>
-                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Nos Valeurs</h3>
-                        <p style="color: #666;">Excellence, Innovation, Collaboration et Partage de connaissances</p>
-                    </div>
-                </div>
+                <a href="#" onclick="showPage('register')" class="btn btn-primary" style="font-size: 0.95rem;">
+                    <i class="fas fa-handshake"></i> Restez informé(e)
+                </a>
             </div>
-        </section>
+        </div>
     </div>
 
-
-
-<!-- FOOTER COMPLET - À remplacer avant </body> -->
+    <!-- Modal -->
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <div style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-                <!-- Colonne 1 : À propos -->
-                <div>
-                    <h3 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-brain"></i> Club ML ESATIC
-                    </h3>
-                    <p style="opacity: 0.9; line-height: 1.8;">
-                        Le Club Machine Learning d'ESATIC forme la nouvelle génération d'experts en Intelligence Artificielle. 
-                        Rejoignez-nous pour maîtriser le ML et créer l'avenir de la tech en Afrique.
-                    </p>
-                </div>
-
-                <!-- Colonne 2 : Liens rapides -->
-                <div>
-                    <h3 style="margin-bottom: 1rem;">
-                        <i class="fas fa-link"></i> Liens Rapides
-                    </h3>
-                    <ul style="list-style: none; line-height: 2;">
-                        <li><a href="#" onclick="showPage('home')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
-                            <i class="fas fa-chevron-right"></i> Accueil
-                        </a></li>
-                        <li><a href="#" onclick="showPage('program')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
-                            <i class="fas fa-chevron-right"></i> Programme de Formation
-                        </a></li>
-                        <li><a href="#" onclick="showPage('team')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
-                            <i class="fas fa-chevron-right"></i> Bureau du Club
-                        </a></li>
-                        <li><a href="#" onclick="showPage('register')" style="color: var(--white); text-decoration: none; opacity: 0.9; transition: opacity 0.3s;">
-                            <i class="fas fa-chevron-right"></i> S'inscrire
-                        </a></li>
-                    </ul>
-                </div>
-
-                <!-- Colonne 3 : Contact -->
-                <div>
-                    <h3 style="margin-bottom: 1rem;">
-                        <i class="fas fa-envelope"></i> Contact
-                    </h3>
-                    <ul style="list-style: none; line-height: 2;">
-                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>ESATIC, Abidjan, Côte d'Ivoire</span>
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:contact@clubml-esatic.ci" style="color: var(--white); text-decoration: none;">contact@clubml-esatic.ci</a>
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
-                            <i class="fas fa-phone"></i>
-                            <span>+225 27 XX XX XX XX</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Colonne 4 : Réseaux sociaux -->
-                <div>
-                    <h3 style="margin-bottom: 1rem;">
-                        <i class="fas fa-share-alt"></i> Suivez-nous
-                    </h3>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" style="width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.3rem; transition: all 0.3s; text-decoration: none;" onmouseover="this.style.background='var(--secondary)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
-                    <div style="margin-top: 1.5rem;">
-                        <p style="opacity: 0.9; margin-bottom: 0.5rem; font-weight: 600;">Newsletter</p>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <input type="email" placeholder="Votre email" style="flex: 1; padding: 0.7rem; border: none; border-radius: 5px; background: rgba(255,255,255,0.2); color: var(--white);">
-                            <button style="padding: 0.7rem 1.2rem; border: none; border-radius: 5px; background: var(--secondary); color: var(--white); cursor: pointer; font-weight: 600;">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3><i class="fas fa-brain"></i> Club ML ESATIC</h3>
+                <p>
+                    Le Club Machine Learning d'ESATIC forme la nouvelle génération d'experts en Intelligence Artificielle. 
+                    Rejoignez-nous pour maîtriser le ML et créer l'avenir de la tech en Afrique.
+                </p>
             </div>
 
-            <!-- Barre de séparation -->
-            <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; text-align: center;">
-                <p style="margin-bottom: 0.5rem; opacity: 0.9;">
-                    &copy; 2025-2026 Club Machine Learning ESATIC. Tous droits réservés.
-                </p>
-                <p style="opacity: 0.8;">
-                    <i class="fas fa-crown"></i> Président: <strong>Diarrassouba Brahima</strong> | 
-                    Vice-Président: <strong>Tuo Yénékpeya</strong>
-                </p>
-                <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
-                    Développé avec <i class="fas fa-heart" style="color: #e74c3c;"></i> par le Club ML ESATIC
-                </p>
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Liens Rapides</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                    <li><a href="#" onclick="showPage('program')"><i class="fas fa-chevron-right"></i> Programme</a></li>
+                    <li><a href="#" onclick="showPage('team')"><i class="fas fa-chevron-right"></i> Bureau</a></li>
+                    <li><a href="#" onclick="showPage('register')"><i class="fas fa-chevron-right"></i> S'inscrire</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3><i class="fas fa-envelope"></i> Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> ESATIC, Abidjan, CI</li>
+                    <li><i class="fas fa-envelope"></i> contact@clubml-esatic.ci</li>
+                    <li><i class="fas fa-phone"></i> +225 27 XX XX XX XX</li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3><i class="fas fa-share-alt"></i> Suivez-nous</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
             </div>
         </div>
+
+        <div class="footer-bottom">
+            <p style="margin-bottom: 0.5rem; opacity: 0.9; font-size: 0.9rem;">
+                &copy; 2025-2026 Club Machine Learning ESATIC. Tous droits réservés.
+            </p>
+            <p style="opacity: 0.8; font-size: 0.85rem;">
+                <i class="fas fa-crown"></i> Président: <strong>Diarrassouba Brahima</strong> | 
+                Vice-Président: <strong>Tuo Yénékpeya</strong>
+            </p>
+        </div>
     </footer>
-<html>
+
+    <script>
+        // Système de particules ML
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.querySelector('.hero').offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class Node {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 2;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 107, 53, 0.6)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        const nodes = [];
+
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        for (let i = 0; i < 15; i++) {
+            nodes.push(new Node());
+        }
+
+        function connectNodes() {
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(255, 107, 53, ${1 - distance / 150})`;
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            connectNodes();
+
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Navigation
+      // Navigation
+function showPage(pageName) {
+    // Cacher toutes les pages
+    document.getElementById('homePage').classList.add('hidden');
+    document.getElementById('teamPage').classList.add('hidden');
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
+    
+    // Afficher la page demandée
+    if (pageName === 'home') {
+        document.getElementById('homePage').classList.remove('hidden');
+    } else if (pageName === 'team') {
+        document.getElementById('teamPage').classList.remove('hidden');
+    } else if (pageName === 'login') {
+        document.getElementById('loginPage').classList.remove('hidden');
+    } else if (pageName === 'register') {
+        document.getElementById('registerPage').classList.remove('hidden');
+    } else if (pageName === 'program') {
+        document.getElementById('homePage').classList.remove('hidden');
+        setTimeout(() => scrollToProgram(), 100);
+    }
+    
+    // Fermer le menu mobile
+    document.getElementById('mainNav').classList.remove('active');
+}
+
+// Menu mobile toggle
+function toggleMobileMenu() {
+    document.getElementById('mainNav').classList.toggle('active');
+}
+
+// Gestion des formulaires
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // Ici, ajoute ton appel API
+    alert(`Connexion en cours pour ${email}...`);
+    // Simulation connexion réussie
+    setTimeout(() => {
+        alert('Connexion réussie !');
+        showPage('home');
+    }, 1000);
+}
+
+
+    async function handleRegister(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+        
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const classe = document.getElementById('regClass').value;
+        const password = document.getElementById('regPassword').value;
+
+        // On crée un objet avec les données du formulaire
+        const formData = {
+            name,
+            email,
+            classe,
+            password
+        };
+
+        try {
+            // On envoie les données au serveur avec fetch
+            const response = await fetch('http://10.240.182.188:3000/register', {
+                method: 'POST', // Type de requête
+                headers: {
+                    'Content-Type': 'application/json' // On indique qu'on envoie du JSON
+                },
+                body: JSON.stringify(formData) 
+            });
+
+        
+            const result = await response.json();
+
+            if (!response.ok) {
+               
+                throw new Error(result.message || 'Une erreur est survenue.');
+            }
+
+            
+            alert(result.message);
+            showPage('homePage'); 
+
+        } catch (error) {
+           
+            console.error('Erreur lors de l\'inscription:', error);
+            alert(`Erreur d'inscription: ${error.message}`);
+        }
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+       
+        alert(`La fonction de connexion n'est pas nécessaire actuelement.`);
+        setTimeout(() => {
+            showPage('home');
+        }, 1000);
+    }
+    
+
+        function scrollToProgram() {
+            document.getElementById('programSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+     
+        const modulesContent = {
+            module0: {
+                title: "Module 0 : Introduction et Concepts du ML",
+                content: `
+                    <p><strong>Durée:</strong> 5 semaines (Semaines 0-4)</p>
+                    <h3>Objectifs</h3>
+                    <ul>
+                        <li>Comprendre l'histoire de l'Intelligence Artificielle</li>
+                        <li>Découvrir les applications du Machine Learning</li>
+                        <li>Maîtriser les bases de Python pour le ML</li>
+                    </ul>
+                    <h3>Contenu</h3>
+                    <ul>
+                        <li>Histoire de l'IA: des origines à nos jours</li>
+                        <li>Applications modernes: ChatGPT, voitures autonomes, reconnaissance faciale</li>
+                        <li>Python fondamental: variables, structures de données, fonctions</li>
+                        <li>Bibliothèques essentielles: NumPy, Pandas, Matplotlib</li>
+                    </ul>
+                `
+            },
+            module1: {
+                title: "Module 1 : Apprentissage Supervisé",
+                content: `
+                    <p><strong>Durée:</strong> 5 semaines (Semaines 5-9)</p>
+                    <h3>Objectifs</h3>
+                    <ul>
+                        <li>Maîtriser les algorithmes de classification et régression</li>
+                        <li>Évaluer et optimiser les modèles</li>
+                        <li>Appliquer les techniques sur des cas réels</li>
+                    </ul>
+                    <h3>Algorithmes étudiés</h3>
+                    <ul>
+                        <li>K-Nearest Neighbors (KNN)</li>
+                        <li>Support Vector Machines (SVM)</li>
+                        <li>Random Forest & Decision Trees</li>
+                        <li>Régression Linéaire & Logistique</li>
+                    </ul>
+                    <h3>Projets pratiques</h3>
+                    <ul>
+                        <li>Prédiction de prix immobiliers</li>
+                        <li>Classification d'emails spam</li>
+                    </ul>
+                `
+            },
+            module2: {
+                title: "Module 2 : Apprentissage Non Supervisé",
+                content: `
+                    <p><strong>Durée:</strong> 3 semaines (Semaines 10-12)</p>
+                    <h3>Objectifs</h3>
+                    <ul>
+                        <li>Comprendre le clustering et la segmentation</li>
+                        <li>Créer des systèmes de recommandation</li>
+                        <li>Réduire la dimensionnalité des données</li>
+                    </ul>
+                    <h3>Techniques étudiées</h3>
+                    <ul>
+                        <li>K-Means Clustering</li>
+                        <li>Hierarchical Clustering</li>
+                        <li>Content-Based Filtering</li>
+                        <li>Collaborative Filtering</li>
+                        <li>PCA (Principal Component Analysis)</li>
+                    </ul>
+                    <h3>Projets</h3>
+                    <ul>
+                        <li>Système de recommandation de films</li>
+                        <li>Segmentation de clients</li>
+                    </ul>
+                `
+            },
+            module3: {
+                title: "Module 3 : NLP & Projets Pratiques",
+                content: `
+                    <p><strong>Durée:</strong> 4 semaines (Semaines 13-16)</p>
+                    <h3>Objectifs</h3>
+                    <ul>
+                        <li>Maîtriser le traitement du langage naturel</li>
+                        <li>Réaliser 4 projets d'IA complets</li>
+                        <li>Travailler en équipe sur des cas réels</li>
+                    </ul>
+                    <h3>NLP - Natural Language Processing</h3>
+                    <ul>
+                        <li>Tokenization & Preprocessing</li>
+                        <li>Bag of Words & TF-IDF</li>
+                        <li>Word Embeddings (Word2Vec)</li>
+                        <li>Analyse de sentiments</li>
+                    </ul>
+                    <h3>4 Projets d'IA</h3>
+                    <ul>
+                        <li>Chatbot intelligent</li>
+                        <li>Système de prédiction financière</li>
+                        <li>Détection de fraudes</li>
+                        <li>Recommandation personnalisée</li>
+                    </ul>
+                `
+            },
+            module4: {
+                title: "Module 4 : Déploiement de Modèles",
+                content: `
+                    <p><strong>Durée:</strong> 2 semaines (Semaines 17-18)</p>
+                    <h3>Objectifs</h3>
+                    <ul>
+                        <li>Déployer des modèles ML en production</li>
+                        <li>Créer des APIs avec FastAPI</li>
+                        <li>Réussir l'IA Challenge final</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <ul>
+                        <li>FastAPI pour créer des APIs</li>
+                        <li>Docker pour la conteneurisation</li>
+                        <li>Cloud deployment (Heroku/AWS)</li>
+                        <li>MLOps basics</li>
+                    </ul>
+                    <h3>IA Challenge Final</h3>
+                    <p>Test final pour valider vos compétences et obtenir votre certification du Club ML ESATIC.</p>
+                `
+            }
+        };
+
+function openModal(moduleId) {
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    const content = modulesContent[moduleId];
+    
+    modalBody.innerHTML = `
+        <h2>${content.title}</h2>
+        ${content.content}
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--gray-light);">
+            <button onclick="participateModule('${moduleId}')" class="btn btn-primary" style="font-size: 1rem; padding: 0.8rem 2rem;">
+                <i class="fas fa-hand-paper"></i> Participer à ce module
+            </button>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+}
+
+function participateModule(moduleId) {
+    alert('Inscription au module réussie ! Vous recevrez un email de confirmation.');
+    closeModal();
+   
+}
+
+        function closeModal(event) {
+            if (!event || event.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
