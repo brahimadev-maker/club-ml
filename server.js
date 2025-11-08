@@ -7,7 +7,7 @@ import postgres from 'postgres';
 const sql = postgres(process.env.DATABASE_URL);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
@@ -44,4 +44,4 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.listen(() => {});
+app.listen(PORT);
