@@ -1407,8 +1407,8 @@
                 <h3><i class="fas fa-envelope"></i> Contact</h3>
                 <ul>
                     <li><i class="fas fa-map-marker-alt"></i> ESATIC, Abidjan, CI</li>
-                    <li><i class="fas fa-envelope"></i> contact@clubml-esatic.ci</li>
-                    <li><i class="fas fa-phone"></i> +225 27 XX XX XX XX</li>
+                    <li><i class="fas fa-envelope"></i> club.machinelearning.esatic@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +225 05 46 64 13 90</li>
                 </ul>
             </div>
 
@@ -1604,7 +1604,7 @@ function handleLogin(event) {
         const classe = document.getElementById('regClass').value;
         const password = document.getElementById('regPassword').value;
 
-        // On crée un objet avec les données du formulaire
+        
         const formData = {
             name,
             email,
@@ -1613,11 +1613,11 @@ function handleLogin(event) {
         };
 
         try {
-            // On envoie les données au serveur avec fetch
-            const response = await fetch('http://10.240.182.188:3000/register', {
-                method: 'POST', // Type de requête
+            
+            const response = await fetch('https://club-ml.onrender.com/register', {
+                method: 'POST', 
                 headers: {
-                    'Content-Type': 'application/json' // On indique qu'on envoie du JSON
+                    'Content-Type': 'application/json' 
                 },
                 body: JSON.stringify(formData) 
             });

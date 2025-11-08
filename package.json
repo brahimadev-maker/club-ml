@@ -12,14 +12,15 @@
   },
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "type": "module",
   "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "postgres": "^3.4.7"
