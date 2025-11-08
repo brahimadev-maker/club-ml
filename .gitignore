@@ -28,8 +28,7 @@ Thumbs.db
 *.sublime-project
 
 # Optional: lock files (if you prefer to ignore them)
-package-lock.json
-yarn.lock
+
 
 # Optional: temporary files
 *.tmp
