@@ -1004,7 +1004,7 @@
                     <a href="#" class="btn btn-primary" onclick="showPage('register')">
                         <i class="fas fa-rocket"></i> J'intègre le club dès maintenant !
                     </a>
-                    <a href="#" class="btn btn-secondary" onclick="scrollToProgram()">
+                    <a href="#" class="btn btn-secondary" onclick="ScrollAnimation('programSection')">
                         <i class="fas fa-book-open"></i> Découvrir le programme
                     </a>
                 </div>
@@ -1041,10 +1041,10 @@
 
         <!-- Program Section -->
         <section class="container" id="programSection">
-            <div class="section-title">
+            <div  class="section-title">
                 <h2>Programme de Formation 2025-2026</h2>
                 <p>Un parcours complet pour devenir expert en Machine Learning</p>
-                <p style="text-decoration: underline;text-decoration-color:#ff6b35 ;text-decoration-thickness: 2px;" >Cliquez sur chaque case pour en savoir plus</p>
+                <p style="text-decoration: underline;text-decoration-color:#ff6b35 ;text-decoration-thickness: 2px;color:#ff6b35 " >Cliquez sur chaque case pour en savoir plus</p>
             </div>
 
             <div class="modules-grid">
@@ -1253,8 +1253,7 @@
     </div>
 </div>
     <!-- Team Page -->
-    <div id="teamPage" 
->
+    <div id="teamPage" >
         <div class="container">
             <div class="section-title">
                 <h2>Bureau du Club 2025-2026</h2>
@@ -1597,27 +1596,37 @@
 
         animate();
 
-        // Navigation
-      // Navigation
-function showPage(pageName) {
-    // Cacher toutes les pages
-    document.getElementById('homePage').classList.add('hidden');
-    document.getElementById('teamPage').classList.add('hidden');
-    document.getElementById('loginPage').classList.add('hidden');
-    document.getElementById('registerPage').classList.add('hidden');
     
-    // Afficher la page demandée
+function showPage(pageName) {
+
+     setTimeout(() => ScrollAnimation(`${pageName}Section`), 100);
+ 
+
+    
+  
     if (pageName === 'home') {
         document.getElementById('homePage').classList.remove('hidden');
+          setTimeout(() => ScrollAnimation(`${pageName}Page`), 100);
     } else if (pageName === 'team') {
+        
+ 
         document.getElementById('teamPage').classList.remove('hidden');
+          setTimeout(() => ScrollAnimation(`${pageName}Page`), 100);
+        
     } else if (pageName === 'login') {
         document.getElementById('loginPage').classList.remove('hidden');
+        
+    document.getElementById('registerPage').classList.add('hidden');
+         document.getElementById('homePage').classList.add('hidden');
+    document.getElementById('teamPage').classList.add('hidden');
     } else if (pageName === 'register') {
         document.getElementById('registerPage').classList.remove('hidden');
+            document.getElementById('homePage').classList.add('hidden');
+    document.getElementById('teamPage').classList.add('hidden');
+    document.getElementById('loginPage').classList.add('hidden');
     } else if (pageName === 'program') {
         document.getElementById('homePage').classList.remove('hidden');
-        setTimeout(() => scrollToProgram(), 100);
+       
     }
     
     // Fermer le menu mobile
@@ -1706,8 +1715,8 @@ async function handleRegister(event) {
     }
     
 
-        function scrollToProgram() {
-            document.getElementById('programSection').scrollIntoView({ behavior: 'smooth' });
+        function ScrollAnimation(name) {
+            document.getElementById(name).scrollIntoView({ behavior: 'smooth' });
         }
 
      
