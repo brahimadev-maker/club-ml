@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Club ML ESATIC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/src/images/icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1c6487;
+            --secondary: #ff6b35;
+            --blue: #337ab7;
+            --black: #000000;
+            --gray-light: #f0f0f0;
+            --white: #ffffff;
+            --danger: #dc3545;
+            --success: #28a745;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-light);
+            color: var(--black);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary) 0%, #0d4a5f 100%);
+            color: var(--white);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--secondary);
+        }
+
+        .menu-item.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: var(--secondary);
+        }
+
+        .menu-item i {
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 0.7rem 1.3rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Content Container */
+        .container {
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.8rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.primary {
+            background: rgba(28, 100, 135, 0.1);
+            color: var(--primary);
+        }
+
+        .stat-icon.secondary {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--secondary);
+        }
+
+        .stat-icon.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Table */
+        .table-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-box input {
+            padding: 0.6rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: 250px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--gray-light);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(28, 100, 135, 0.03);
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+
+        .badge-primary {
+            background: rgba(28, 100, 135, 0.1);
+            color: var(--primary);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #155570;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: #e65a2b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray-light);
+            margin-bottom: 1rem;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--gray-light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-brain" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+            <h2>Club ML Admin</h2>
+            <p id="adminName">Chargement...</p>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-chart-line"></i>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="#" class="menu-item" onclick="showSection('members')">
+                <i class="fas fa-users"></i>
+                <span>Membres inscrits</span>
+            </a>
+            <a href="#" class="menu-item" onclick="showSection('stats')">
+                <i class="fas fa-chart-pie"></i>
+                <span>Statistiques</span>
+            </a>
+            <a href="#" class="menu-item" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="pageTitle">Tableau de bord</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / <span id="currentSection">Accueil</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600;" id="headerAdminName">Admin</div>
+                        <div style="font-size: 0.85rem; color: #666;">Administrateur</div>
+                    </div>
+                </div>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Container -->
+        <div class="container">
+            <!-- Dashboard Section -->
+            <div id="dashboardSection">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="totalMembers">0</div>
+                                <div class="stat-label">Membres inscrits</div>
+                            </div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="totalClasses">0</div>
+                                <div class="stat-label">Classes représentées</div>
+                            </div>
+                            <div class="stat-icon secondary">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="newToday">0</div>
+                                <div class="stat-label">Inscriptions aujourd'hui</div>
+                            </div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Members -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><i class="fas fa-clock"></i> Inscriptions récentes</h3>
+                    </div>
+                    <div class="table-container">
+                        <div id="recentMembersLoading" class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <div id="recentMembersContent" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members Section -->
+            <div id="membersSection" style="display: none;">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><i class="fas fa-users"></i> Tous les membres</h3>
+                        <div class="search-box">
+                            <input type="text" id="searchInput" placeholder="Rechercher un membre..." onkeyup="filterMembers()">
+                            <button class="btn btn-primary btn-sm" onclick="exportToCSV()">
+                                <i class="fas fa-download"></i> Exporter CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div id="membersLoading" class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <div id="membersContent" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div id="statsSection" style="display: none;">
+                <h2 style="margin-bottom: 1.5rem; color: var(--primary);">
+                    <i class="fas fa-chart-pie"></i> Statistiques détaillées
+                </h2>
+                <div id="statsContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settingsSection" style="display: none;">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><i class="fas fa-cog"></i> Paramètres du compte</h3>
+                    </div>
+                    <div style="padding: 2rem;">
+                        <p style="color: #666; margin-bottom: 1rem;">
+                            Fonctionnalités de gestion du compte à venir...
+                        </p>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-key"></i> Changer le mot de passe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        const API_URL = 'https://club-ml.onrender.com';
+        let allMembers = [];
+        let token = '';
+
+        // Vérifier l'authentification
+        window.addEventListener('DOMContentLoaded', async () => {
+            token = localStorage.getItem('adminToken');
+            const adminData = JSON.parse(localStorage.getItem('adminData') || '{}');
+
+            if (!token) {
+                window.location.href = '/admin-login.html';
+                return;
+            }
+
+            // Afficher le nom de l'admin
+            if (adminData.identifiant) {
+                document.getElementById('adminName').textContent = adminData.identifiant;
+                document.getElementById('headerAdminName').textContent = adminData.identifiant;
+            }
+
+            // Charger les données
+            await loadDashboard();
+        });
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function showSection(section) {
+            // Masquer toutes les sections
+            document.querySelectorAll('[id$="Section"]').forEach(el => el.style.display = 'none');
+            
+            // Retirer la classe active des menu items
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            
+            // Afficher la section demandée
+            const sectionMap = {
+                'dashboard': { title: 'Tableau de bord', breadcrumb: 'Accueil' },
+                'members': { title: 'Membres inscrits', breadcrumb: 'Membres' },
+                'stats': { title: 'Statistiques', breadcrumb: 'Stats' },
+                'settings': { title: 'Paramètres', breadcrumb: 'Paramètres' }
+            };
+
+            const info = sectionMap[section];
+            document.getElementById('pageTitle').textContent = info.title;
+            document.getElementById('currentSection').textContent = info.breadcrumb;
+            document.getElementById(`${section}Section`).style.display = 'block';
+
+            // Activer le menu item
+            event.target.closest('.menu-item').classList.add('active');
+
+            // Charger les données si nécessaire
+            if (section === 'members' && allMembers.length === 0) {
+                loadMembers();
+            } else if (section === 'stats') {
+                loadStats();
+            }
+
+            // Fermer le sidebar sur mobile
+            if (window.innerWidth <= 968) {
+                document.getElementById('sidebar').classList.remove('active');
+            }
+        }
+
+        async function loadDashboard() {
+            try {
+                // Charger les stats
+                await loadStats();
+                
+                // Charger les membres récents
+                const response = await fetch(`${API_URL}/inscrits`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Erreur de chargement');
+
+                const data = await response.json();
+                displayRecentMembers(data.members || []);
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('recentMembersContent').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Erreur de chargement des données</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayRecentMembers(members) {
+            document.getElementById('recentMembersLoading').style.display = 'none';
+            const content = document.getElementById('recentMembersContent');
+            content.style.display = 'block';
+
+            if (members.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>Aucune inscription récente</p>
+                    </div>
+                `;
+                return;
+            }
+
+            content.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>WhatsApp</th>
+                            <th>Classe</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${members.slice(0, 5).map(member => `
+                            <tr>
+                                <td><strong>${member.nom}</strong></td>
+                                <td>${member.email}</td>
+                                <td>${member.whatsapp}</td>
+                                <td><span class="badge badge-primary">${member.classe}</span></td>
+                                <td>${new Date(member.created_at).toLocaleDateString('fr-FR')}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        async function loadStats() {
+            try {
+                // Simuler le chargement des stats (à remplacer par votre API)
+                const stats = {
+                    total: 30,
+                    classes: 15,
+                    today: 3
+                };
+
+                document.getElementById('totalMembers').textContent = stats.total;
+                document.getElementById('totalClasses').textContent = stats.classes;
+                document.getElementById('newToday').textContent = stats.today;
+
+            } catch (error) {
+                console.error('Erreur stats:', error);
+            }
+        }
+
+        async function loadMembers() {
+            // À implémenter avec votre endpoint API
+            console.log('Chargement des membres...');
+        }
+
+        function filterMembers() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            // Implémenter le filtrage
+        }
+
+        function exportToCSV() {
+            alert('Export CSV à implémenter');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                localStorage.removeItem('adminToken');
+                localStorage.removeItem('adminData');
+                window.location.href = '/admin-login.html';
+            }
+        }
+    </script>
+</body>
+</html>

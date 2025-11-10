@@ -20,7 +20,6 @@ app.post('/register', async (req, res) => {
         return res.status(400).json({ message: 'Tous les champs sont requis.' });
     }
 
-    // Validation du numéro WhatsApp (format ivoirien)
     const whatsappRegex = /^(0[1|5|7])\d{8}$/;
     if (!whatsappRegex.test(whatsapp)) {
         return res.status(400).json({ 
@@ -194,6 +193,25 @@ app.post('/admin/login', async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la connexion:', error.message);
         res.status(500).json({ message: 'Une erreur interne est survenue.' });
+    }
+});
+
+// --- Endpoint pour récupérer la liste des inscrits (protégé par token admin) ---
+app.get('/admin/liste-inscrits', authMiddleware, async (req, res) => {
+    try {
+        const inscrits = await sql`
+            SELECT id, nom, email, whatsapp, classe, created_at
+            FROM inscrit
+            ORDER BY created_at DESC
+        `;
+
+        res.json({
+            message: 'Liste des inscrits récupérée avec succès.',
+            inscrits,
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des inscrits:', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur.' });
     }
 });
 
