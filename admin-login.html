@@ -330,7 +330,7 @@
     </div>
 
     <script>
-        const API_URL = 'https://club-ml.onrender.com';
+        const API_URL = 'http://localhost:3000';
 
         function togglePassword() {
             const passwordInput = document.getElementById('password');
@@ -383,7 +383,7 @@
             btnText.textContent = 'Connexion...';
 
             try {
-                const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
+                const response = await fetch(`${API_URL}/admin/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -399,6 +399,7 @@
 
                 // Sauvegarder le token
                 localStorage.setItem('adminToken', data.token);
+                
                 localStorage.setItem('adminData', JSON.stringify(data.admin));
 
                 showAlert('Connexion réussie ! Redirection...', 'success');

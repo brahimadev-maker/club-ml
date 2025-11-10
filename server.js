@@ -51,37 +51,46 @@ app.post('/register', async (req, res) => {
     }
 });
 
+app.get('/admin/stats', authMiddleware, async (req, res) => {
+    try {
+        // Total des membres
+        const totalResult = await sql`SELECT COUNT(*) FROM inscrit`;
+        const total = parseInt(totalResult[0].count, 10);
 
+        // Total des classes distinctes
+        const classesResult = await sql`SELECT COUNT(DISTINCT classe) FROM inscrit`;
+        const classes = parseInt(classesResult[0].count, 10);
 
+        // Inscriptions du jour
+        const todayResult = await sql`
+            SELECT COUNT(*) FROM inscrit
+            WHERE DATE(created_at) = CURRENT_DATE
+        `;
+        const today = parseInt(todayResult[0].count, 10);
 
-app.post('/admin/register', async (req, res) => {
-  const { identifiant, mot_de_passe } = req.body;
-
-  if (!identifiant || !mot_de_passe) {
-    return res.status(400).json({ message: 'Identifiant et mot de passe requis.' });
-  }
-
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(mot_de_passe, salt);
-
-    await sql`
-      INSERT INTO admin (identifiant, mot_de_passe)
-      VALUES (${identifiant}, ${hashedPassword})
-    `;
-
-    res.status(201).json({ message: 'Admin enregistré avec succès.' });
-  } catch (error) {
-    console.error('Erreur admin register:', error.message);
-    if (error.code === '23505') {
-      return res.status(409).json({ message: 'Identifiant déjà utilisé.' });
+        res.json({ total, classes, today });
+    } catch (error) {
+        console.error('Erreur stats:', error.message);
+        res.status(500).json({ message: 'Erreur serveur.' });
     }
-    res.status(500).json({ message: 'Erreur interne.' });
-  }
+});
+
+
+app.get('/admin/totalMembers', authMiddleware, async (req, res) => {
+    try {
+        const result = await sql`SELECT COUNT(*) FROM inscrit`;
+        const total = parseInt(result[0].count, 10); // convertir en nombre entier
+
+        res.json({ total });
+    } catch (error) {
+        console.error('Erreur totalMembers:', error.message);
+        res.status(500).json({ message: 'Erreur serveur.' });
+    }
 });
 
 
 app.post('/admin/login', async (req, res) => {
+ 
   const { identifiant, mot_de_passe } = req.body;
 
   if (!identifiant || !mot_de_passe) {
@@ -104,12 +113,19 @@ app.post('/admin/login', async (req, res) => {
 
     const token = generateToken({ id: admin[0].id, identifiant: admin[0].identifiant });
 
-    res.json({ message: 'Connexion réussie.', token });
+     
+     
+
+    res.json({ message: 'Connexion réussie.', token,admin:{
+        id: admin[0].id, identifiant: admin[0].identifiant
+    } });
   } catch (error) {
     console.error('Erreur admin login:', error.message);
     res.status(500).json({ message: 'Erreur interne.' });
   }
 });
+
+
 import { generateToken, verifyToken, authMiddleware } from './config/token.js';
 
 // Endpoint pour créer un admin
@@ -152,49 +168,6 @@ app.post('/admin/register', async (req, res) => {
 });
 
 
-app.post('/admin/login', async (req, res) => {
-    const { identifiant, password } = req.body;
-
-    if (!identifiant || !password) {
-        return res.status(400).json({ message: 'Identifiant et mot de passe requis.' });
-    }
-
-    try {
-        const admins = await sql`
-            SELECT * FROM admin WHERE identifiant = ${identifiant}
-        `;
-
-        if (admins.length === 0) {
-            return res.status(401).json({ message: 'Identifiant ou mot de passe incorrect.' });
-        }
-
-        const admin = admins[0];
-        const isPasswordValid = await bcrypt.compare(password, admin.mot_de_passe);
-
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Identifiant ou mot de passe incorrect.' });
-        }
-
-       
-        const token = generateToken({
-            id: admin.id,
-            identifiant: admin.identifiant
-        });
-
-        res.json({
-            message: 'Connexion réussie.',
-            token,
-            admin: {
-                id: admin.id,
-                identifiant: admin.identifiant
-            }
-        });
-
-    } catch (error) {
-        console.error('Erreur lors de la connexion:', error.message);
-        res.status(500).json({ message: 'Une erreur interne est survenue.' });
-    }
-});
 
 // --- Endpoint pour récupérer la liste des inscrits (protégé par token admin) ---
 app.get('/admin/liste-inscrits', authMiddleware, async (req, res) => {
