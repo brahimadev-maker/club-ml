@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - Club ML ESATIC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="/src/images/icon.png">
     <style>
         * {
             margin: 0;
@@ -166,6 +165,29 @@
         .btn-danger:hover {
             background: #c82333;
             transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #155570;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: #e65a2b;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
         }
 
         /* Content Container */
@@ -333,42 +355,9 @@
             display: inline-block;
         }
 
-        .badge-success {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-        }
-
         .badge-primary {
             background: rgba(28, 100, 135, 0.1);
             color: var(--primary);
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-sm {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: #155570;
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: var(--white);
-        }
-
-        .btn-secondary:hover {
-            background: #e65a2b;
         }
 
         .empty-state {
@@ -404,7 +393,84 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Mobile Menu */
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Mobile Toggle */
         .mobile-toggle {
             display: none;
             position: fixed;
@@ -420,6 +486,8 @@
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             z-index: 999;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Responsive */
@@ -438,8 +506,6 @@
 
             .mobile-toggle {
                 display: flex;
-                align-items: center;
-                justify-content: center;
             }
 
             .header {
@@ -479,19 +545,23 @@
         </div>
         
         <nav class="sidebar-menu">
-            <a href="#" class="menu-item active" onclick="showSection('dashboard')">
+            <a href="#" class="menu-item active" data-section="dashboard">
                 <i class="fas fa-chart-line"></i>
                 <span>Tableau de bord</span>
             </a>
-            <a href="#" class="menu-item" onclick="showSection('members')">
+            <a href="#" class="menu-item" data-section="members">
                 <i class="fas fa-users"></i>
                 <span>Membres inscrits</span>
             </a>
-            <a href="#" class="menu-item" onclick="showSection('stats')">
+            <a href="#" class="menu-item" data-section="stats">
                 <i class="fas fa-chart-pie"></i>
                 <span>Statistiques</span>
             </a>
-            <a href="#" class="menu-item" onclick="showSection('settings')">
+            <a href="#" class="menu-item" data-section="messages">
+                <i class="fas fa-envelope"></i>
+                <span>Envoyer un message</span>
+            </a>
+            <a href="#" class="menu-item" data-section="settings">
                 <i class="fas fa-cog"></i>
                 <span>Paramètres</span>
             </a>
@@ -518,7 +588,7 @@
                         <div style="font-size: 0.85rem; color: #666;">Administrateur</div>
                     </div>
                 </div>
-                <button class="btn btn-danger" onclick="logout()">
+                <button class="btn btn-danger" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i>
                     Déconnexion
                 </button>
@@ -588,8 +658,8 @@
                     <div class="table-header">
                         <h3><i class="fas fa-users"></i> Tous les membres</h3>
                         <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Rechercher un membre..." onkeyup="filterMembers()">
-                            <button class="btn btn-primary btn-sm" onclick="exportToCSV()">
+                            <input type="text" id="searchInput" placeholder="Rechercher un membre...">
+                            <button class="btn btn-primary btn-sm" id="exportBtn">
                                 <i class="fas fa-download"></i> Exporter CSV
                             </button>
                         </div>
@@ -604,51 +674,125 @@
             </div>
 
             <!-- Stats Section -->
-        <!-- Stats Section -->
-<div id="statsSection" style="display: none;">
-    <h2 style="margin-bottom: 1.5rem; color: var(--primary);">
-        <i class="fas fa-chart-pie"></i> Statistiques détaillées
-    </h2>
+            <div id="statsSection" style="display: none;">
+                <h2 style="margin-bottom: 1.5rem; color: var(--primary);">
+                    <i class="fas fa-chart-pie"></i> Statistiques détaillées
+                </h2>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-header">
-                <div>
-                    <div class="stat-number" id="totalMembers">0</div>
-                    <div class="stat-label">Membres inscrits</div>
-                </div>
-                <div class="stat-icon primary">
-                    <i class="fas fa-users"></i>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="statsTotalMembers">0</div>
+                                <div class="stat-label">Membres inscrits</div>
+                            </div>
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="statsTotalClasses">0</div>
+                                <div class="stat-label">Classes représentées</div>
+                            </div>
+                            <div class="stat-icon secondary">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="statsNewToday">0</div>
+                                <div class="stat-label">Inscriptions aujourd'hui</div>
+                            </div>
+                            <div class="stat-icon success">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="stat-card">
-            <div class="stat-header">
-                <div>
-                    <div class="stat-number" id="totalClasses">0</div>
-                    <div class="stat-label">Classes représentées</div>
-                </div>
-                <div class="stat-icon secondary">
-                    <i class="fas fa-graduation-cap"></i>
+            <!-- Messages Section -->
+            <div id="messagesSection" style="display: none;">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><i class="fas fa-envelope"></i> Envoyer un message à tous les membres</h3>
+                    </div>
+                    <div style="padding: 2rem;">
+                        <form id="messageForm">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-heading"></i> Objet du message
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="messageSubject" 
+                                    required
+                                    placeholder="Ex: Nouvelle activité du Club ML"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-palette"></i> Couleur du thème
+                                </label>
+                                <select id="messageTheme">
+                                    <option value="#1c6487">Bleu primaire (par défaut)</option>
+                                    <option value="#ff6b35">Orange</option>
+                                    <option value="#28a745">Vert</option>
+                                    <option value="#dc3545">Rouge</option>
+                                    <option value="#6f42c1">Violet</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-edit"></i> Contenu du message
+                                </label>
+                                <textarea 
+                                    id="messageContent" 
+                                    required
+                                    rows="8"
+                                    placeholder="Rédigez votre message ici... Vous pouvez utiliser des paragraphes et des sauts de ligne."
+                                ></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-link"></i> Lien d'action (optionnel)
+                                </label>
+                                <input 
+                                    type="url" 
+                                    id="messageLink" 
+                                    placeholder="https://exemple.com"
+                                    style="margin-bottom: 0.5rem;"
+                                />
+                                <input 
+                                    type="text" 
+                                    id="messageLinkText" 
+                                    placeholder="Texte du bouton (Ex: En savoir plus)"
+                                />
+                            </div>
+
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button type="submit" class="btn btn-primary" id="sendBtn">
+                                    <i class="fas fa-paper-plane"></i> Envoyer à tous les membres
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="previewBtn">
+                                    <i class="fas fa-eye"></i> Aperçu
+                                </button>
+                                <span id="sendStatus" style="font-size: 0.9rem;"></span>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-header">
-                <div>
-                    <div class="stat-number" id="newToday">0</div>
-                    <div class="stat-label">Inscriptions aujourd'hui</div>
-                </div>
-                <div class="stat-icon success">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
             <!-- Settings Section -->
             <div id="settingsSection" style="display: none;">
@@ -669,286 +813,477 @@
         </div>
     </main>
 
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Aperçu du message</h3>
+                <button class="modal-close" id="closePreviewBtn">&times;</button>
+            </div>
+            <div id="previewContent"></div>
+        </div>
+    </div>
+
     <!-- Mobile Toggle -->
-    <button class="mobile-toggle" onclick="toggleSidebar()">
+    <button class="mobile-toggle" id="mobileToggle">
         <i class="fas fa-bars"></i>
     </button>
 
- <script>
-const API_URL = 'https://club-ml.onrender.com';
-let allMembers = [];
-let token = '';
+    <script>
+        const API_URL = 'https://club-ml.onrender.com';
+        let allMembers = [];
+        let token = '';
 
-window.addEventListener('DOMContentLoaded', async () => {
-    token = localStorage.getItem('adminToken');
-    const storedAdminData = localStorage.getItem('adminData');
+        // App State
+        const app = {
+            currentSection: 'dashboard',
+            adminData: {},
+            
+            init() {
+                this.checkAuth();
+                this.attachEventListeners();
+                this.loadInitialData();
+            },
 
-    let adminData = {};
-    if (storedAdminData && storedAdminData !== 'undefined') {
-        try { adminData = JSON.parse(storedAdminData); } catch { adminData = {}; }
-    }
+            checkAuth() {
+                token = localStorage.getItem('adminToken');
+                const storedAdminData = localStorage.getItem('adminData');
 
-    if (!token) {
-        window.location.href = '/admin-login.html';
-        return;
-    }
+                if (!token) {
+                    window.location.href = '/admin-login.html';
+                    return;
+                }
 
-    if (adminData.identifiant) {
-        document.getElementById('adminName').textContent = adminData.identifiant;
-        document.getElementById('headerAdminName').textContent = adminData.identifiant;
-    }
+                if (storedAdminData && storedAdminData !== 'undefined') {
+                    try {
+                        this.adminData = JSON.parse(storedAdminData);
+                        if (this.adminData.identifiant) {
+                            document.getElementById('adminName').textContent = this.adminData.identifiant;
+                            document.getElementById('headerAdminName').textContent = this.adminData.identifiant;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing admin data:', error);
+                    }
+                }
+            },
 
-    await loadDashboard();
-});
+            attachEventListeners() {
+                // Menu items
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const section = item.dataset.section;
+                        this.showSection(section);
+                    });
+                });
 
-// --- TABLEAU DE BORD ---
-async function loadDashboard() {
-    try {
-        await loadStats();
+                // Logout
+                document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
 
-        const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+                // Mobile toggle
+                document.getElementById('mobileToggle').addEventListener('click', () => this.toggleSidebar());
+
+                // Search
+                document.getElementById('searchInput').addEventListener('keyup', () => this.filterMembers());
+
+                // Export
+                document.getElementById('exportBtn').addEventListener('click', () => this.exportToCSV());
+
+                // Message form
+                document.getElementById('messageForm').addEventListener('submit', (e) => this.sendMessage(e));
+                document.getElementById('previewBtn').addEventListener('click', () => this.previewEmail());
+                document.getElementById('closePreviewBtn').addEventListener('click', () => this.closePreview());
+            },
+
+            async loadInitialData() {
+                await this.loadStats();
+                await this.loadDashboard();
+            },
+
+            showSection(section) {
+                // Hide all sections
+                document.querySelectorAll('[id$="Section"]').forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                // Remove active class from all menu items
+                document.querySelectorAll('.menu-item').forEach(el => {
+                    el.classList.remove('active');
+                });
+
+                // Section info
+                const sectionMap = {
+                    'dashboard': { title: 'Tableau de bord', breadcrumb: 'Accueil' },
+                    'members': { title: 'Membres inscrits', breadcrumb: 'Membres' },
+                    'stats': { title: 'Statistiques', breadcrumb: 'Stats' },
+                    'messages': { title: 'Envoyer un message', breadcrumb: 'Messages' },
+                    'settings': { title: 'Paramètres', breadcrumb: 'Paramètres' }
+                };
+
+                const info = sectionMap[section];
+                document.getElementById('pageTitle').textContent = info.title;
+                document.getElementById('currentSection').textContent = info.breadcrumb;
+                document.getElementById(`${section}Section`).style.display = 'block';
+
+                // Add active class to current menu item
+                const activeItem = document.querySelector(`.menu-item[data-section="${section}"]`);
+                if (activeItem) activeItem.classList.add('active');
+
+                // Load section data if needed
+                if (section === 'members' && allMembers.length === 0) {
+                    this.loadMembers();
+                }
+                if (section === 'stats') {
+                    this.loadStats();
+                }
+
+                // Close sidebar on mobile
+                if (window.innerWidth <= 968) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+
+                this.currentSection = section;
+            },
+
+            async loadDashboard() {
+                try {
+                    const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) throw new Error('Erreur de chargement');
+
+                    const data = await response.json();
+                    allMembers = data.inscrits || [];
+                    this.displayRecentMembers(allMembers);
+
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    document.getElementById('recentMembersContent').innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erreur de chargement des données</p>
+                        </div>`;
+                    document.getElementById('recentMembersLoading').style.display = 'none';
+                    document.getElementById('recentMembersContent').style.display = 'block';
+                }
+            },
+
+            displayRecentMembers(members) {
+                document.getElementById('recentMembersLoading').style.display = 'none';
+                const content = document.getElementById('recentMembersContent');
+                content.style.display = 'block';
+
+                if (members.length === 0) {
+                    content.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <p>Aucune inscription récente</p>
+                        </div>`;
+                    return;
+                }
+
+                const recentMembers = members.slice(0, 5);
+                content.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>WhatsApp</th>
+                                <th>Classe</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${recentMembers.map(m => `
+                                <tr>
+                                    <td><strong>${m.nom}</strong></td>
+                                    <td>${m.email}</td>
+                                    <td>${m.whatsapp}</td>
+                                    <td><span class="badge badge-primary">${m.classe}</span></td>
+                                    <td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>`;
+            },
+
+            async loadStats() {
+                try {
+                    const response = await fetch(`${API_URL}/admin/stats`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) throw new Error('Erreur API stats');
+
+                    const stats = await response.json();
+
+                    // Update dashboard stats
+                    document.getElementById('totalMembers').textContent = stats.total || 0;
+                    document.getElementById('totalClasses').textContent = stats.classes || 0;
+                    document.getElementById('newToday').textContent = stats.today || 0;
+
+                    // Update stats section
+                    document.getElementById('statsTotalMembers').textContent = stats.total || 0;
+                    document.getElementById('statsTotalClasses').textContent = stats.classes || 0;
+                    document.getElementById('statsNewToday').textContent = stats.today || 0;
+
+                } catch (error) {
+                    console.error('Erreur stats:', error);
+                    const fallback = '--';
+                    document.getElementById('totalMembers').textContent = fallback;
+                    document.getElementById('totalClasses').textContent = fallback;
+                    document.getElementById('newToday').textContent = fallback;
+                    document.getElementById('statsTotalMembers').textContent = fallback;
+                    document.getElementById('statsTotalClasses').textContent = fallback;
+                    document.getElementById('statsNewToday').textContent = fallback;
+                }
+            },
+
+            async loadMembers() {
+                try {
+                    document.getElementById('membersLoading').style.display = 'flex';
+                    document.getElementById('membersContent').style.display = 'none';
+
+                    const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) throw new Error('Erreur de chargement');
+                    const data = await response.json();
+                    allMembers = data.inscrits || [];
+
+                    this.renderMembersTable(allMembers);
+                } catch (error) {
+                    console.error('Erreur membres:', error);
+                    document.getElementById('membersContent').innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Impossible de charger les membres.</p>
+                        </div>`;
+                } finally {
+                    document.getElementById('membersLoading').style.display = 'none';
+                    document.getElementById('membersContent').style.display = 'block';
+                }
+            },
+
+            renderMembersTable(members) {
+                const container = document.getElementById('membersContent');
+
+                if (members.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-user-slash"></i>
+                            <p>Aucun membre trouvé</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>WhatsApp</th>
+                                <th>Classe</th>
+                                <th>Date d'inscription</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${members.map(m => `
+                                <tr>
+                                    <td><strong>${m.nom}</strong></td>
+                                    <td>${m.email}</td>
+                                    <td>${m.whatsapp}</td>
+                                    <td><span class="badge badge-primary">${m.classe}</span></td>
+                                    <td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>`;
+            },
+
+            filterMembers() {
+                const search = document.getElementById('searchInput').value.toLowerCase();
+                const filtered = allMembers.filter(m =>
+                    m.nom.toLowerCase().includes(search) ||
+                    m.email.toLowerCase().includes(search) ||
+                    m.whatsapp.toLowerCase().includes(search) ||
+                    m.classe.toLowerCase().includes(search)
+                );
+                this.renderMembersTable(filtered);
+            },
+
+            exportToCSV() {
+                if (!allMembers.length) {
+                    alert('Aucune donnée à exporter.');
+                    return;
+                }
+
+                const header = ['Nom', 'Email', 'WhatsApp', 'Classe', 'Date'];
+                const rows = allMembers.map(m => [
+                    m.nom, 
+                    m.email, 
+                    m.whatsapp, 
+                    m.classe, 
+                    new Date(m.created_at).toLocaleDateString('fr-FR')
+                ]);
+
+                const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `membres_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            },
+
+            async sendMessage(event) {
+                event.preventDefault();
+                
+                const subject = document.getElementById('messageSubject').value;
+                const content = document.getElementById('messageContent').value;
+                const theme = document.getElementById('messageTheme').value;
+                const link = document.getElementById('messageLink').value;
+                const linkText = document.getElementById('messageLinkText').value;
+                
+                const sendBtn = document.getElementById('sendBtn');
+                const status = document.getElementById('sendStatus');
+                
+                if (!subject || !content) {
+                    status.innerHTML = '<span style="color: var(--danger);">Veuillez remplir tous les champs requis.</span>';
+                    return;
+                }
+                
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                status.innerHTML = '<span style="color: var(--blue);">Envoi en cours...</span>';
+                
+                try {
+                    const response = await fetch(`${API_URL}/admin/send-message`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            subject,
+                            content,
+                            theme,
+                            link: link || null,
+                            linkText: linkText || null
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        status.innerHTML = `<span style="color: var(--success);"><i class="fas fa-check-circle"></i> ${data.message}</span>`;
+                        document.getElementById('messageForm').reset();
+                        setTimeout(() => {
+                            status.innerHTML = '';
+                        }, 5000);
+                    } else {
+                        throw new Error(data.message || 'Erreur lors de l\'envoi');
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    status.innerHTML = `<span style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> ${error.message}</span>`;
+                } finally {
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer à tous les membres';
+                }
+            },
+
+            previewEmail() {
+                const subject = document.getElementById('messageSubject').value;
+                const content = document.getElementById('messageContent').value;
+                const theme = document.getElementById('messageTheme').value;
+                const link = document.getElementById('messageLink').value;
+                const linkText = document.getElementById('messageLinkText').value;
+                
+                if (!subject || !content) {
+                    alert('Veuillez remplir au moins l\'objet et le contenu.');
+                    return;
+                }
+                
+                const htmlContent = this.generateEmailHTML(subject, content, theme, link, linkText);
+                document.getElementById('previewContent').innerHTML = htmlContent;
+                document.getElementById('previewModal').classList.add('active');
+            },
+
+            closePreview() {
+                document.getElementById('previewModal').classList.remove('active');
+            },
+
+            generateEmailHTML(subject, content, theme, link, linkText) {
+                const paragraphs = content.split('\n')
+                    .filter(p => p.trim())
+                    .map(p => `<p style="margin-bottom: 1rem; line-height: 1.6;">${p}</p>`)
+                    .join('');
+                
+                const linkButton = link && linkText ? `
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <a href="${link}" style="display: inline-block; padding: 12px 30px; background: ${theme}; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                            ${linkText}
+                        </a>
+                    </div>
+                ` : '';
+                
+                const darkerTheme = this.adjustColor(theme, -20);
+                
+                return `
+                    <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
+                        <div style="background: linear-gradient(135deg, ${theme} 0%, ${darkerTheme} 100%); padding: 40px 20px; text-align: center;">
+                            <h1 style="color: white; margin: 0; font-size: 2rem;">Club ML ESATIC</h1>
+                        </div>
+                        
+                        <div style="padding: 30px 20px; background: #f9f9f9;">
+                            <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                <h2 style="color: ${theme}; margin-top: 0; margin-bottom: 1.5rem;">${subject}</h2>
+                                ${paragraphs}
+                                ${linkButton}
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px; text-align: center; background: #f0f0f0; color: #666; font-size: 0.9rem;">
+                            <p style="margin: 0;">© 2025 Club ML ESATIC - Machine Learning Club</p>
+                            <p style="margin: 5px 0 0 0;">École Supérieure Africaine des TIC</p>
+                        </div>
+                    </div>
+                `;
+            },
+
+            adjustColor(color, amount) {
+                const num = parseInt(color.replace('#', ''), 16);
+                const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+                const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+                const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+                return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+            },
+
+            logout() {
+                if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('adminData');
+                    window.location.href = '/admin-login.html';
+                }
+            },
+
+            toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('active');
+            }
+        };
+
+        // Initialize app when DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            app.init();
         });
-
-        if (!response.ok) throw new Error('Erreur de chargement');
-
-        const data = await response.json();
-        allMembers = data.inscrits || [];
-        displayRecentMembers(allMembers);
-
-    } catch (error) {
-        console.error('Erreur:', error);
-        document.getElementById('recentMembersContent').innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-exclamation-circle"></i>
-                <p>Erreur de chargement des données</p>
-            </div>`;
-    }
-}
-
-function displayRecentMembers(members) {
-    document.getElementById('recentMembersLoading').style.display = 'none';
-    const content = document.getElementById('recentMembersContent');
-    content.style.display = 'block';
-
-    if (members.length === 0) {
-        content.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-users"></i>
-                <p>Aucune inscription récente</p>
-            </div>`;
-        return;
-    }
-
-    content.innerHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Email</th>
-                    <th>WhatsApp</th>
-                    <th>Classe</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${members.slice(0, 5).map(m => `
-                    <tr>
-                        <td><strong>${m.nom}</strong></td>
-                        <td>${m.email}</td>
-                        <td>${m.whatsapp}</td>
-                        <td><span class="badge badge-primary">${m.classe}</span></td>
-                        <td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td>
-                    </tr>`).join('')}
-            </tbody>
-        </table>`;
-}
-
-// --- STATS ---
-async function loadStats() {
-    try {
-        const response = await fetch(`${API_URL}/admin/stats`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (!response.ok) throw new Error('Erreur API stats');
-
-        const stats = await response.json();
-
-        document.getElementById('totalMembers').textContent = stats.total || 0;
-        document.getElementById('totalClasses').textContent = stats.classes || 0;
-        document.getElementById('newToday').textContent = stats.today || 0;
-    } catch (error) {
-        console.error('Erreur stats:', error);
-        document.getElementById('totalMembers').textContent = '--';
-        document.getElementById('totalClasses').textContent = '--';
-        document.getElementById('newToday').textContent = '--';
-    }
-}
-
-// Example: call loadStats when Stats section is displayed
-function showSection(section) {
-    document.querySelectorAll('[id$="Section"]').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-
-    const sectionMap = {
-        'dashboard': { title: 'Tableau de bord', breadcrumb: 'Accueil' },
-        'members': { title: 'Membres inscrits', breadcrumb: 'Membres' },
-        'stats': { title: 'Statistiques', breadcrumb: 'Stats' },
-        'settings': { title: 'Paramètres', breadcrumb: 'Paramètres' }
-    };
-
-    const info = sectionMap[section];
-    document.getElementById('pageTitle').textContent = info.title;
-    document.getElementById('currentSection').textContent = info.breadcrumb;
-    document.getElementById(`${section}Section`).style.display = 'block';
-    event.target.closest('.menu-item').classList.add('active');
-
-    // Load data if needed
-    if (section === 'members' && allMembers.length === 0) loadMembers();
-    if (section === 'stats') loadStats();
-
-    if (window.innerWidth <= 968) document.getElementById('sidebar').classList.remove('active');
-}
-
-
-// --- LISTE DES MEMBRES ---
-async function loadMembers() {
-    try {
-        document.getElementById('membersLoading').style.display = 'flex';
-        document.getElementById('membersContent').style.display = 'none';
-
-        const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (!response.ok) throw new Error('Erreur de chargement');
-        const data = await response.json();
-        allMembers = data.inscrits || [];
-
-        renderMembersTable(allMembers);
-    } catch (error) {
-        console.error('Erreur membres:', error);
-        document.getElementById('membersContent').innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Impossible de charger les membres.</p>
-            </div>`;
-    } finally {
-        document.getElementById('membersLoading').style.display = 'none';
-        document.getElementById('membersContent').style.display = 'block';
-    }
-}
-
-function renderMembersTable(members) {
-    const container = document.getElementById('membersContent');
-
-    if (members.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-user-slash"></i>
-                <p>Aucun membre trouvé</p>
-            </div>`;
-        return;
-    }
-
-    container.innerHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Email</th>
-                    <th>WhatsApp</th>
-                    <th>Classe</th>
-                    <th>Date d'inscription</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${members.map(m => `
-                    <tr>
-                        <td>${m.nom}</td>
-                        <td>${m.email}</td>
-                        <td>${m.whatsapp}</td>
-                        <td><span class="badge badge-primary">${m.classe}</span></td>
-                        <td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td>
-                    </tr>`).join('')}
-            </tbody>
-        </table>`;
-}
-
-// --- FILTRAGE DES MEMBRES ---
-function filterMembers() {
-    const search = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allMembers.filter(m =>
-        m.nom.toLowerCase().includes(search) ||
-        m.email.toLowerCase().includes(search) ||
-        m.whatsapp.toLowerCase().includes(search) ||
-        m.classe.toLowerCase().includes(search)
-    );
-    renderMembersTable(filtered);
-}
-
-// --- EXPORT CSV ---
-function exportToCSV() {
-    if (!allMembers.length) {
-        alert('Aucune donnée à exporter.');
-        return;
-    }
-
-    const header = ['Nom', 'Email', 'WhatsApp', 'Classe', 'Date'];
-    const rows = allMembers.map(m => [
-        m.nom, m.email, m.whatsapp, m.classe, new Date(m.created_at).toLocaleDateString('fr-FR')
-    ]);
-
-    const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `membres_${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-// --- DÉCONNEXION ---
-function logout() {
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('adminData');
-        window.location.href = '/admin-login.html';
-    }
-}
-
-// --- UI ---
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('active');
-}
-
-function showSection(section) {
-    document.querySelectorAll('[id$="Section"]').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-
-    const sectionMap = {
-        'dashboard': { title: 'Tableau de bord', breadcrumb: 'Accueil' },
-        'members': { title: 'Membres inscrits', breadcrumb: 'Membres' },
-        'stats': { title: 'Statistiques', breadcrumb: 'Stats' },
-        'settings': { title: 'Paramètres', breadcrumb: 'Paramètres' }
-    };
-
-    const info = sectionMap[section];
-    document.getElementById('pageTitle').textContent = info.title;
-    document.getElementById('currentSection').textContent = info.breadcrumb;
-    document.getElementById(`${section}Section`).style.display = 'block';
-    event.target.closest('.menu-item').classList.add('active');
-
-    if (section === 'members') loadMembers();
-    if (section === 'stats') loadStats();
-
-    if (window.innerWidth <= 968) document.getElementById('sidebar').classList.remove('active');
-}
-</script>
-
+    </script>
 </body>
 </html>
