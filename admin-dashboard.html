@@ -925,14 +925,13 @@
                 document.getElementById('currentSection').textContent = info.breadcrumb;
                 document.getElementById(`${section}Section`).style.display = 'block';
 
-                // Add active class to current menu item
                 const activeItem = document.querySelector(`.menu-item[data-section="${section}"]`);
                 if (activeItem) activeItem.classList.add('active');
 
-                // Load section data if needed
-                if (section === 'members' && allMembers.length === 0) {
-                    this.loadMembers();
-                }
+   if (section === 'members') {
+    this.loadMembers();
+}
+
                 if (section === 'stats') {
                     this.loadStats();
                 }
@@ -957,6 +956,8 @@
                     console.log(data)
                     allMembers = data.inscrits || [];
                     this.displayRecentMembers(allMembers);
+                    console.log(allMembers)
+                    this.renderMembersTable(allMembers);
 
                 } catch (error) {
                     console.error('Erreur:', error);
@@ -1045,8 +1046,7 @@
                 try {
                     document.getElementById('membersLoading').style.display = 'flex';
                     document.getElementById('membersContent').style.display = 'none';
-
-                    const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
+  const response = await fetch(`${API_URL}/admin/liste-inscrits`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
 

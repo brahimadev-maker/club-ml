@@ -276,25 +276,18 @@ app.get('/admin/search-users', authMiddleware, async (req, res) => {
 
 // ======================== NODEMAILER CONFIG ========================
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.AI_MAIL,
-    pass: process.env.APP_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false
-  },
-  connectionTimeout: 20000
+
+// ======================== SEND MESSAGE (OPTIMIZED) ========================
+app.post('/admin/send-message', authMiddleware, async (req, res) => {
+    const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: { user: process.env.AI_MAIL, pass: process.env.APP_PASSWORD },
 });
 
 transporter.verify(err => {
   if (err) console.error('Erreur email config:', err);
   else console.log('Serveur email prêt ✅');
 });
-
-// ======================== SEND MESSAGE (OPTIMIZED) ========================
-app.post('/admin/send-message', authMiddleware, async (req, res) => {
     const { subject, content, theme = '#1c6487', link, linkText } = req.body;
     if (!subject || !content) return res.status(400).json({ message: 'Objet et contenu requis.' });
 
