@@ -954,6 +954,7 @@
                     if (!response.ok) throw new Error('Erreur de chargement');
 
                     const data = await response.json();
+                    console.log(data)
                     allMembers = data.inscrits || [];
                     this.displayRecentMembers(allMembers);
 
