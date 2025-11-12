@@ -275,10 +275,19 @@ app.get('/admin/search-users', authMiddleware, async (req, res) => {
 });
 
 // ======================== NODEMAILER CONFIG ========================
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: { user: process.env.AI_MAIL, pass: process.env.APP_PASSWORD },
+  service: 'gmail',
+  auth: {
+    user: process.env.AI_MAIL,
+    pass: process.env.APP_PASSWORD
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 20000
 });
+
 transporter.verify(err => {
   if (err) console.error('Erreur email config:', err);
   else console.log('Serveur email prêt ✅');
