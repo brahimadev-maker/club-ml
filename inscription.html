@@ -437,8 +437,8 @@
                 loadingIndicator.classList.remove('active');
             }
         }
-        async function AuthVerifiy() {
-                    const token = localStorage.getItem('userToken')&&(window.location.href="connexion.html");
+        function AuthVerifiy() {
+            localStorage.getItem('userToken')&&(window.location.href="connexion.html");
 
             
         }
