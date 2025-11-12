@@ -982,10 +982,10 @@
             <a href="#" onclick="showPage('team')">
                 <i class="fas fa-users"></i> Bureau
             </a>
-            <a href="#"  class="btn btn-secondary" onclick="showPage('login')" id="loginBtn">
+            <a href="/connexion.html"  class="btn btn-secondary"  id="loginBtn">
                 <i class="fas fa-sign-in-alt"></i> Connexion
             </a>
-            <a href="#" class="btn btn-primary" onclick="showPage('register')" id="registerBtn">
+            <a href="/inscription.html" class="btn btn-primary" id="registerBtn">
                 <i class="fas fa-user-plus"></i> S'inscrire
             </a>
         </nav>
@@ -1001,7 +1001,7 @@
                 <h1>Bienvenue au Club Machine Learning</h1>
                 <p>Maîtrisez l'Intelligence Artificielle et le Machine Learning avec le club ML  ESATIC</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary" onclick="showPage('register')">
+                    <a href="/inscription.html" class="btn btn-primary" >
                         <i class="fas fa-rocket"></i> J'intègre le club dès maintenant !
                     </a>
                     <a href="#" class="btn btn-secondary" onclick="ScrollAnimation('programSection')">
@@ -1160,108 +1160,10 @@
             </div>
         </section>
     </div>
-<!-- Login Page -->
-<div id="loginPage" class="hidden">
-    <div class="auth-container">
-        <h2><i class="fas fa-sign-in-alt"></i> Connexion</h2>
-        <form id="loginForm" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="loginEmail" required placeholder="votre.email@esatic.ci">
-            </div>
-            <div class="form-group">
-                <label for="loginPassword"><i class="fas fa-lock"></i> Mot de passe</label>
-                <input type="password" id="loginPassword" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                <i class="fas fa-sign-in-alt"></i> Se connecter
-            </button>
-            <div class="form-footer">
-                <p>Pas encore de compte ? <a href="#" onclick="showPage('register')">S'inscrire ici</a></p>
-            </div>
-        </form>
-    </div>
-</div>
+
 
 <!-- Register Page -->
-<div id="registerPage" class="hidden">
-    <div class="auth-container">
-        <h2><i class="fas fa-user-plus"></i> Inscription</h2>
-        <form id="registerForm" onsubmit="handleRegister(event)">
-            <div class="form-group">
-                <label for="regName"><i class="fas fa-user"></i> Nom complet</label>
-                <input type="text" id="regName" required placeholder="Prénom Nom">
-            </div>
-            <div class="form-group">
-    <label for="regWhatsapp"><i class="fab fa-whatsapp"></i> Numéro WhatsApp</label>
-    <input type="tel" id="regWhatsapp" required placeholder="07 12 34 56 78" pattern="(\+225|225)?\s?(0[1|5|7])\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}">
-    <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.3rem;">
-        Format:10 chiffres
-    </small>
-</div>
-            <div class="form-group">
-                <label for="regEmail"><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="regEmail" required placeholder="jean@gmail.com">
-            </div>
-            <div class="form-group">
-                <label for="regClass"><i class="fas fa-graduation-cap"></i> Classe</label>
-                <select id="regClass" required style="width: 100%; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
-                    <option value="">Sélectionnez votre classe</option>
-                      <option value="ENTD1">ENTD1</option>
-                        <option value="ENTD2">ENTD2</option>
-                          <option value="ENTD3">ENTD3</option>
-                                <option value="TWIN1">TWIN 1</option>
-                                      <option value="TWIN2">TWIN 2</option>
-                                            <option value="TWIN3">TWIN 3</option>
-                          
-  <option value="SRIT1">SRIT1</option>
-    <option value="SRIT2">SRIT2</option>
 
-                    <option value="SRIT3">SRIT3</option>
-                                              
-  <option value="MP2I">MP2I</option>
-    <option value="MPI">MPI</option>
-    <option value="CSIA2">CSIA2</option>
-
-                    <option value="CSIA3">CSIA3</option>
-                          <option value="M1 ERIS">M1 ERIS</option>
-                                <option value="M2 ERIS">M2 ERIS</option>
-
-                    <option value="SIGL2">SIGL2</option>
-                    <option value="SIGL3">SIGL3</option>
-                    <option value="RTEL2">RTEL2</option>
-                    <option value="RTEL3">RTEL3</option>
-                       <option value="DASI"> DASI </option>
-          <option value="ING1">ING 1</option>
-                      <option value="ING2">ING 2</option>
-                    <option value="M1 CSIA">M1 CSIA</option>
-                    <option value="M1 BIHAR">M1 BIHAR</option>
-                    <option value="M1 SIGL">M1 SIGL</option>
-                        <option value="M1 RTEL">M1 RTEL</option>
-                         <option value="M1 MBDS">M1 MBDS</option>
-                $
-                       <option value="M2 CSIA">M2 CSIA</option>
-                    <option value="M2 BIHAR">M2 BIHAR</option>
-                    <option value="M2 SIGL">M2 SIGL</option>
-                      <option value="M2 RTEL">M2 RTEL</option>
-                      
-                              <option value="M2 MBDS">M2 MBDS</option>
-
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="regPassword"><i class="fas fa-lock"></i> Mot de passe</label>
-                <input type="password" id="regPassword" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                <i class="fas fa-rocket"></i> Créer mon compte
-            </button>
-            <div class="form-footer">
-                <p>Déjà inscrit ? <a href="#" onclick="showPage('login')">Se connecter</a></p>
-            </div>
-        </form>
-    </div>
-</div>
     <!-- Team Page -->
     <div id="teamPage" >
         <div class="container">
