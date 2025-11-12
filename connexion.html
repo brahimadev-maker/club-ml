@@ -281,8 +281,9 @@
                 alert(result.message || 'Inscription réussie ! Bienvenue au Club ML.');
                 
                 // Redirection vers la page d'accueil
+                localStorage.setItem('userToken', result.token);
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'parcour.html';
                 }, 1500);
 
             } catch (error) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Parcours - Club ML ESATIC</title>
+    <title>Mon Parcours ML - Club ESATIC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -27,16 +27,16 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding-top: 80px;
+            padding-top: 70px;
         }
 
         .container {
-            max-width: 850px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 1rem;
         }
 
-        /* Navbar */
+        /* Navbar compacte */
         .navbar {
             position: fixed;
             top: 0;
@@ -44,8 +44,8 @@
             right: 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 0.7rem 1.5rem;
             z-index: 1000;
         }
 
@@ -60,14 +60,15 @@
         .navbar-brand {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1.3rem;
+            gap: 0.6rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: var(--dark);
+            cursor: pointer;
         }
 
         .navbar-brand i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -76,20 +77,21 @@
         .navbar-menu {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
+            gap: 0.4rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--gray);
             font-weight: 500;
             text-decoration: none;
+            font-size: 0.9rem;
         }
 
         .nav-item:hover {
@@ -102,8 +104,8 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
@@ -113,21 +115,21 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .user-avatar:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .dropdown-menu {
             position: absolute;
-            top: 55px;
+            top: 50px;
             right: 0;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            min-width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            min-width: 200px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
@@ -140,215 +142,168 @@
             transform: translateY(0);
         }
 
-        .dropdown-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .dropdown-header .user-name {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.3rem;
-        }
-
-        .dropdown-header .user-email {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-
         .dropdown-item {
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 1rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--dark);
+            font-size: 0.9rem;
         }
 
         .dropdown-item:hover {
             background: var(--gray-light);
         }
 
-        .dropdown-item i {
-            width: 20px;
-            color: var(--gray);
-        }
-
-        .dropdown-divider {
-            height: 1px;
-            background: var(--gray-light);
-            margin: 0.5rem 0;
-        }
-
         .dropdown-item.danger {
             color: #dc3545;
         }
 
-        .dropdown-item.danger:hover {
-            background: rgba(220, 53, 69, 0.1);
-        }
-
-        /* Welcome Screen */
+        /* Welcome Screen optimisée */
         .welcome-screen {
             background: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             text-align: center;
             animation: fadeIn 0.8s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .welcome-icon {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             background: linear-gradient(135deg, var(--primary), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .welcome-screen h1 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: var(--dark);
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.6rem;
         }
 
         .user-greeting {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--gray);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .welcome-description {
             color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
         }
 
+        /* Cards compactes */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin: 1.2rem 0;
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(28, 100, 135, 0.1), rgba(51, 122, 183, 0.1));
-            padding: 1.2rem;
-            border-radius: 10px;
-            border: 2px solid rgba(28, 100, 135, 0.2);
+            background: linear-gradient(135deg, rgba(28, 100, 135, 0.08), rgba(51, 122, 183, 0.08));
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid rgba(28, 100, 135, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
 
         .feature-card i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
         .feature-card h3 {
             color: var(--dark);
-            font-size: 0.95rem;
-            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
         }
 
         .feature-card p {
             color: var(--gray);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
-        /* Quiz Container */
+        /* Quiz Container compacte */
         .quiz-container {
             background: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             animation: fadeIn 0.6s ease;
             display: none;
         }
 
         .quiz-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .quiz-header h1 {
             color: var(--dark);
-            font-size: 1.6rem;
-            margin-bottom: 0.6rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
         }
 
         .quiz-header p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* Progress Bar */
         .progress-container {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .progress-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.6rem;
-            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
             color: var(--gray);
             font-weight: 600;
         }
 
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: var(--gray-light);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea, #764ba2);
             transition: width 0.5s ease;
-            border-radius: 10px;
-            position: relative;
+            border-radius: 8px;
         }
 
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Question */
+        /* Question compacte */
         .question-container {
             animation: slideIn 0.5s ease;
-            min-height: 250px;
+            min-height: 200px;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(50px); }
+            from { opacity: 0; transform: translateX(30px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
@@ -356,86 +311,67 @@
             display: inline-block;
             background: linear-gradient(135deg, var(--primary), var(--blue));
             color: var(--white);
-            padding: 0.4rem 0.9rem;
-            border-radius: 18px;
-            font-size: 0.8rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .question-title {
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             color: var(--dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             font-weight: 600;
             line-height: 1.4;
         }
 
-        /* Options */
+        /* Options compactes */
         .options {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.6rem;
         }
 
         .option {
-            padding: 1.2rem;
+            padding: 0.9rem;
             border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: var(--white);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .option::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            transition: width 0.3s ease;
+            gap: 0.7rem;
         }
 
         .option:hover {
             border-color: #667eea;
             background: rgba(102, 126, 234, 0.05);
-            transform: translateX(8px);
-        }
-
-        .option:hover::before {
-            width: 100%;
+            transform: translateX(5px);
         }
 
         .option.selected {
             border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.25);
         }
 
         .option-icon {
-            width: 28px;
-            height: 28px;
-            border: 3px solid var(--gray);
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             transition: all 0.3s ease;
-            z-index: 1;
         }
 
         .option.selected .option-icon {
             border-color: #667eea;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            transform: scale(1.1);
         }
 
         .option.selected .option-icon::after {
@@ -443,35 +379,34 @@
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             color: var(--white);
-            font-size: 0.9rem;
+            font-size: 0.75rem;
         }
 
         .option-text {
             color: var(--dark);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 500;
-            z-index: 1;
         }
 
-        /* Buttons */
+        /* Buttons compacts */
         .quiz-actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 2rem;
-            gap: 0.8rem;
+            margin-top: 1.5rem;
+            gap: 0.6rem;
         }
 
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 0.7rem 1.5rem;
             border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .btn-secondary {
@@ -489,34 +424,33 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: var(--white);
             flex: 1;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .btn-primary:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(102, 126, 234, 0.4);
         }
 
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none !important;
         }
 
         .btn-start {
             background: linear-gradient(135deg, var(--secondary), #e65a2b);
             color: var(--white);
-            padding: 1rem 2.5rem;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            padding: 0.9rem 2rem;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
         }
 
         .btn-start:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+            box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
         }
 
-        /* Result Container */
+        /* Result Container compacte */
         .result-container {
             text-align: center;
             animation: fadeIn 0.8s ease;
@@ -524,61 +458,60 @@
         }
 
         .result-animation {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
         }
 
         .result-title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             font-weight: bold;
         }
 
         .result-description {
             color: var(--gray);
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.88rem;
         }
 
         .recommended-module {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: var(--white);
-            padding: 2rem;
-            border-radius: 14px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
 
         .recommended-module h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
         }
 
         .module-badge {
             display: inline-block;
             background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
         }
 
         .module-content {
             text-align: left;
             background: rgba(255,255,255,0.15);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 1.2rem;
-            backdrop-filter: blur(10px);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
         }
 
         .module-content h4 {
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
         }
 
         .module-content ul {
@@ -587,11 +520,11 @@
         }
 
         .module-content li {
-            padding: 0.5rem 0;
-            padding-left: 1.8rem;
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
             position: relative;
-            line-height: 1.5;
-            font-size: 0.9rem;
+            line-height: 1.4;
+            font-size: 0.85rem;
         }
 
         .module-content li::before {
@@ -601,78 +534,116 @@
             position: absolute;
             left: 0;
             color: var(--secondary);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
+        /* 🥚 EASTER EGG STYLES */
+        .konami-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .konami-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 600px;
+        }
+
+        .konami-robot {
+            font-size: 8rem;
+            animation: bounce 1s infinite, rotate 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .konami-title {
+            font-size: 2rem;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, #667eea, #ff6b35, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .konami-message {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .konami-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .close-konami {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-konami:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0.8rem 1rem;
-            }
-
-            .navbar-brand {
-                font-size: 1.1rem;
-            }
-
-            .navbar-brand i {
-                font-size: 1.5rem;
-            }
-
-            .nav-item span {
-                display: none;
-            }
-
-            .navbar-menu {
-                gap: 0.8rem;
-            }
-
-            body {
-                padding-top: 70px;
-            }
-
-            .container {
-                padding: 0.5rem;
-            }
-
-            .welcome-screen,
-            .quiz-container {
-                padding: 1.5rem;
-            }
-
-            .welcome-screen h1 {
-                font-size: 1.6rem;
-            }
-
-            .quiz-header h1 {
-                font-size: 1.4rem;
-            }
-
-            .question-title {
-                font-size: 1.1rem;
-            }
-
-            .quiz-actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .result-title {
-                font-size: 1.6rem;
-            }
+            .nav-item span { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .konami-robot { font-size: 5rem; }
+            .konami-title { font-size: 1.5rem; }
+            .konami-stats { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -680,7 +651,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-content">
-            <div class="navbar-brand">
+            <div class="navbar-brand" onclick="triggerEasterEgg()">
                 <i class="fas fa-brain"></i>
                 <span>Club ML</span>
             </div>
@@ -695,28 +666,19 @@
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-chart-line"></i>
-                    <span>Progression</span>
+                    <span>Stats</span>
                 </a>
                 <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()">JD</div>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <div class="dropdown-header">
-                            <div class="user-name" id="dropdownName">John Doe</div>
-                            <div class="user-email" id="dropdownEmail">john.doe@example.com</div>
-                        </div>
-                        <div class="dropdown-item" onclick="showProfile()">
+                        <div class="dropdown-item" onclick="alert('Profil')">
                             <i class="fas fa-user"></i>
                             <span>Mon Profil</span>
                         </div>
-                        <div class="dropdown-item" onclick="showSettings()">
+                        <div class="dropdown-item" onclick="alert('Paramètres')">
                             <i class="fas fa-cog"></i>
                             <span>Paramètres</span>
                         </div>
-                        <div class="dropdown-item" onclick="showProgress()">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Ma Progression</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
                         <div class="dropdown-item danger" onclick="logout()">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Déconnexion</span>
@@ -738,32 +700,30 @@
                 Bonjour, <strong id="userName">Membre</strong> ! <i class="fas fa-hand-paper"></i>
             </div>
             <p class="welcome-description">
-                Nous sommes ravis de vous accompagner dans votre apprentissage du Machine Learning. 
-                Pour personnaliser votre expérience et vous proposer le module le plus adapté à votre profil, 
-                nous vous invitons à répondre à quelques questions.
+                Personnalisez votre expérience et découvrez le module parfait pour votre profil.
             </p>
 
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-graduation-cap"></i>
-                    <h3>Parcours Personnalisé</h3>
-                    <p>Un module adapté à votre niveau</p>
+                    <h3>Parcours Adapté</h3>
+                    <p>Module à votre niveau</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-chart-line"></i>
-                    <h3>Progression Claire</h3>
-                    <p>Suivez votre évolution</p>
+                    <h3>Suivi Progression</h3>
+                    <p>Évolution en temps réel</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-project-diagram"></i>
                     <h3>Projets Pratiques</h3>
-                    <p>Apprenez en créant</p>
+                    <p>Apprendre en créant</p>
                 </div>
             </div>
 
             <button class="btn btn-start" id="startQuizBtn">
                 <i class="fas fa-rocket"></i>
-                Commencer le quiz d'orientation
+                Commencer le quiz
             </button>
         </div>
 
@@ -771,12 +731,12 @@
         <div class="quiz-container" id="quizContainer">
             <div class="quiz-header">
                 <h1><i class="fas fa-compass"></i> Quiz d'Orientation ML</h1>
-                <p>Répondez aux questions pour découvrir votre module idéal</p>
+                <p>Découvrez votre module idéal</p>
             </div>
 
             <div class="progress-container">
                 <div class="progress-info">
-                    <span><i class="fas fa-tasks"></i> Question <span id="currentQ">1</span> sur <span id="totalQ">10</span></span>
+                    <span>Question <span id="currentQ">1</span>/<span id="totalQ">10</span></span>
                     <span id="progressPercent">10%</span>
                 </div>
                 <div class="progress-bar">
@@ -800,171 +760,219 @@
         <div class="quiz-container result-container" id="resultContainer"></div>
     </div>
 
+    <!-- 🥚 EASTER EGG OVERLAY -->
+    <div class="konami-overlay" id="konamiOverlay">
+        <div class="konami-content">
+            <div class="konami-robot">🤖</div>
+            <h1 class="konami-title">🎉 CODE KONAMI ACTIVÉ ! 🎉</h1>
+            <p class="konami-message">
+                Bravo ! Vous avez découvert l'Easter Egg secret du Club ML ! 🥚✨<br>
+                <strong>Les vrais dev savent toujours où chercher...</strong>
+            </p>
+            
+            <div class="konami-stats">
+                <div class="stat-box">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">Motivation</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Curiosité</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">🔥</div>
+                    <div class="stat-label">Passion ML</div>
+                </div>
+            </div>
 
+            <p class="konami-message">
+                <em>"Dans le code comme dans la vie, il faut savoir chercher les trésors cachés."</em><br>
+                - Un dev anonyme qui a oublié de commit
+            </p>
+
+            <button class="close-konami" onclick="closeEasterEgg()">
+                <i class="fas fa-times-circle"></i> Fermer (et ne rien dire aux autres 😉)
+            </button>
+        </div>
+    </div>
 
     <script>
-        const questions = [
-            {
-                question: "Quel est votre niveau actuel en programmation Python ?",
-                options: [
-                    { text: "🆕 Débutant - Je découvre la programmation", modules: { 0: 3, 1: 1 } },
-                    { text: "📚 Intermédiaire - Je connais les bases de Python", modules: { 0: 2, 1: 3, 2: 1 } },
-                    { text: "💪 Avancé - Je maîtrise bien Python et ses concepts", modules: { 1: 2, 2: 3, 3: 2 } },
-                    { text: "🚀 Expert - Je code régulièrement en Python", modules: { 2: 2, 3: 3, 4: 2 } }
-                ]
-            },
-            {
-                question: "Avez-vous déjà utilisé des bibliothèques de Data Science (NumPy, Pandas) ?",
-                options: [
-                    { text: "❌ Non, jamais utilisé", modules: { 0: 3, 1: 1 } },
-                    { text: "👂 J'en ai entendu parler seulement", modules: { 0: 2, 1: 2 } },
-                    { text: "✅ Oui, j'ai fait quelques tutoriels", modules: { 1: 3, 2: 2 } },
-                    { text: "⭐ Oui, je les utilise régulièrement", modules: { 2: 3, 3: 2, 4: 1 } }
-                ]
-            },
-            {
-                question: "Que souhaitez-vous apprendre en priorité ?",
-                options: [
-                    { text: "🎯 Les bases de l'IA et du Machine Learning", modules: { 0: 4, 1: 1 } },
-                    { text: "📊 Créer des modèles de prédiction", modules: { 1: 4, 2: 1 } },
-                    { text: "🎨 Systèmes de recommandation et clustering", modules: { 2: 4, 3: 1 } },
-                    { text: "💬 Traitement du langage et chatbots", modules: { 3: 4, 4: 1 } }
-                ]
-            },
-            {
-                question: "Connaissez-vous des algorithmes de Machine Learning ?",
-                options: [
-                    { text: "❌ Non, pas du tout", modules: { 0: 3 } },
-                    { text: "👂 J'en ai entendu parler (KNN, Random Forest...)", modules: { 0: 2, 1: 2 } },
-                    { text: "📖 Je connais la théorie de base", modules: { 1: 3, 2: 2 } },
-                    { text: "💡 Je les ai déjà implémentés", modules: { 2: 2, 3: 3, 4: 2 } }
-                ]
-            },
-            {
-                question: "Avez-vous déjà travaillé sur un projet de Data Science ?",
-                options: [
-                    { text: "❌ Non, jamais", modules: { 0: 3, 1: 1 } },
-                    { text: "📚 Quelques tutoriels en ligne", modules: { 0: 2, 1: 2 } },
-                    { text: "🎓 Oui, des projets académiques", modules: { 1: 2, 2: 3, 3: 1 } },
-                    { text: "💼 Oui, des projets professionnels ou personnels aboutis", modules: { 3: 3, 4: 3 } }
-                ]
-            },
-            {
-                question: "Quel est votre objectif principal avec le Machine Learning ?",
-                options: [
-                    { text: "🤔 Comprendre comment fonctionne l'IA", modules: { 0: 4 } },
-                    { text: "🛠️ Créer mes premiers modèles ML", modules: { 1: 4, 2: 1 } },
-                    { text: "🚀 Développer des applications d'IA complètes", modules: { 2: 2, 3: 4 } },
-                    { text: "☁️ Déployer des modèles en production", modules: { 4: 4 } }
-                ]
-            },
-            {
-                question: "Combien de temps pouvez-vous consacrer par semaine à l'apprentissage ?",
-                options: [
-                    { text: "⏰ 2-4 heures - Apprentissage progressif", modules: { 0: 3, 1: 1 } },
-                    { text: "📅 5-8 heures - Rythme régulier", modules: { 1: 3, 2: 2 } },
-                    { text: "💪 9-12 heures - Engagement sérieux", modules: { 2: 2, 3: 3 } },
-                    { text: "🔥 Plus de 12 heures - Mode intensif", modules: { 3: 2, 4: 3 } }
-                ]
-            },
-            {
-                question: "Connaissez-vous les concepts de Supervised et Unsupervised Learning ?",
-                options: [
-                    { text: "❌ Non, je ne sais pas ce que c'est", modules: { 0: 3 } },
-                    { text: "🤷 J'ai une vague idée", modules: { 0: 2, 1: 2 } },
-                    { text: "✅ Oui, je comprends la différence", modules: { 1: 2, 2: 3 } },
-                    { text: "⭐ Oui, je les ai déjà appliqués dans des projets", modules: { 2: 2, 3: 3, 4: 2 } }
-                ]
-            },
-            {
-                question: "Quel est votre niveau en mathématiques (algèbre, statistiques) ?",
-                options: [
-                    { text: "📖 Niveau lycée", modules: { 0: 3, 1: 1 } },
-                    { text: "🎓 Niveau licence (Bac+1 à Bac+3)", modules: { 0: 1, 1: 3, 2: 1 } },
-                    { text: "📊 Bonnes connaissances en stats et algèbre", modules: { 1: 1, 2: 3, 3: 2 } },
-                    { text: "🧮 Très bonnes connaissances mathématiques", modules: { 2: 2, 3: 3, 4: 2 } }
-                ]
-            },
-            {
-                question: "Quel style d'apprentissage préférez-vous ?",
-                options: [
-                    { text: "📚 Théorie d'abord, puis pratique", modules: { 0: 3, 1: 2 } },
-                    { text: "⚖️ Équilibre entre théorie et pratique", modules: { 1: 3, 2: 3 } },
-                    { text: "🛠️ Beaucoup de projets pratiques", modules: { 2: 2, 3: 3 } },
-                    { text: "🧩 Résoudre des problèmes complexes et challenges", modules: { 3: 3, 4: 3 } }
-                ]
+      
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let clickCount = 0;
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                showEasterEgg();
             }
-        ];
+        });
+
+        // Alternative: Triple-click sur le logo
+        function triggerEasterEgg() {
+            clickCount++;
+            if (clickCount === 5) {
+                showEasterEgg();
+                clickCount = 0;
+            }
+            setTimeout(() => clickCount = 0, 2000);
+        }
+
+        function showEasterEgg() {
+            document.getElementById('konamiOverlay').style.display = 'flex';
+            confetti();
+        }
+
+        function closeEasterEgg() {
+            document.getElementById('konamiOverlay').style.display = 'none';
+        }
+
+        function confetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const emoji = ['🎉', '🎊', '✨', '🌟', '💫', '🤖', '🧠'][Math.floor(Math.random() * 7)];
+                    const span = document.createElement('span');
+                    span.textContent = emoji;
+                    span.style.position = 'fixed';
+                    span.style.fontSize = '2rem';
+                    span.style.left = Math.random() * 100 + '%';
+                    span.style.top = '-50px';
+                    span.style.zIndex = '10000';
+                    span.style.pointerEvents = 'none';
+                    document.body.appendChild(span);
+                    
+                    let top = -50;
+                    const interval = setInterval(() => {
+                        top += 5;
+                        span.style.top = top + 'px';
+                        span.style.transform = `rotate(${top * 2}deg)`;
+                        if (top > window.innerHeight) {
+                            clearInterval(interval);
+                            span.remove();
+                        }
+                    }, 50);
+                }, i * 100);
+            }
+        }
+
+
+// Questions du quiz
+const questions = [
+    {
+        question: "Quel est votre niveau en Python ?",
+        options: [
+            { text: '<i class="fa-solid fa-seedling"></i> Débutant - Je découvre', modules: { 0: 3, 1: 1 } },
+            { text: '<i class="fa-solid fa-book"></i> Intermédiaire - Je connais les bases', modules: { 0: 2, 1: 3, 2: 1 } },
+            { text: '<i class="fa-solid fa-dumbbell"></i> Avancé - Je maîtrise bien Python', modules: { 1: 2, 2: 3, 3: 2 } },
+            { text: '<i class="fa-solid fa-rocket"></i> Expert - Je code régulièrement', modules: { 2: 2, 3: 3, 4: 2 } }
+        ]
+    },
+    {
+        question: "Connaissez-vous NumPy et Pandas ?",
+        options: [
+            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais utilisé', modules: { 0: 3, 1: 1 } },
+            { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
+            { text: '<i class="fa-solid fa-check"></i> Oui, j\'ai fait des tutoriels', modules: { 1: 3, 2: 2 } },
+            { text: '<i class="fa-solid fa-star"></i> Oui, je les utilise souvent', modules: { 2: 3, 3: 2, 4: 1 } }
+        ]
+    },
+    {
+        question: "Que souhaitez-vous apprendre ?",
+        options: [
+            { text: '<i class="fa-solid fa-bullseye"></i> Les bases du ML', modules: { 0: 4, 1: 1 } },
+            { text: '<i class="fa-solid fa-chart-column"></i> Créer des modèles de prédiction', modules: { 1: 4, 2: 1 } },
+            { text: '<i class="fa-solid fa-palette"></i> Systèmes de recommandation', modules: { 2: 4, 3: 1 } },
+            { text: '<i class="fa-solid fa-comment-dots"></i> NLP et chatbots', modules: { 3: 4, 4: 1 } }
+        ]
+    },
+    {
+        question: "Connaissez-vous des algos ML ?",
+        options: [
+            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, pas du tout', modules: { 0: 3 } },
+            { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
+            { text: '<i class="fa-solid fa-book-open"></i> Je connais la théorie', modules: { 1: 3, 2: 2 } },
+            { text: '<i class="fa-solid fa-lightbulb"></i> Je les ai déjà codés', modules: { 2: 2, 3: 3, 4: 2 } }
+        ]
+    },
+    {
+        question: "Avez-vous fait des projets Data Science ?",
+        options: [
+            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais', modules: { 0: 3, 1: 1 } },
+            { text: '<i class="fa-solid fa-book"></i> Quelques tutoriels', modules: { 0: 2, 1: 2 } },
+            { text: '<i class="fa-solid fa-graduation-cap"></i> Projets académiques', modules: { 1: 2, 2: 3, 3: 1 } },
+            { text: '<i class="fa-solid fa-briefcase"></i> Projets pros/persos', modules: { 3: 3, 4: 3 } }
+        ]
+    }
+];
+
 
         const modules = [
             {
                 id: 0,
-                title: "Module 0 : Fondamentaux & Introduction au ML",
+                title: "Module 0 : Fondamentaux ML",
                 badge: "DÉBUTANT",
-                description: "Le point de départ idéal pour découvrir le Machine Learning et acquérir les bases essentielles.",
+                description: "Point de départ idéal pour découvrir le Machine Learning.",
                 topics: [
-                    "Histoire et applications de l'Intelligence Artificielle",
-                    "Concepts fondamentaux du Machine Learning",
-                    "Python pour le ML : syntaxe et bonnes pratiques",
-                    "Introduction à NumPy et Pandas",
-                    "Manipulation et visualisation de données",
-                    "Premiers algorithmes simples"
+                    "Histoire et applications de l'IA",
+                    "Concepts fondamentaux du ML",
+                    "Python pour le ML",
+                    "NumPy et Pandas",
+                    "Visualisation de données"
                 ]
             },
             {
                 id: 1,
                 title: "Module 1 : Apprentissage Supervisé",
                 badge: "INTERMÉDIAIRE",
-                description: "Maîtrisez les algorithmes de prédiction et classification pour résoudre des problèmes concrets.",
+                description: "Maîtrisez les algorithmes de prédiction et classification.",
                 topics: [
                     "Régression Linéaire et Logistique",
-                    "K-Nearest Neighbors (KNN)",
-                    "Support Vector Machines (SVM)",
-                    "Arbres de décision et Random Forest",
-                    "Évaluation de modèles (accuracy, précision, recall)",
-                    "Projets : Prédiction de prix, classification d'images"
+                    "K-Nearest Neighbors",
+                    "Support Vector Machines",
+                    "Random Forest",
+                    "Évaluation de modèles"
                 ]
             },
             {
                 id: 2,
                 title: "Module 2 : Apprentissage Non Supervisé",
                 badge: "INTERMÉDIAIRE+",
-                description: "Découvrez le clustering, la réduction de dimensionnalité et les systèmes de recommandation.",
+                description: "Clustering, PCA et systèmes de recommandation.",
                 topics: [
-                    "K-Means et algorithmes de clustering",
-                    "Clustering Hiérarchique",
-                    "Principal Component Analysis (PCA)",
-                    "Systèmes de recommandation collaboratifs",
+                    "K-Means et clustering",
+                    "PCA et réduction dimensionnalité",
+                    "Systèmes de recommandation",
                     "Détection d'anomalies",
-                    "Projets : Segmentation clients, moteur de recommandation"
+                    "Projets pratiques"
                 ]
             },
             {
                 id: 3,
                 title: "Module 3 : NLP & Deep Learning",
                 badge: "AVANCÉ",
-                description: "Plongez dans le traitement du langage naturel et créez des applications d'IA innovantes.",
+                description: "Traitement du langage et réseaux de neurones.",
                 topics: [
-                    "Natural Language Processing (NLP)",
-                    "Tokenization, Embeddings et Word2Vec",
+                    "Natural Language Processing",
+                    "Word Embeddings",
                     "Analyse de sentiments",
-                    "Création de chatbots intelligents",
-                    "Introduction aux réseaux de neurones",
-                    "4 projets d'IA complets de bout en bout"
+                    "Chatbots intelligents",
+                    "Réseaux de neurones"
                 ]
             },
             {
                 id: 4,
                 title: "Module 4 : MLOps & Déploiement",
                 badge: "EXPERT",
-                description: "Apprenez à déployer vos modèles en production et à les maintenir efficacement.",
+                description: "Déployez vos modèles en production.",
                 topics: [
-                    "Création d'APIs REST avec FastAPI",
-                    "Conteneurisation avec Docker",
-                    "Déploiement Cloud (AWS, Heroku, GCP)",
-                    "CI/CD pour le Machine Learning",
-                    "Monitoring et maintenance de modèles",
-                    "MLOps et bonnes pratiques en production"
+                    "APIs REST avec FastAPI",
+                    "Docker et conteneurisation",
+                    "Déploiement Cloud",
+                    "CI/CD pour ML",
+                    "Monitoring et maintenance"
                 ]
             }
         ];
@@ -972,24 +980,62 @@
         let currentQuestion = 0;
         let answers = [];
         let selectedOption = null;
-        let userData = {};
+        let userData = {id:-1, nom: "Membre", email: "membre@esatic.edu.ci" };
 
-        // Initialize app
-        function init() {
-            checkAuth();
-            attachEventListeners();
+        // API Configuration
+        const API_URL = 'http://localhost:3000'; // Remplacer par votre URL d'API
+        const token = localStorage.getItem('userToken');
+   
+      
+  
+async function loadUserInfo() {
+    if (!token) return;
+
+    try {
+        // Décoder la partie payload du JWT
+        const base64Payload = token.split('.')[1];
+        const payload = JSON.parse(atob(base64Payload));
+        userData=payload
+           if (payload.quiz){
+            document.getElementById('startQuizBtn').style.display='none'
+
         }
 
-        function checkAuth() {
-  
+
+
+
+
+        document.getElementById('userName').textContent = payload.nom;
+        document.getElementById('userAvatar').textContent = payload.nom? payload.nom.substring(0, 2).toUpperCase()
+            : '?';
+           
+         
+    } catch (error) {
+       
+    }
+}
+
+        function init() {
+            loadUserInfo();
+            attachEventListeners();
         }
 
         function attachEventListeners() {
             document.getElementById('startQuizBtn').addEventListener('click', startQuiz);
             document.getElementById('prevBtn').addEventListener('click', previousQuestion);
             document.getElementById('nextBtn').addEventListener('click', nextQuestion);
-            document.getElementById('logoutBtn').addEventListener('click', logout);
         }
+
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').classList.toggle('active');
+        }
+
+        // Fermer dropdown en cliquant ailleurs
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.user-profile')) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
 
         function startQuiz() {
             document.getElementById('welcomeScreen').style.display = 'none';
@@ -1016,7 +1062,6 @@
                 </div>
             `;
 
-            // Restore previous selection if exists
             if (answers[currentQuestion] !== undefined) {
                 selectedOption = answers[currentQuestion].option;
                 const options = document.querySelectorAll('.option');
@@ -1042,7 +1087,6 @@
         function nextQuestion() {
             if (selectedOption === null) return;
 
-            // Save answer with weighted modules
             answers[currentQuestion] = {
                 question: currentQuestion,
                 option: selectedOption,
@@ -1078,7 +1122,7 @@
             document.getElementById('nextBtn').disabled = selectedOption === null;
             
             if (currentQuestion === questions.length - 1 && selectedOption !== null) {
-                document.getElementById('nextBtn').innerHTML = 'Voir mes résultats <i class="fas fa-check-circle"></i>';
+                document.getElementById('nextBtn').innerHTML = 'Voir résultats <i class="fas fa-check-circle"></i>';
             } else {
                 document.getElementById('nextBtn').innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
             }
@@ -1087,15 +1131,13 @@
         function calculateRecommendation() {
             const moduleScores = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 };
             
-            // Calculate weighted scores
             answers.forEach(answer => {
-                const modules = answer.modules;
-                for (const [moduleId, weight] of Object.entries(modules)) {
+                const mods = answer.modules;
+                for (const [moduleId, weight] of Object.entries(mods)) {
                     moduleScores[moduleId] += weight;
                 }
             });
 
-            // Find module with highest score
             let maxScore = 0;
             let recommendedModule = 0;
 
@@ -1110,21 +1152,23 @@
         }
 
         function showResults() {
+       
+
             const recommendedModuleId = calculateRecommendation();
             const module = modules[recommendedModuleId];
             
             document.getElementById('quizContainer').style.display = 'none';
             const resultContainer = document.getElementById('resultContainer');
             resultContainer.style.display = 'block';
+
+                 UpdateQuizStatus(module.badge,true,userData.id,token)
+               
             
             resultContainer.innerHTML = `
-                <div class="result-animation">
-                    🎉
-                </div>
-                <h2 class="result-title">Votre module idéal est prêt !</h2>
+                <div class="result-animation">🎉</div>
+                <h2 class="result-title">Votre module idéal !</h2>
                 <p class="result-description">
-                    Basé sur vos réponses et votre profil, nous avons identifié le module parfait pour démarrer 
-                    ou continuer votre apprentissage du Machine Learning.
+                    Basé sur vos réponses, voici le module parfait pour vous.
                 </p>
 
                 <div class="recommended-module">
@@ -1132,55 +1176,94 @@
                         <i class="fas fa-award"></i> ${module.badge}
                     </div>
                     <h3>${module.title}</h3>
-                    <p style="margin-bottom: 0; font-size: 1.05rem; opacity: 0.95;">${module.description}</p>
+                    <p style="margin-bottom: 0; font-size: 0.95rem; opacity: 0.95;">${module.description}</p>
                     
                     <div class="module-content">
-                        <h4><i class="fas fa-book-open"></i> Ce que vous allez apprendre :</h4>
+                        <h4><i class="fas fa-book-open"></i> Programme :</h4>
                         <ul>
                             ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
                         </ul>
                     </div>
                 </div>
 
-                <div class="action-buttons">
-                    <button class="btn btn-primary btn-start" onclick="startModule(${recommendedModuleId})">
-                        <i class="fas fa-play-circle"></i> Commencer ce module
+                <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-start" onclick="startModule(${recommendedModuleId})">
+                        <i class="fas fa-play-circle"></i> Commencer
                     </button>
-                    <button class="btn btn-secondary" onclick="location.reload()" style="padding: 1.2rem 2rem;">
-                        <i class="fas fa-redo"></i> Refaire le quiz
+                    <button class="btn btn-secondary" onclick="location.reload()" style="padding: 0.9rem 1.5rem;">
+                        <i class="fas fa-redo"></i> Refaire
                     </button>
                 </div>
 
-                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(102, 126, 234, 0.1); border-radius: 12px; border-left: 4px solid #667eea;">
-                    <p style="margin: 0; color: var(--dark); line-height: 1.6;">
+                <div style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(102, 126, 234, 0.1); border-radius: 10px; border-left: 4px solid #667eea;">
+                    <p style="margin: 0; color: var(--dark); line-height: 1.5; font-size: 0.85rem;">
                         <i class="fas fa-info-circle" style="color: #667eea;"></i>
-                        <strong>Bon à savoir :</strong> Vous pourrez toujours accéder aux autres modules depuis votre dashboard. 
-                        Cette recommandation est simplement un point de départ optimal pour votre profil.
+                        <strong>Info :</strong> Vous pourrez accéder aux autres modules depuis votre dashboard.
                     </p>
                 </div>
             `;
         }
 
+
+
+
         function startModule(moduleId) {
-            alert(`Démarrage du Module ${moduleId} !\n\nVous allez être redirigé vers l'espace d'apprentissage.`);
-            // TODO: Redirect to module learning page
-            // window.location.href = `/modules/${moduleId}/learn`;
+            alert(`🚀 Module ${moduleId} activé !\n\nRedirection vers l'espace d'apprentissage...`);
+        
         }
 
         function logout() {
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+            if (confirm('Se déconnecter ?')) {
                 localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                window.location.href = '/login.html';
+                window.location.href = '/connexion.html';
             }
         }
 
-        // Make functions global
+        // Rendre les fonctions globales
         window.selectOption = selectOption;
         window.startModule = startModule;
+        window.toggleDropdown = toggleDropdown;
+        window.triggerEasterEgg = triggerEasterEgg;
+        window.closeEasterEgg = closeEasterEgg;
+        window.logout = logout;
 
-        // Initialize when DOM is ready
+        // Initialiser au chargement
         window.addEventListener('DOMContentLoaded', init);
+
+async function UpdateQuizStatus(level, quiz, id, token) {
+  try {
+    const response = await fetch(`${API_URL}/user/update/${id}`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // ✅ Nécessaire
+      },
+      body: JSON.stringify({ level, quiz })
+    });
+
+    const text = await response.text();
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      console.error('Réponse brute:', text);
+      throw new Error('Le serveur a renvoyé du HTML (erreur proxy ou mauvaise route).');
+    }
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Erreur mise à jour.');
+    }
+
+    alert('Profil mis à jour avec succès.');
+    location.reload();
+
+  } catch (error) {
+    console.error('Erreur UpdateQuizStatus:', error);
+    alert(`Mise à jour échouée: ${error.message}`);
+  }
+}
+
+
     </script>
 </body>
 </html>

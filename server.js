@@ -42,6 +42,144 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// ======================== USER LOGIN ========================
+app.post('/user/login', async (req, res) => {
+    const { email, mot_de_passe } = req.body;
+    
+    if (!email || !mot_de_passe) {
+        return res.status(400).json({ message: 'Email et mot de passe requis.' });
+    }
+
+    try {
+        const user = await sql`SELECT * FROM inscrit WHERE email = ${email}`;
+        if (user.length === 0) {
+            return res.status(401).json({ message: 'Email incorrect.' });
+        }
+
+        const valid = await bcrypt.compare(mot_de_passe, user[0].mot_de_passe);
+        if (!valid) {
+            return res.status(401).json({ message: 'Mot de passe incorrect.' });
+        }
+
+        // Mise à jour de la dernière connexion
+    
+
+        const token = generateToken({id: user[0].id, 
+                nom: user[0].nom,
+                email: user[0].email,
+                classe: user[0].classe,
+                whatsapp: user[0].whatsapp , quiz:user[0].quiz});
+        
+        res.json({ 
+            message: 'Connexion réussie.', 
+            token, 
+            user: { 
+                id: user[0].id, 
+                nom: user[0].nom,
+                email: user[0].email,
+                classe: user[0].classe,
+                whatsapp: user[0].whatsapp,
+                quiz:user[0].quiz
+            } 
+        });
+    } catch (error) {
+        console.error('Erreur user login:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+// ======================== GET USER INFO ========================
+app.get('/user/info/:id', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Vérifier que l'utilisateur demande ses propres informations
+     if (parseInt(id) !== parseInt(req.admin.id)) {
+    return res.status(403).json({ message: 'Accès non autorisé.' });
+}
+
+
+        const user = await sql`
+            SELECT id, nom, email, whatsapp, classe, created_at, last_login 
+            FROM inscrit 
+            WHERE id = ${id}
+        `;
+
+        if (user.length === 0) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+        }
+
+        res.json({ 
+            message: 'Informations récupérées avec succès.', 
+            user: user[0] 
+        });
+    } catch (error) {
+        console.error('Erreur get user info:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+// ======================== GET USER INFO BY EMAIL ========================
+app.get('/user/info-by-email/:email', authMiddleware, async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const user = await sql`
+            SELECT id, nom, email, whatsapp, classe, created_at, last_login 
+            FROM inscrit 
+            WHERE email = ${email}
+        `;
+
+        if (user.length === 0) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+        }
+
+        res.json({ 
+            message: 'Informations récupérées avec succès.', 
+            user: user[0] 
+        });
+    } catch (error) {
+        console.error('Erreur get user info by email:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+// ======================== UPDATE USER PROFILE ========================
+app.put('/user/update/:id', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    const { level,quiz } = req.body; // quiz sera mis à true automatiquement
+
+ 
+
+
+    try {
+      if (parseInt(id) !== parseInt(req.admin.id)) {
+    return res.status(403).json({ message: 'Accès non autorisé.' });
+}
+
+        // Mise à jour du niveau et du flag quiz
+        const result = await sql`
+            UPDATE inscrit
+            SET level = ${level}, quiz = true
+            WHERE id = ${id}
+            RETURNING id, level, quiz
+        `;
+
+        if (result.count === 0) {
+            return res.status(404).json({ message: 'Utilisateur introuvable.' });
+        }
+
+        res.json({
+            message: 'Profil mis à jour avec succès.',
+            
+        });
+    } catch (error) {
+        console.error('Erreur update user:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+
 // ======================== ADMIN REGISTER ========================
 app.post('/admin/register', async (req, res) => {
     const { identifiant, password } = req.body;
@@ -59,26 +197,6 @@ app.post('/admin/register', async (req, res) => {
     }
 });
 
-app.post('/user/login', async (req, res) => {
-    const { email, mot_de_passe } = req.body;
-    console.log(email)
-    if (!email || !mot_de_passe) return res.status(400).json({ message: 'Identifiant et mot de passe requis.' });
-    try {
-        const admin = await sql`SELECT * FROM inscrit WHERE email = ${email}`;
-        if (admin.length === 0) return res.status(401).json({ message: 'Identifiant incorrect.' });
-
-        const valid = await bcrypt.compare(mot_de_passe, admin[0].mot_de_passe);
-        if (!valid) return res.status(401).json({ message: 'Mot de passe incorrect.' });
-
-        const token = generateToken({ id: admin[0].id, email: admin[0].email });
-        res.json({ message: 'Connexion réussie.', token, admin: { id: admin[0].id, email: admin[0].email } });
-    } catch (error) {
-        console.error('Erreur admin login:', error.message);
-        res.status(500).json({ message: 'Erreur interne.' });
-    }
-});
-
-
 // ======================== ADMIN LOGIN ========================
 app.post('/admin/login', async (req, res) => {
     const { identifiant, mot_de_passe } = req.body;
@@ -91,7 +209,7 @@ app.post('/admin/login', async (req, res) => {
         const valid = await bcrypt.compare(mot_de_passe, admin[0].mot_de_passe);
         if (!valid) return res.status(401).json({ message: 'Mot de passe incorrect.' });
 
-        const token = generateToken({ id: admin[0].id, identifiant: admin[0].identifiant });
+        const token = generateToken({ id: admin[0].id, identifiant: admin[0].identifiant, isAdmin: true });
         res.json({ message: 'Connexion réussie.', token, admin: { id: admin[0].id, identifiant: admin[0].identifiant } });
     } catch (error) {
         console.error('Erreur admin login:', error.message);
@@ -120,10 +238,38 @@ app.get('/admin/stats', authMiddleware, async (req, res) => {
 // ======================== LISTE INSCRITS ========================
 app.get('/admin/liste-inscrits', authMiddleware, async (req, res) => {
     try {
-        const inscrits = await sql`SELECT id, nom, email, whatsapp, classe, created_at FROM inscrit ORDER BY created_at DESC`;
+        const inscrits = await sql`SELECT id, nom, email, whatsapp, classe, created_at, last_login FROM inscrit ORDER BY created_at DESC`;
         res.json({ message: 'Liste récupérée.', inscrits });
     } catch (error) {
         console.error('Erreur liste inscrits:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+// ======================== SEARCH USERS ========================
+app.get('/admin/search-users', authMiddleware, async (req, res) => {
+    const { query } = req.query;
+
+    if (!query) {
+        return res.status(400).json({ message: 'Paramètre de recherche requis.' });
+    }
+
+    try {
+        const users = await sql`
+            SELECT id, nom, email, whatsapp, classe, created_at 
+            FROM inscrit 
+            WHERE nom ILIKE ${'%' + query + '%'} 
+                OR email ILIKE ${'%' + query + '%'}
+                OR classe ILIKE ${'%' + query + '%'}
+            ORDER BY created_at DESC
+        `;
+
+        res.json({ 
+            message: `${users.length} résultat(s) trouvé(s).`, 
+            users 
+        });
+    } catch (error) {
+        console.error('Erreur search users:', error.message);
         res.status(500).json({ message: 'Erreur interne.' });
     }
 });
@@ -177,30 +323,30 @@ app.post('/admin/send-message', authMiddleware, async (req, res) => {
                             ${paragraphs}
                             ${linkButton}
                             <hr style="margin-top:2rem">
-                            <p>Cordialement,<br><strong style="color:${theme}">L’équipe du Club ML ESATIC</strong></p>
+                            <p>Cordialement,<br><strong style="color:${theme}">L'équipe du Club ML ESATIC</strong></p>
                         </div>
                     </div>
                 </div>`;
         };
 
         const results = [];
-        const batchSize = 20; // 20 emails par lot
+        const batchSize = 20;
         for (let i = 0; i < membres.length; i += batchSize) {
             const batch = membres.slice(i, i + batchSize);
             console.log(`Envoi du lot ${i / batchSize + 1}/${Math.ceil(membres.length / batchSize)}...`);
 
             for (const membre of batch) {
-            const mailOptions = {
-  from: `"Club ML ESATIC" <${process.env.AI_MAIL}>`,
-  to: membre.email,
-  subject,
-  html: generateEmailHTML(membre.nom),
-  headers: {
-    "X-Priority": "1",
-    "X-MSMail-Priority": "High",
-    "Importance": "High"
-  }
-};
+                const mailOptions = {
+                    from: `"Club ML ESATIC" <${process.env.AI_MAIL}>`,
+                    to: membre.email,
+                    subject,
+                    html: generateEmailHTML(membre.nom),
+                    headers: {
+                        "X-Priority": "1",
+                        "X-MSMail-Priority": "High",
+                        "Importance": "High"
+                    }
+                };
 
                 try {
                     await transporter.sendMail(mailOptions);
@@ -209,10 +355,10 @@ app.post('/admin/send-message', authMiddleware, async (req, res) => {
                     results.push({ success: false, email: membre.email, error: error.message });
                 }
 
-                await new Promise(r => setTimeout(r, 2000)); // pause 2s entre chaque mail
+                await new Promise(r => setTimeout(r, 2000));
             }
 
-            await new Promise(r => setTimeout(r, 5000)); // pause 5s entre lots
+            await new Promise(r => setTimeout(r, 5000));
         }
 
         const successes = results.filter(r => r.success).length;
@@ -227,9 +373,9 @@ app.post('/admin/send-message', authMiddleware, async (req, res) => {
 
     } catch (error) {
         console.error('Erreur envoi:', error.message);
-        res.status(500).json({ message: 'Erreur lors de l’envoi.', error: error.message });
+        res.status(500).json({ message: "Erreur lors de l'envoi.', error: error.message" });
     }
-});
+})
 
 // ======================== SERVER START ========================
-app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Serveur démarré sur le port ${PORT}`));
