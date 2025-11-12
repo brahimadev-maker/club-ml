@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          
             min-height: 100vh;
             padding-top: 70px;
         }
@@ -450,6 +450,230 @@
             box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
         }
 
+        /* Modules Section */
+        .modules-section {
+            margin-top: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .module-card {
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .module-image-container {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .module-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover .module-image {
+            transform: scale(1.1);
+        }
+
+        .module-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .module-content {
+            padding: 1.2rem;
+        }
+
+        .module-title {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .module-description {
+            color: var(--gray);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .module-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .module-meta-item i {
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 14px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-body h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-body li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray);
+        }
+
+        .modal-body li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+        }
+
+        .recommended-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #e65a2b);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         /* Result Container compacte */
         .result-container {
             text-align: center;
@@ -492,7 +716,7 @@
             margin-bottom: 0.6rem;
         }
 
-        .module-badge {
+        .module-badge-result {
             display: inline-block;
             background: rgba(255,255,255,0.2);
             padding: 0.4rem 0.8rem;
@@ -501,7 +725,7 @@
             margin-bottom: 0.8rem;
         }
 
-        .module-content {
+        .module-content-result {
             text-align: left;
             background: rgba(255,255,255,0.15);
             padding: 1.2rem;
@@ -509,17 +733,17 @@
             margin-top: 1rem;
         }
 
-        .module-content h4 {
+        .module-content-result h4 {
             margin-bottom: 0.6rem;
             font-size: 1rem;
         }
 
-        .module-content ul {
+        .module-content-result ul {
             list-style: none;
             padding-left: 0;
         }
 
-        .module-content li {
+        .module-content-result li {
             padding: 0.4rem 0;
             padding-left: 1.5rem;
             position: relative;
@@ -527,7 +751,7 @@
             font-size: 0.85rem;
         }
 
-        .module-content li::before {
+        .module-content-result li::before {
             content: "\f00c";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
@@ -641,6 +865,7 @@
         @media (max-width: 768px) {
             .nav-item span { display: none; }
             .features-grid { grid-template-columns: 1fr; }
+            .modules-grid { grid-template-columns: 1fr; }
             .konami-robot { font-size: 5rem; }
             .konami-title { font-size: 1.5rem; }
             .konami-stats { grid-template-columns: 1fr; }
@@ -797,7 +1022,7 @@
     </div>
 
     <script>
-      
+        // Easter Egg
         let konamiCode = [];
         const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let clickCount = 0;
@@ -811,7 +1036,6 @@
             }
         });
 
-        // Alternative: Triple-click sur le logo
         function triggerEasterEgg() {
             clickCount++;
             if (clickCount === 5) {
@@ -858,56 +1082,54 @@
             }
         }
 
-
-// Questions du quiz
-const questions = [
-    {
-        question: "Quel est votre niveau en Python ?",
-        options: [
-            { text: '<i class="fa-solid fa-seedling"></i> Débutant - Je découvre', modules: { 0: 3, 1: 1 } },
-            { text: '<i class="fa-solid fa-book"></i> Intermédiaire - Je connais les bases', modules: { 0: 2, 1: 3, 2: 1 } },
-            { text: '<i class="fa-solid fa-dumbbell"></i> Avancé - Je maîtrise bien Python', modules: { 1: 2, 2: 3, 3: 2 } },
-            { text: '<i class="fa-solid fa-rocket"></i> Expert - Je code régulièrement', modules: { 2: 2, 3: 3, 4: 2 } }
-        ]
-    },
-    {
-        question: "Connaissez-vous NumPy et Pandas ?",
-        options: [
-            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais utilisé', modules: { 0: 3, 1: 1 } },
-            { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
-            { text: '<i class="fa-solid fa-check"></i> Oui, j\'ai fait des tutoriels', modules: { 1: 3, 2: 2 } },
-            { text: '<i class="fa-solid fa-star"></i> Oui, je les utilise souvent', modules: { 2: 3, 3: 2, 4: 1 } }
-        ]
-    },
-    {
-        question: "Que souhaitez-vous apprendre ?",
-        options: [
-            { text: '<i class="fa-solid fa-bullseye"></i> Les bases du ML', modules: { 0: 4, 1: 1 } },
-            { text: '<i class="fa-solid fa-chart-column"></i> Créer des modèles de prédiction', modules: { 1: 4, 2: 1 } },
-            { text: '<i class="fa-solid fa-palette"></i> Systèmes de recommandation', modules: { 2: 4, 3: 1 } },
-            { text: '<i class="fa-solid fa-comment-dots"></i> NLP et chatbots', modules: { 3: 4, 4: 1 } }
-        ]
-    },
-    {
-        question: "Connaissez-vous des algos ML ?",
-        options: [
-            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, pas du tout', modules: { 0: 3 } },
-            { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
-            { text: '<i class="fa-solid fa-book-open"></i> Je connais la théorie', modules: { 1: 3, 2: 2 } },
-            { text: '<i class="fa-solid fa-lightbulb"></i> Je les ai déjà codés', modules: { 2: 2, 3: 3, 4: 2 } }
-        ]
-    },
-    {
-        question: "Avez-vous fait des projets Data Science ?",
-        options: [
-            { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais', modules: { 0: 3, 1: 1 } },
-            { text: '<i class="fa-solid fa-book"></i> Quelques tutoriels', modules: { 0: 2, 1: 2 } },
-            { text: '<i class="fa-solid fa-graduation-cap"></i> Projets académiques', modules: { 1: 2, 2: 3, 3: 1 } },
-            { text: '<i class="fa-solid fa-briefcase"></i> Projets pros/persos', modules: { 3: 3, 4: 3 } }
-        ]
-    }
-];
-
+        // Questions du quiz
+        const questions = [
+            {
+                question: "Quel est votre niveau en Python ?",
+                options: [
+                    { text: '<i class="fa-solid fa-seedling"></i> Débutant - Je découvre', modules: { 0: 3, 1: 1 } },
+                    { text: '<i class="fa-solid fa-book"></i> Intermédiaire - Je connais les bases', modules: { 0: 2, 1: 3, 2: 1 } },
+                    { text: '<i class="fa-solid fa-dumbbell"></i> Avancé - Je maîtrise bien Python', modules: { 1: 2, 2: 3, 3: 2 } },
+                    { text: '<i class="fa-solid fa-rocket"></i> Expert - Je code régulièrement', modules: { 2: 2, 3: 3, 4: 2 } }
+                ]
+            },
+            {
+                question: "Connaissez-vous NumPy et Pandas ?",
+                options: [
+                    { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais utilisé', modules: { 0: 3, 1: 1 } },
+                    { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
+                    { text: '<i class="fa-solid fa-check"></i> Oui, j\'ai fait des tutoriels', modules: { 1: 3, 2: 2 } },
+                    { text: '<i class="fa-solid fa-star"></i> Oui, je les utilise souvent', modules: { 2: 3, 3: 2, 4: 1 } }
+                ]
+            },
+            {
+                question: "Que souhaitez-vous apprendre ?",
+                options: [
+                    { text: '<i class="fa-solid fa-bullseye"></i> Les bases du ML', modules: { 0: 4, 1: 1 } },
+                    { text: '<i class="fa-solid fa-chart-column"></i> Créer des modèles de prédiction', modules: { 1: 4, 2: 1 } },
+                    { text: '<i class="fa-solid fa-palette"></i> Systèmes de recommandation', modules: { 2: 4, 3: 1 } },
+                    { text: '<i class="fa-solid fa-comment-dots"></i> NLP et chatbots', modules: { 3: 4, 4: 1 } }
+                ]
+            },
+            {
+                question: "Connaissez-vous des algos ML ?",
+                options: [
+                    { text: '<i class="fa-solid fa-circle-xmark"></i> Non, pas du tout', modules: { 0: 3 } },
+                    { text: '<i class="fa-solid fa-ear-listen"></i> J\'en ai entendu parler', modules: { 0: 2, 1: 2 } },
+                    { text: '<i class="fa-solid fa-book-open"></i> Je connais la théorie', modules: { 1: 3, 2: 2 } },
+                    { text: '<i class="fa-solid fa-lightbulb"></i> Je les ai déjà codés', modules: { 2: 2, 3: 3, 4: 2 } }
+                ]
+            },
+            {
+                question: "Avez-vous fait des projets Data Science ?",
+                options: [
+                    { text: '<i class="fa-solid fa-circle-xmark"></i> Non, jamais', modules: { 0: 3, 1: 1 } },
+                    { text: '<i class="fa-solid fa-book"></i> Quelques tutoriels', modules: { 0: 2, 1: 2 } },
+                    { text: '<i class="fa-solid fa-graduation-cap"></i> Projets académiques', modules: { 1: 2, 2: 3, 3: 1 } },
+                    { text: '<i class="fa-solid fa-briefcase"></i> Projets pros/persos', modules: { 3: 3, 4: 3 } }
+                ]
+            }
+        ];
 
         const modules = [
             {
@@ -980,40 +1202,30 @@ const questions = [
         let currentQuestion = 0;
         let answers = [];
         let selectedOption = null;
-        let userData = {id:-1, nom: "Membre", email: "membre@esatic.edu.ci" };
+        let userData = {id:-1, nom: "Membre", email: "membre@esatic.edu.ci", quiz:false, level: "DÉBUTANT"};
 
-        // API Configuration
-       const API_URL = 'https://club-ml.onrender.com';
+        const API_URL = 'https://club-ml.onrender.com';
         const token = localStorage.getItem('userToken');
-   
-      
-  
-async function loadUserInfo() {
-    if (!token) return;
 
-    try {
-        // Décoder la partie payload du JWT
-        const base64Payload = token.split('.')[1];
-        const payload = JSON.parse(atob(base64Payload));
-        userData=payload
-           if (payload.quiz){
-            document.getElementById('startQuizBtn').style.display='none'
+        async function loadUserInfo() {
+            if (!token) return;
 
+            try {
+                const base64Payload = token.split('.')[1];
+                const payload = JSON.parse(atob(base64Payload));
+                userData = payload;
+
+                if (payload.quiz) {
+                    document.getElementById('startQuizBtn').style.display = 'none';
+                    showStoredResults();
+                }
+
+                document.getElementById('userName').textContent = payload.nom;
+                document.getElementById('userAvatar').textContent = payload.nom ? payload.nom.substring(0, 2).toUpperCase() : '?';
+            } catch (error) {
+                console.error('Erreur loadUserInfo:', error);
+            }
         }
-
-
-
-
-
-        document.getElementById('userName').textContent = payload.nom;
-        document.getElementById('userAvatar').textContent = payload.nom? payload.nom.substring(0, 2).toUpperCase()
-            : '?';
-           
-         
-    } catch (error) {
-       
-    }
-}
 
         function init() {
             loadUserInfo();
@@ -1030,7 +1242,6 @@ async function loadUserInfo() {
             document.getElementById('dropdownMenu').classList.toggle('active');
         }
 
-        // Fermer dropdown en cliquant ailleurs
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.user-profile')) {
                 document.getElementById('dropdownMenu').classList.remove('active');
@@ -1152,8 +1363,6 @@ async function loadUserInfo() {
         }
 
         function showResults() {
-       
-
             const recommendedModuleId = calculateRecommendation();
             const module = modules[recommendedModuleId];
             
@@ -1161,8 +1370,7 @@ async function loadUserInfo() {
             const resultContainer = document.getElementById('resultContainer');
             resultContainer.style.display = 'block';
 
-                 UpdateQuizStatus(module.badge,true,userData.id,token)
-               
+            UpdateQuizStatus(module.badge, true, userData.id, token);
             
             resultContainer.innerHTML = `
                 <div class="result-animation">🎉</div>
@@ -1172,13 +1380,13 @@ async function loadUserInfo() {
                 </p>
 
                 <div class="recommended-module">
-                    <div class="module-badge">
+                    <div class="module-badge-result">
                         <i class="fas fa-award"></i> ${module.badge}
                     </div>
                     <h3>${module.title}</h3>
                     <p style="margin-bottom: 0; font-size: 0.95rem; opacity: 0.95;">${module.description}</p>
                     
-                    <div class="module-content">
+                    <div class="module-content-result">
                         <h4><i class="fas fa-book-open"></i> Programme :</h4>
                         <ul>
                             ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
@@ -1186,36 +1394,182 @@ async function loadUserInfo() {
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-start" onclick="startModule(${recommendedModuleId})">
-                        <i class="fas fa-play-circle"></i> Commencer
-                    </button>
-                    <button class="btn btn-secondary" onclick="location.reload()" style="padding: 0.9rem 1.5rem;">
-                        <i class="fas fa-redo"></i> Refaire
-                    </button>
+                <div style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(102, 126, 234, 0.1); border-radius: 10px; border-left: 4px solid #667eea;">
+                    <p style="margin: 0; color: var(--dark); line-height: 1.5; font-size: 0.85rem;">
+                        <i class="fas fa-info-circle" style="color: #667eea;"></i>
+                        <strong>Info :</strong> Découvrez tous les modules ci-dessous. Votre module recommandé est mis en évidence.
+                    </p>
+                </div>
+            `;
+
+            showModulesSection(recommendedModuleId);
+        }
+
+        function showStoredResults() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            const level = userData.level || 'DÉBUTANT';
+            const recommendedModuleId = modules.findIndex(m => m.badge === level);
+            
+            const module = modules[recommendedModuleId >= 0 ? recommendedModuleId : 0];
+            
+            document.getElementById('resultContainer').innerHTML = `
+                <div class="result-animation">✅</div>
+                <h2 class="result-title">Votre parcours ML</h2>
+                <p class="result-description">
+                    Vous avez déjà complété le quiz d'orientation. Voici votre module recommandé.
+                </p>
+
+                <div class="recommended-module">
+                    <div class="module-badge-result">
+                        <i class="fas fa-award"></i> ${module.badge}
+                    </div>
+                    <h3>${module.title}</h3>
+                    <p style="margin-bottom: 0; font-size: 0.95rem; opacity: 0.95;">${module.description}</p>
+                    
+                    <div class="module-content-result">
+                        <h4><i class="fas fa-book-open"></i> Programme :</h4>
+                        <ul>
+                            ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
+                        </ul>
+                    </div>
                 </div>
 
                 <div style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(102, 126, 234, 0.1); border-radius: 10px; border-left: 4px solid #667eea;">
                     <p style="margin: 0; color: var(--dark); line-height: 1.5; font-size: 0.85rem;">
-                        <i class="fas fa-info-circle" style="color: #667eea;"></i>
-                        <strong>Info :</strong> Vous pourrez accéder aux autres modules depuis votre dashboard.
+                        <i class="fas fa-lightbulb" style="color: #667eea;"></i>
+                        <strong>Astuce :</strong> Explorez tous les modules ci-dessous pour enrichir vos compétences.
                     </p>
                 </div>
             `;
+            
+            showModulesSection(recommendedModuleId >= 0 ? recommendedModuleId : 0);
         }
 
+        function showModulesSection(recommendedId) {
+            const modulesHTML = `
+                <div class="modules-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-graduation-cap"></i> Tous nos modules</h2>
+                        <p>Explorez l'ensemble de notre programme de formation ML</p>
+                    </div>
+                    <div class="modules-grid">
+                        ${generateModuleCards(recommendedId)}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('resultContainer').insertAdjacentHTML('beforeend', modulesHTML);
+        }
 
+        function generateModuleCards(recommendedId) {
+            const moduleImages = [
+                'https://blog.integral-system.fr/wp-content/uploads/2020/02/33797061.jpg',
+                'https://miro.medium.com/v2/resize:fit:1400/1*c_fiB-YgbnMl6nntYGBMHQ.jpeg',
+                'https://tse2.mm.bing.net/th/id/OIP.1HLob1SNzr2tXxr2_1-AbAHaE8?cb=ucfimg2&pid=ImgDet&ucfimg=1&w=474&h=316&rs=1&o=7&rm=3',
+                'https://qualitapps.com/wp-content/uploads/2023/12/nlp.png',
+                'https://miro.medium.com/v2/resize:fit:1090/1*P-jGHYAm-fakOugsrf2plA.png'
+            ];
 
+            return modules.map((module, idx) => `
+                <div class="module-card" onclick="openModal('module${idx}')">
+                    <div class="module-image-container">
+                        <img src="${moduleImages[idx]}" alt="${module.title}" class="module-image">
+                        <div class="module-badge">Module ${idx}</div>
+                        ${idx === recommendedId ? '<span class="recommended-tag"><i class="fas fa-star"></i> Recommandé</span>' : ''}
+                    </div>
+                    <div class="module-content">
+                        <h3 class="module-title">${module.title}</h3>
+                        <p class="module-description">${module.description}</p>
+                        <div class="module-meta">
+                            <div class="module-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Semaines ${idx * 4}-${(idx + 1) * 4}</span>
+                            </div>
+                            <div class="module-meta-item">
+                                <i class="fas fa-book"></i>
+                                <span>${module.topics.length} chapitres</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(moduleId) {
+            const moduleIndex = parseInt(moduleId.replace('module', ''));
+            const module = modules[moduleIndex];
+            
+            const modalHTML = `
+                <div class="modal-overlay active" id="moduleModal" onclick="closeModal(event)">
+                    <div class="modal-content" onclick="event.stopPropagation()">
+                        <div class="modal-header">
+                            <h2>${module.title}</h2>
+                            <button class="modal-close" onclick="closeModal()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>${module.description}</p>
+                            <h3><i class="fas fa-list-check"></i> Programme détaillé :</h3>
+                            <ul>
+                                ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
+                            </ul>
+                            <button class="btn btn-start" onclick="startModule(${moduleIndex})">
+                                <i class="fas fa-play-circle"></i> Commencer ce module
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeModal(event) {
+            if (event && event.target.className !== 'modal-overlay active') return;
+            const modal = document.getElementById('moduleModal');
+            if (modal) modal.remove();
+        }
 
         function startModule(moduleId) {
             alert(`🚀 Module ${moduleId} activé !\n\nRedirection vers l'espace d'apprentissage...`);
-        
         }
 
         function logout() {
             if (confirm('Se déconnecter ?')) {
                 localStorage.removeItem('userToken');
                 window.location.href = '/connexion.html';
+            }
+        }
+
+        async function UpdateQuizStatus(level, quiz, id, token) {
+            try {
+                const response = await fetch(`${API_URL}/user/update/${id}`, {
+                    method: 'PUT', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ level, quiz })
+                });
+
+                const text = await response.text();
+                let result;
+                
+                try {
+                    result = JSON.parse(text);
+                } catch {
+                    console.error('Réponse brute:', text);
+                    throw new Error('Le serveur a renvoyé du HTML (erreur proxy ou mauvaise route).');
+                }
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Erreur mise à jour.');
+                }
+
+            } catch (error) {
+                console.error('Erreur UpdateQuizStatus:', error);
+                alert(`Mise à jour échouée: ${error.message}`);
             }
         }
 
@@ -1226,44 +1580,11 @@ async function loadUserInfo() {
         window.triggerEasterEgg = triggerEasterEgg;
         window.closeEasterEgg = closeEasterEgg;
         window.logout = logout;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
 
         // Initialiser au chargement
         window.addEventListener('DOMContentLoaded', init);
-
-async function UpdateQuizStatus(level, quiz, id, token) {
-  try {
-    const response = await fetch(`${API_URL}/user/update/${id}`, {
-      method: 'PUT', 
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // ✅ Nécessaire
-      },
-      body: JSON.stringify({ level, quiz })
-    });
-
-    const text = await response.text();
-    let result;
-    try {
-      result = JSON.parse(text);
-    } catch {
-      console.error('Réponse brute:', text);
-      throw new Error('Le serveur a renvoyé du HTML (erreur proxy ou mauvaise route).');
-    }
-
-    if (!response.ok) {
-      throw new Error(result.message || 'Erreur mise à jour.');
-    }
-
-    alert('Profil mis à jour avec succès.');
-    location.reload();
-
-  } catch (error) {
-    console.error('Erreur UpdateQuizStatus:', error);
-    alert(`Mise à jour échouée: ${error.message}`);
-  }
-}
-
-
     </script>
 </body>
 </html>
