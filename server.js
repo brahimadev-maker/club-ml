@@ -59,6 +59,26 @@ app.post('/admin/register', async (req, res) => {
     }
 });
 
+app.post('/user/login', async (req, res) => {
+    const { email, mot_de_passe } = req.body;
+    console.log(email)
+    if (!email || !mot_de_passe) return res.status(400).json({ message: 'Identifiant et mot de passe requis.' });
+    try {
+        const admin = await sql`SELECT * FROM inscrit WHERE email = ${email}`;
+        if (admin.length === 0) return res.status(401).json({ message: 'Identifiant incorrect.' });
+
+        const valid = await bcrypt.compare(mot_de_passe, admin[0].mot_de_passe);
+        if (!valid) return res.status(401).json({ message: 'Mot de passe incorrect.' });
+
+        const token = generateToken({ id: admin[0].id, email: admin[0].email });
+        res.json({ message: 'Connexion réussie.', token, admin: { id: admin[0].id, email: admin[0].email } });
+    } catch (error) {
+        console.error('Erreur admin login:', error.message);
+        res.status(500).json({ message: 'Erreur interne.' });
+    }
+});
+
+
 // ======================== ADMIN LOGIN ========================
 app.post('/admin/login', async (req, res) => {
     const { identifiant, mot_de_passe } = req.body;
@@ -170,13 +190,17 @@ app.post('/admin/send-message', authMiddleware, async (req, res) => {
             console.log(`Envoi du lot ${i / batchSize + 1}/${Math.ceil(membres.length / batchSize)}...`);
 
             for (const membre of batch) {
-                const mailOptions = {
-                    from: `"Club ML ESATIC" <${process.env.AI_MAIL}>`,
-                    to: membre.email,
-                    subject,
-                    html: generateEmailHTML(membre.nom),
-                    headers: { "X-Priority": "1", Importance: "High" }
-                };
+            const mailOptions = {
+  from: `"Club ML ESATIC" <${process.env.AI_MAIL}>`,
+  to: membre.email,
+  subject,
+  html: generateEmailHTML(membre.nom),
+  headers: {
+    "X-Priority": "1",
+    "X-MSMail-Priority": "High",
+    "Importance": "High"
+  }
+};
 
                 try {
                     await transporter.sendMail(mailOptions);

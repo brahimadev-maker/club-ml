@@ -247,20 +247,51 @@
     </div>
 
     <script>
-        function handleLogin(event) {
+        async function handleLogin(event) {
             event.preventDefault();
             
             const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const mot_de_passe = document.getElementById('loginPassword').value;
+    
+
+      
             
-            // Pour le moment, la connexion n'est pas nécessaire
-            alert('La fonction de connexion n\'est pas nécessaire actuellement.');
-            
-            // Redirection vers la page d'accueil
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
+            const formData = {
+                email,
+                mot_de_passe
+            };
+
+           
+
+            try {
+                const response = await fetch('http://localhost:3000/user/login', {
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify(formData) 
+                });
+
+              const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.message || 'Une erreur est survenue lors de l\'inscription.');
+                }
+
+                // Succès
+                alert(result.message || 'Inscription réussie ! Bienvenue au Club ML.');
+                
+                // Redirection vers la page d'accueil
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Erreur lors de l\'inscription:', error);
+                alert(`Erreur d'inscription: ${error.message}`);
+           
+            }
         }
+      
     </script>
 </body>
 </html>
