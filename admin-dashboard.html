@@ -1088,6 +1088,7 @@
                                 <th>Email</th>
                                 <th>WhatsApp</th>
                                 <th>Classe</th>
+                                   <th>Niveau</th>
                                 <th>Date d'inscription</th>
                             </tr>
                         </thead>
@@ -1097,7 +1098,9 @@
                                     <td><strong>${m.nom}</strong></td>
                                     <td>${m.email}</td>
                                     <td>${m.whatsapp}</td>
+
                                     <td><span class="badge badge-primary">${m.classe}</span></td>
+                                      <td>${m.level}</td>
                                     <td>${new Date(m.created_at).toLocaleDateString('fr-FR')}</td>
                                 </tr>`).join('')}
                         </tbody>
