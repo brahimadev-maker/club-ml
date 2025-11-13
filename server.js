@@ -238,7 +238,7 @@ app.get('/admin/stats', authMiddleware, async (req, res) => {
 // ======================== LISTE INSCRITS ========================
 app.get('/admin/liste-inscrits', authMiddleware, async (req, res) => {
     try {
-        const inscrits = await sql`SELECT id, nom, email, whatsapp, classe, created_at FROM inscrit ORDER BY created_at DESC`;
+        const inscrits = await sql`SELECT id, nom, email, whatsapp, classe, level,created_at FROM inscrit ORDER BY created_at DESC`;
         res.json({ message: 'Liste récupérée.', inscrits });
     } catch (error) {
         console.error('Erreur liste inscrits:', error.message);
