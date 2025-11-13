@@ -694,7 +694,35 @@
             margin-bottom: 0.6rem;
             font-weight: bold;
         }
+      .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            animation: slideInLeft 0.8s ease;
+        }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
         .result-description {
             color: var(--gray);
             margin-bottom: 1.5rem;
@@ -876,9 +904,11 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-content">
-            <div class="navbar-brand" onclick="triggerEasterEgg()">
-                <i class="fas fa-brain"></i>
-                <span>Club ML</span>
+             <div class="logo-container">
+                <div class="logo">
+                   <img src="/src/images/icon.png" alt="Club ML" onerror="this.style.display='none'">
+                  
+                </div>
             </div>
             <div class="navbar-menu">
                 <a href="#" class="nav-item">
