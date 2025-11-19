@@ -2246,9 +2246,7 @@ function exportProgress() {
 
 
    function AuthVerifiy() {
-            localStorage.getItem('userToken')&&(window.location.href="connexion.html");
-
-            
+            !localStorage.getItem('userToken')&&(window.location.href="../connexion.html");     
         }
         AuthVerifiy()
 
