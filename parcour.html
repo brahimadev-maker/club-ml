@@ -12,17 +12,25 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #1c6487;
-            --secondary: #ff6b35;
+       :root {
+            
+  
+            --primary:  #ff6b35;
+            --secondary:#1c6487;
             --blue: #337ab7;
-            --success: #28a745;
+            --black: #000000;
+            --gray-light: #f0f0f0;
             --white: #ffffff;
-            --gray-light: #f8f9fa;
-            --gray: #6c757d;
-            --dark: #2c3e50;
-        }
 
+            --accent:#667eea;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --dark: #2c3e50;
+            --gray: #6c757d;
+            --light: #f8f9fa;
+            --white: #ffffff;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           
@@ -88,7 +96,7 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: var(--gray);
+            color: var(--primary);
             font-weight: 500;
             text-decoration: none;
             font-size: 0.9rem;
@@ -731,7 +739,7 @@
         }
 
         .recommended-module {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--primary), var(--dark));
             color: var(--white);
             padding: 1.5rem;
             border-radius: 12px;
@@ -1445,8 +1453,6 @@
             const module = modules[recommendedModuleId >= 0 ? recommendedModuleId : 0];
             
             document.getElementById('resultContainer').innerHTML = `
-                <div class="result-animation">✅</div>
-                <h2 class="result-title">Votre parcours ML</h2>
                 <p class="result-description">
                     Vous avez déjà complété le quiz d'orientation. Voici votre module recommandé.
                 </p>
