@@ -1871,6 +1871,469 @@ print(f"Spam: {prediction[0] == 1}")</code></pre>
             // Update progress
             updateProgress();
         }
+// ============================================
+// FONCTIONS QUIZ
+// ============================================
+
+function submitQuiz(chapterId) {
+    const chapter = chapters[chapterId];
+    const userAnswers = quizAnswers[chapterId] || {};
+    const totalQuestions = chapter.quiz.questions;
+    
+    let correctCount = 0;
+    
+    // Vérifier chaque réponse
+    for (let i = 0; i < totalQuestions; i++) {
+        const questionEl = document.querySelectorAll('.quiz-question')[i];
+        const options = questionEl.querySelectorAll('.quiz-option');
+        const explanationEl = document.getElementById(`explanation-${chapterId}-${i}`);
+        
+        const userAnswer = userAnswers[i];
+        const correctAnswer = chapter.quiz.answers[i];
+        
+        // Afficher les résultats visuels
+        options.forEach((opt, idx) => {
+            if (idx === correctAnswer) {
+                opt.classList.add('correct');
+            }
+            if (idx === userAnswer && idx !== correctAnswer) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // Afficher l'explication
+        if (explanationEl) {
+            explanationEl.classList.add('active');
+        }
+        
+        // Compter les bonnes réponses
+        if (userAnswer === correctAnswer) {
+            correctCount++;
+        }
+    }
+    
+    // Afficher les résultats
+    const resultsEl = document.getElementById(`quizResults${chapterId}`);
+    const scoreEl = document.getElementById(`quizScore${chapterId}`);
+    const messageEl = document.getElementById(`quizMessage${chapterId}`);
+    const submitBtn = document.getElementById(`submitQuiz${chapterId}`);
+    
+    scoreEl.textContent = `${correctCount}/${totalQuestions}`;
+    
+    // Message personnalisé selon le score
+    const percentage = (correctCount / totalQuestions) * 100;
+    let message = '';
+    
+    if (percentage === 100) {
+        message = '🎉 Parfait ! Vous maîtrisez ce chapitre !';
+    } else if (percentage >= 75) {
+        message = '👏 Très bien ! Quelques petites erreurs seulement.';
+    } else if (percentage >= 50) {
+        message = '👍 Pas mal ! Relisez les points manqués.';
+    } else {
+        message = '📚 Relisez le chapitre pour mieux comprendre.';
+    }
+    
+    messageEl.textContent = message;
+    resultsEl.classList.add('active');
+    
+    // Désactiver le bouton de soumission
+    if (submitBtn) {
+        submitBtn.disabled = true;
+    }
+    
+    // Marquer le chapitre comme complété si score >= 75%
+    if (percentage >= 75) {
+        completedChapters.add(chapterId);
+        updateProgress();
+    }
+}
+
+function resetQuiz(chapterId) {
+    // Réinitialiser les réponses
+    quizAnswers[chapterId] = {};
+    
+    // Réinitialiser l'affichage
+    const questions = document.querySelectorAll('.quiz-question');
+    questions.forEach((questionEl, idx) => {
+        const options = questionEl.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+            opt.classList.remove('selected', 'correct', 'incorrect');
+        });
+        
+        const explanationEl = document.getElementById(`explanation-${chapterId}-${idx}`);
+        if (explanationEl) {
+            explanationEl.classList.remove('active');
+        }
+    });
+    
+    // Cacher les résultats
+    const resultsEl = document.getElementById(`quizResults${chapterId}`);
+    if (resultsEl) {
+        resultsEl.classList.remove('active');
+    }
+    
+    // Réactiver le bouton de soumission
+    const submitBtn = document.getElementById(`submitQuiz${chapterId}`);
+    if (submitBtn) {
+        submitBtn.disabled = false;
+    }
+}
+
+// ============================================
+// FONCTIONS DÉMO INTERACTIVE
+// ============================================
+
+function runDemo() {
+    const input = document.getElementById('demoInput');
+    const output = document.getElementById('demoOutput');
+    
+    const surface = parseFloat(input.value);
+    
+    if (isNaN(surface) || surface < 20 || surface > 500) {
+        output.innerHTML = `
+            <div style="text-align: center; color: var(--danger);">
+                <i class="fas fa-exclamation-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                <p><strong>Erreur</strong></p>
+                <p>Veuillez entrer une surface valide entre 20 et 500 m²</p>
+            </div>
+        `;
+        output.classList.add('active');
+        return;
+    }
+    
+    // Formule simple : Prix = 3000 * surface (FCFA par m²)
+    const prixParM2 = 3000;
+    const prixEstime = surface * prixParM2;
+    
+    // Ajouter une petite variation aléatoire (-5% à +5%)
+    const variation = (Math.random() - 0.5) * 0.1;
+    const prixFinal = prixEstime * (1 + variation);
+    
+    output.innerHTML = `
+        <div style="text-align: center;">
+            <i class="fas fa-home" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h4 style="color: var(--dark); margin-bottom: 1rem;">Prédiction du Prix</h4>
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                <div style="color: white; font-size: 2rem; font-weight: bold;">
+                    ${prixFinal.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} FCFA
+                </div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 0.5rem;">
+                    Pour ${surface} m²
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
+                <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                    <div style="color: var(--gray); font-size: 0.85rem;">Prix par m²</div>
+                    <div style="color: var(--dark); font-weight: 600;">${prixParM2.toLocaleString()} FCFA</div>
+                </div>
+                <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                    <div style="color: var(--gray); font-size: 0.85rem;">Confiance</div>
+                    <div style="color: var(--success); font-weight: 600;">85%</div>
+                </div>
+            </div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(102, 126, 234, 0.1); border-radius: 8px; text-align: left;">
+                <div style="font-size: 0.85rem; color: var(--gray);">
+                    <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                    <strong>Note :</strong> Cette prédiction est basée sur un modèle simplifié. 
+                    En réalité, d'autres facteurs influencent le prix (localisation, état, commodités, etc.).
+                </div>
+            </div>
+        </div>
+    `;
+    
+    output.classList.add('active');
+}
+
+// ============================================
+// FONCTION COPIE DE CODE
+// ============================================
+
+function copyCode(button) {
+    const codeBlock = button.closest('.code-block');
+    const code = codeBlock.querySelector('pre code').textContent;
+    
+    navigator.clipboard.writeText(code).then(() => {
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+        button.style.background = 'var(--success)';
+        
+        setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.style.background = 'var(--primary)';
+        }, 2000);
+    }).catch(err => {
+        console.error('Erreur lors de la copie:', err);
+        button.innerHTML = '<i class="fas fa-times"></i> Erreur';
+        button.style.background = 'var(--danger)';
+        
+        setTimeout(() => {
+            button.innerHTML = '<i class="fas fa-copy"></i> Copier';
+            button.style.background = 'var(--primary)';
+        }, 2000);
+    });
+}
+
+// ============================================
+// SAUVEGARDE DE PROGRESSION (LocalStorage)
+// ============================================
+
+function saveProgress() {
+    const progress = {
+        currentChapter: currentChapter,
+        completedChapters: Array.from(completedChapters),
+        quizAnswers: quizAnswers,
+        timestamp: new Date().toISOString()
+    };
+    
+    try {
+        localStorage.setItem('ml_module_progress', JSON.stringify(progress));
+        console.log('Progression sauvegardée');
+    } catch (e) {
+        console.error('Erreur sauvegarde:', e);
+    }
+}
+
+function loadProgress() {
+    try {
+        const saved = localStorage.getItem('ml_module_progress');
+        if (saved) {
+            const progress = JSON.parse(saved);
+            currentChapter = progress.currentChapter || 0;
+            completedChapters = new Set(progress.completedChapters || []);
+            quizAnswers = progress.quizAnswers || {};
+            
+            console.log('Progression chargée');
+            return true;
+        }
+    } catch (e) {
+        console.error('Erreur chargement:', e);
+    }
+    return false;
+}
+
+function resetProgress() {
+    if (confirm('Êtes-vous sûr de vouloir réinitialiser toute votre progression ?')) {
+        localStorage.removeItem('ml_module_progress');
+        currentChapter = 0;
+        completedChapters = new Set();
+        quizAnswers = {};
+        loadChapter(0);
+        updateProgress();
+        alert('Progression réinitialisée !');
+    }
+}
+
+// ============================================
+// NAVIGATION CLAVIER
+// ============================================
+
+function handleKeyNavigation(event) {
+    // Flèche droite : chapitre suivant
+    if (event.key === 'ArrowRight' && currentChapter < chapters.length - 1) {
+        loadChapter(currentChapter + 1);
+    }
+    // Flèche gauche : chapitre précédent
+    else if (event.key === 'ArrowLeft' && currentChapter > 0) {
+        loadChapter(currentChapter - 1);
+    }
+}
+
+// ============================================
+// ANIMATIONS AU SCROLL
+// ============================================
+
+function observeElements() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    });
+    
+    // Observer tous les éléments animables
+    document.querySelectorAll('.content-section, .quiz-question, .info-box').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+    });
+}
+
+// ============================================
+// MODE SOMBRE (BONUS)
+// ============================================
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+}
+
+function initDarkMode() {
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+    }
+}
+
+// ============================================
+// RECHERCHE DANS LE CONTENU
+// ============================================
+
+function searchContent(query) {
+    const normalizedQuery = query.toLowerCase().trim();
+    if (!normalizedQuery) return;
+    
+    const results = [];
+    
+    chapters.forEach((chapter, index) => {
+        const content = chapter.content.toLowerCase();
+        if (content.includes(normalizedQuery)) {
+            results.push({
+                chapterIndex: index,
+                chapterTitle: chapter.title
+            });
+        }
+    });
+    
+    if (results.length > 0) {
+        console.log(`Trouvé dans ${results.length} chapitre(s):`, results);
+        // Charger le premier résultat
+        loadChapter(results[0].chapterIndex);
+    } else {
+        alert('Aucun résultat trouvé');
+    }
+}
+
+// ============================================
+// EXPORT DE PROGRESSION (PDF/JSON)
+// ============================================
+
+function exportProgress() {
+    const progress = {
+        date: new Date().toLocaleDateString('fr-FR'),
+        totalChapters: chapters.length,
+        completedChapters: completedChapters.size,
+        percentage: Math.round((completedChapters.size / chapters.length) * 100),
+        chapters: chapters.map((ch, idx) => ({
+            title: ch.title,
+            completed: completedChapters.has(idx),
+            quizScore: calculateQuizScore(idx)
+        }))
+    };
+    
+    const dataStr = JSON.stringify(progress, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `progression_ml_${Date.now()}.json`;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+}
+
+function calculateQuizScore(chapterId) {
+    const chapter = chapters[chapterId];
+    const userAnswers = quizAnswers[chapterId] || {};
+    
+    if (!chapter.quiz) return 'N/A';
+    
+    let correct = 0;
+    for (let i = 0; i < chapter.quiz.questions; i++) {
+        if (userAnswers[i] === chapter.quiz.answers[i]) {
+            correct++;
+        }
+    }
+    
+    return `${correct}/${chapter.quiz.questions}`;
+}
+
+// ============================================
+// INITIALISATION
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Charger la progression sauvegardée
+    const hasProgress = loadProgress();
+    
+    // Charger le chapitre initial
+    loadChapter(currentChapter);
+    
+    // Ajouter la navigation clavier
+    document.addEventListener('keydown', handleKeyNavigation);
+    
+    // Observer les animations
+    setTimeout(observeElements, 100);
+    
+    // Initialiser le mode sombre
+    initDarkMode();
+    
+    // Sauvegarder automatiquement toutes les 30 secondes
+    setInterval(saveProgress, 30000);
+    
+    // Sauvegarder avant de quitter
+    window.addEventListener('beforeunload', saveProgress);
+    
+    console.log('✅ Module ML initialisé avec succès!');
+    if (hasProgress) {
+        console.log(`📚 Progression chargée: ${completedChapters.size}/${chapters.length} chapitres complétés`);
+    }
+});
+
+// ============================================
+// UTILITAIRES
+// ============================================
+
+// Générer un certificat de completion
+function generateCertificate() {
+    if (completedChapters.size === chapters.length) {
+        alert('🎉 Félicitations ! Vous avez terminé tous les chapitres !\n\n' +
+              'Un certificat pourrait être généré ici en production.');
+    } else {
+        alert(`Complétez tous les chapitres pour obtenir votre certificat.\n\n` +
+              `Progression: ${completedChapters.size}/${chapters.length}`);
+    }
+}
+
+// Afficher les statistiques
+function showStats() {
+    const total = chapters.length;
+    const completed = completedChapters.size;
+    const percentage = Math.round((completed / total) * 100);
+    
+    let totalQuizScore = 0;
+    let totalQuizQuestions = 0;
+    
+    chapters.forEach((ch, idx) => {
+        if (ch.quiz && quizAnswers[idx]) {
+            for (let i = 0; i < ch.quiz.questions; i++) {
+                totalQuizQuestions++;
+                if (quizAnswers[idx][i] === ch.quiz.answers[i]) {
+                    totalQuizScore++;
+                }
+            }
+        }
+    });
+    
+    const quizPercentage = totalQuizQuestions > 0 
+        ? Math.round((totalQuizScore / totalQuizQuestions) * 100) 
+        : 0;
+    
+    console.log('📊 STATISTIQUES');
+    console.log('================');
+    console.log(`Chapitres complétés: ${completed}/${total} (${percentage}%)`);
+    console.log(`Score quiz global: ${totalQuizScore}/${totalQuizQuestions} (${quizPercentage}%)`);
+    console.log(`Temps estimé restant: ${(total - completed) * 20} minutes`);
+}
+
 
         function updateProgress() {
             const totalChapters = chapters.length;
