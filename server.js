@@ -10,7 +10,7 @@ const sql = postgres(process.env.DATABASE_URL);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({origin:'https://club-ml-esatic.vercel.app/'}));
 app.use(express.json());
 
 // ======================== REGISTER MEMBER ========================

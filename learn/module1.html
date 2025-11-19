@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 : Régression - Club ESATIC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b35;
+            --secondary: #1c6487;
+            --accent: #667eea;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --dark: #2c3e50;
+            --gray: #6c757d;
+            --light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding-top: 70px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-outline {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid var(--light);
+        }
+
+        .chapter-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .chapter-header h1 {
+            color: var(--dark);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .chapter-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--gray);
+            font-size: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .chapter-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chapter-meta i {
+            color: var(--primary);
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .content-section h2 i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--dark);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section h4 {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .content-section p {
+            color: var(--dark);
+            line-height: 1.9;
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 1rem 0 1.5rem 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .content-section li {
+            padding: 0.8rem 0 0.8rem 2.5rem;
+            position: relative;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .content-section ul li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 1rem;
+        }
+
+        .content-section ol {
+            counter-reset: item;
+        }
+
+        .content-section ol li {
+            counter-increment: item;
+        }
+
+        .content-section ol li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-left: 5px solid var(--primary);
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+            border-left-color: var(--warning);
+        }
+
+        .info-box.success {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(25, 135, 84, 0.1));
+            border-left-color: var(--success);
+        }
+
+        .info-box.danger {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(200, 35, 51, 0.1));
+            border-left-color: var(--danger);
+        }
+
+        .info-box h4 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            margin: 0.5rem 0;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            position: relative;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #3e3e3e;
+        }
+
+        .code-language {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .code-block code {
+            color: #ce9178;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .formula-box h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .formula {
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.15);
+            border-radius: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .formula-explanation {
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .comparison-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .comparison-card ul {
+            margin: 0;
+        }
+
+        .image-container {
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            margin-top: 1rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2.5rem 0;
+            border: 2px solid var(--primary);
+        }
+
+        .interactive-demo h4 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .demo-input-group label {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .demo-input-group input {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .demo-input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .demo-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 0 auto;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-output {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            min-height: 150px;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .demo-output.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .quiz-header h3 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-header p {
+            color: var(--gray);
+            font-size: 1.05rem;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .question-number {
+            display: inline-flex;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            line-height: 1.6;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quiz-option {
+            padding: 1.3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .option-letter {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quiz-option.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .quiz-option.incorrect .option-letter {
+            background: var(--danger);
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            color: var(--dark);
+            font-size: 1.05rem;
+        }
+
+        .quiz-explanation {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .quiz-explanation.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-explanation strong {
+            color: var(--primary);
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-quiz {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .btn-quiz.primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-quiz.secondary {
+            background: var(--light);
+            color: var(--gray);
+        }
+
+        .btn-quiz:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-quiz:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .quiz-results.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-score {
+            font-size: 4.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1.5rem 0;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 193, 7, 0.2));
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .chapter-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .formula {
+                font-size: 1.3rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <i class="fas fa-brain"></i>
+                <span>Module 1 : Algorithmes de Régression</span>
+            </div>
+            <div class="nav-actions">
+                <a href="/" class="btn-outline">
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="chapter-header">
+                <span class="chapter-number"><i class="fas fa-chart-line"></i> Module 1 - Chapitre 1</span>
+                <h1>Régression Linéaire et Logistique</h1>
+                <div class="chapter-meta">
+                    <span><i class="fas fa-clock"></i> 45 minutes</span>
+                    <span><i class="fas fa-book"></i> 8 sections</span>
+                    <span><i class="fas fa-code"></i> Exemples Python</span>
+                    <span><i class="fas fa-question-circle"></i> 5 questions</span>
+                </div>
+            </div>
+
+            <!-- SECTION 1: Introduction -->
+            <div class="content-section">
+                <h2><i class="fas fa-rocket"></i> Introduction aux Algorithmes de Régression</h2>
+                <p>
+                    Les algorithmes de régression sont au cœur du Machine Learning supervisé. Ils permettent de <span class="highlight">prédire des valeurs</span> en analysant les relations entre les variables. Dans ce chapitre, nous allons explorer en profondeur deux des algorithmes les plus fondamentaux et les plus utilisés.
+                </p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4><i class="fas fa-chart-line"></i> Régression Linéaire</h4>
+                        <ul>
+                            <li>Prédit des <strong>valeurs continues</strong></li>
+                            <li>Exemple : Prix d'une maison, température</li>
+                            <li>Sortie : Nombre réel</li>
+                            <li>Fonction : Droite ou hyperplan</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4><i class="fas fa-chart-pie"></i> Régression Logistique</h4>
+                        <ul>
+                            <li>Prédit des <strong>catégories</strong> (classes)</li>
+                            <li>Exemple : Spam ou non, malade ou sain</li>
+                            <li>Sortie : Probabilité entre 0 et 1</li>
+                            <li>Fonction : Courbe sigmoïde</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-lightbulb"></i> Point Clé</h4>
+                    <p>
+                        Malgré son nom, la <strong>régression logistique</strong> est un algorithme de <strong>classification</strong>, pas de régression ! Elle prédit des catégories en utilisant des probabilités.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Régression Linéaire Simple -->
+            <div class="content-section">
+                <h2><i class="fas fa-chart-line"></i> Régression Linéaire Simple</h2>
+                
+                <h3>📐 Le Concept</h3>
+                <p>
+                    La régression linéaire simple modélise la relation entre <strong>une variable indépendante (X)</strong> et <strong>une variable dépendante (y)</strong> par une ligne droite. C'est l'algorithme le plus simple mais aussi l'un des plus puissants.
+                </p>
+
+                <div class="formula-box">
+                    <h4>Équation de la Droite</h4>
+                    <div class="formula">y = mx + b</div>
+                    <div class="formula-explanation">
+                        <strong>m</strong> = pente (slope) - indique l'inclinaison de la droite<br>
+                        <strong>b</strong> = ordonnée à l'origine (intercept) - point où la droite coupe l'axe y<br>
+                        <strong>x</strong> = variable d'entrée (feature)<br>
+                        <strong>y</strong> = valeur prédite (target)
+                    </div>
+                </div>
+
+                <h3>🎯 Objectif : Minimiser l'Erreur</h3>
+                <p>
+                    L'objectif est de trouver les valeurs optimales de <strong>m</strong> et <strong>b</strong> qui minimisent l'erreur entre les prédictions et les valeurs réelles. Cette erreur est mesurée par la <strong>fonction de coût</strong>.
+                </p>
+
+                <div class="formula-box">
+                    <h4>Fonction de Coût (MSE - Mean Squared Error)</h4>
+                    <div class="formula">MSE = (1/n) Σ (y<sub>réel</sub> - y<sub>prédit</sub>)²</div>
+                    <div class="formula-explanation">
+                        On calcule la différence entre chaque valeur réelle et prédite, on l'élève au carré (pour éviter les valeurs négatives), puis on fait la moyenne.
+                    </div>
+                </div>
+
+                <h3>⚙️ Comment ça Marche ?</h3>
+                <ol>
+                    <li>Initialiser les paramètres m et b (souvent à 0)</li>
+                    <li>Calculer les prédictions avec l'équation y = mx + b</li>
+                    <li>Calculer l'erreur (MSE)</li>
+                    <li>Ajuster m et b pour réduire l'erreur (descente de gradient)</li>
+                    <li>Répéter jusqu'à convergence</li>
+                </ol>
+
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Cas d'Usage</h4>
+                    <p><strong>Exemples pratiques de régression linéaire simple :</strong></p>
+                    <ul>
+                        <li>Prédire le prix d'une maison en fonction de sa surface</li>
+                        <li>Estimer les ventes en fonction du budget publicitaire</li>
+                        <li>Prédire la consommation d'essence en fonction de la vitesse</li>
+                        <li>Évaluer le salaire en fonction des années d'expérience</li>
+                    </ul>
+                </div>
+
+                <h3>💻 Implémentation Python</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language"><i class="fab fa-python"></i> Python - Régression Linéaire Simple</span>
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copier</button>
+                    </div>
+                    <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# 1. Créer des données d'exemple
+# Surface des maisons (en m²)
+X = np.array([50, 60, 70, 80, 90, 100, 110, 120, 130, 140]).reshape(-1, 1)
+# Prix des maisons (en millions FCFA)
+y = np.array([150, 180, 210, 240, 270, 300, 330, 360, 390, 420])
+
+# 2. Créer et entraîner le modèle
+model = LinearRegression()
+model.fit(X, y)
+
+# 3. Afficher les paramètres
+print(f"Pente (m) : {model.coef_[0]:.2f}")
+print(f"Ordonnée à l'origine (b) : {model.intercept_:.2f}")
+print(f"Équation : y = {model.coef_[0]:.2f}x + {model.intercept_:.2f}")
+
+# 4. Faire des prédictions
+X_test = np.array([[75], [95], [125]])
+predictions = model.predict(X_test)
+
+for i, pred in enumerate(predictions):
+    print(f"Pour {X_test[i][0]} m² → Prix prédit: {pred:.2f} millions FCFA")
+
+# 5. Évaluer le modèle
+y_pred = model.predict(X)
+mse = mean_squared_error(y, y_pred)
+r2 = r2_score(y, y_pred)
+
+print(f"\nMSE (Erreur quadratique moyenne) : {mse:.2f}")
+print(f"R² (Coefficient de détermination) : {r2:.4f}")
+
+# 6. Visualiser
+plt.scatter(X, y, color='blue', label='Données réelles')
+plt.plot(X, y_pred, color='red', linewidth=2, label='Ligne de régression')
+plt.xlabel('Surface (m²)')
+plt.ylabel('Prix (millions FCFA)')
+plt.title('Régression Linéaire : Prix vs Surface')
+plt.legend()
+plt.show()</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-info-circle"></i> Interprétation des Résultats</h4>
+                    <p>
+                        <strong>R² (R-carré)</strong> : Varie entre 0 et 1. Plus il est proche de 1, meilleur est le modèle.<br>
+                        • R² = 0.95 signifie que 95% de la variance est expliquée par le modèle<br>
+                        • R² < 0.7 indique que le modèle n'est pas très bon
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Régression Linéaire Multiple -->
+            <div class="content-section">
+                <h2><i class="fas fa-chart-area"></i> Régression Linéaire Multiple</h2>
+                
+                <h3>🔢 Plusieurs Variables</h3>
+                <p>
+                    Dans la réalité, les prédictions dépendent souvent de <strong>plusieurs facteurs</strong>. La régression linéaire multiple étend le concept à plusieurs variables indépendantes.
+                </p>
+
+                <div class="formula-box">
+                    <h4>Équation Multiple</h4>
+                    <div class="formula">y = b₀ + b₁x₁ + b₂x₂ + ... + bₙxₙ</div>
+                    <div class="formula-explanation">
+                        <strong>b₀</strong> = intercept<br>
+                        <strong>b₁, b₂, ..., bₙ</strong> = coefficients pour chaque variable<br>
+                        <strong>x₁, x₂, ..., xₙ</strong> = variables d'entrée (features)
+                    </div>
+                </div>
+
+                <h3>💻 Exemple : Prédire le Prix d'une Maison</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language"><i class="fab fa-python"></i> Python - Régression Multiple</span>
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copier</button>
+                    </div>
+                    <pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+
+# 1. Créer un dataset avec plusieurs features
+data = {
+    'surface': [50, 60, 70, 80, 90, 100, 110, 120, 130, 140],
+    'chambres': [2, 2, 3, 3, 3, 4, 4, 5, 5, 5],
+    'age_maison': [10, 15, 5, 20, 8, 12, 3, 18, 7, 10],
+    'distance_centre': [5, 8, 3, 12, 6, 10, 2, 15, 4, 7],
+    'prix': [150, 180, 210, 200, 270, 280, 350, 300, 390, 380]
+}
+
+df = pd.DataFrame(data)
+
+# 2. Séparer les features (X) et la cible (y)
+X = df[['surface', 'chambres', 'age_maison', 'distance_centre']]
+y = df['prix']
+
+# 3. Diviser en ensembles d'entraînement et de test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# 4. Normaliser les données (recommandé)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# 5. Entraîner le modèle
+model = LinearRegression()
+model.fit(X_train_scaled, y_train)
+
+# 6. Analyser l'importance des features
+feature_importance = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': model.coef_
+}).sort_values('Coefficient', ascending=False)
+
+print("Importance des features :")
+print(feature_importance)
+
+# 7. Faire une prédiction
+nouvelle_maison = [[95, 3, 7, 5]]  # 95m², 3 chambres, 7 ans, 5km du centre
+nouvelle_maison_scaled = scaler.transform(nouvelle_maison)
+prix_predit = model.predict(nouvelle_maison_scaled)
+
+print(f"\nPrix prédit pour la nouvelle maison : {prix_predit[0]:.2f} millions FCFA")
+
+# 8. Évaluer sur l'ensemble de test
+from sklearn.metrics import mean_absolute_error, r2_score
+
+y_pred = model.predict(X_test_scaled)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"\nMAE (Erreur absolue moyenne) : {mae:.2f} millions FCFA")
+print(f"R² : {r2:.4f}")</code></pre>
+                </div>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Attention à la Multicolinéarité</h4>
+                    <p>
+                        Quand deux variables sont fortement corrélées entre elles (ex: surface et nombre de chambres), cela peut créer des problèmes. Solution : supprimer l'une des variables ou utiliser la <strong>régression Ridge/Lasso</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Régression Logistique -->
+            <div class="content-section">
+                <h2><i class="fas fa-chart-pie"></i> Régression Logistique</h2>
+                
+                <h3>🎯 Classification Binaire</h3>
+                <p>
+                    La régression logistique est utilisée pour les problèmes de <strong>classification binaire</strong> (deux classes : 0 ou 1, Oui ou Non, Vrai ou Faux). Au lieu de prédire une valeur continue, elle prédit une <strong>probabilité</strong> qu'une observation appartienne à une classe.
+                </p>
+
+                <div class="formula-box">
+                    <h4>Fonction Sigmoïde</h4>
+                    <div class="formula">σ(z) = 1 / (1 + e<sup>-z</sup>)</div>
+                    <div class="formula-explanation">
+                        Où <strong>z = b₀ + b₁x₁ + b₂x₂ + ... + bₙxₙ</strong><br>
+                        La sigmoïde transforme n'importe quelle valeur en probabilité entre 0 et 1
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*RqXFpiNGwdiKBWyLJc_E7g.png" alt="Fonction Sigmoïde">
+                    <p class="image-caption">La fonction sigmoïde : transformation d'une valeur linéaire en probabilité</p>
+                </div>
+
+                <h3>📊 Comment Interpréter ?</h3>
+                <p>
+                    La régression logistique calcule une probabilité. Nous utilisons ensuite un <strong>seuil de décision</strong> (généralement 0.5) :
+                </p>
+                <ul>
+                    <li>Si probabilité ≥ 0.5 → Classe 1 (Positif)</li>
+                    <li>Si probabilité < 0.5 → Classe 0 (Négatif)</li>
+                </ul>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>🟢 Probabilité = 0.85</h4>
+                        <p>Forte confiance que c'est la classe 1</p>
+                        <p style="font-size: 2rem; margin: 1rem 0;">✓</p>
+                        <p>Prédiction : <strong>Classe 1</strong></p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🔴 Probabilité = 0.15</h4>
+                        <p>Forte confiance que c'est la classe 0</p>
+                        <p style="font-size: 2rem; margin: 1rem 0;">✗</p>
+                        <p>Prédiction : <strong>Classe 0</strong></p>
+                    </div>
+                </div>
+
+                <h3>💻 Exemple : Détection de Spam</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-language"><i class="fab fa-python"></i> Python - Régression Logistique</span>
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copier</button>
+                    </div>
+                    <pre><code>from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
+import numpy as np
+
+# 1. Créer des données d'exemple (features d'emails)
+# Features : [nombre_mots_urgents, nombre_liens, longueur_email, contient_argent]
+X = np.array([
+    [5, 3, 200, 1],   # Spam
+    [0, 1, 150, 0],   # Non-spam
+    [8, 5, 180, 1],   # Spam
+    [1, 1, 250, 0],   # Non-spam
+    [7, 4, 190, 1],   # Spam
+    [0, 2, 300, 0],   # Non-spam
+    [6, 3, 170, 1],   # Spam
+    [1, 1, 280, 0],   # Non-spam
+    [9, 6, 160, 1],   # Spam
+    [0, 1, 320, 0]    # Non-spam
+])
+
+y = np.array([1, 0, 1, 0, 1, 0, 1, 0, 1, 0])  # 1=Spam, 0=Non-spam
+
+# 2. Diviser les données
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# 3. Créer et entraîner le modèle
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 4. Faire des prédictions
+y_pred = model.predict(X_test)
+
+# 5. Obtenir les probabilités
+y_proba = model.predict_proba(X_test)
+
+print("Prédictions avec probabilités :")
+for i, (pred, proba) in enumerate(zip(y_pred, y_proba)):
+    print(f"Email {i+1}: Classe prédite = {pred}, "
+          f"P(Non-spam) = {proba[0]:.2f}, P(Spam) = {proba[1]:.2f}")
+
+# 6. Évaluer le modèle
+print("\n" + "="*50)
+print("MATRICE DE CONFUSION")
+print("="*50)
+print(confusion_matrix(y_test, y_pred))
+
+print("\n" + "="*50)
+print("RAPPORT DE CLASSIFICATION")
+print("="*50)
+print(classification_report(y_test, y_pred, 
+                            target_names=['Non-spam', 'Spam']))
+
+# 7. Tester sur un nouvel email
+nouvel_email = [[6, 4, 175, 1]]  # Caractéristiques suspectes
+prediction = model.predict(nouvel_email)
+probabilite = model.predict_proba(nouvel_email)[0]
+
+print("\n" + "="*50)
+print("NOUVEAU TEST")
+print("="*50)
+if prediction[0] == 1:
+    print(f"🚨 SPAM détecté ! (Probabilité: {probabilite[1]:.2%})")
+else:
+    print(f"✅ Email légitime (Probabilité: {probabilite[0]:.2%})")</code></pre>
+                </div>
+
+                <h3>📈 Métriques d'Évaluation</h3>
+                <p>Pour la classification, on utilise des métriques différentes de la régression :</p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>🎯 Accuracy (Exactitude)</h4>
+                        <p>Pourcentage de prédictions correctes</p>
+                        <div class="formula" style="font-size: 1.2rem; margin: 1rem 0;">(VP + VN) / Total</div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🔍 Precision</h4>
+                        <p>Parmi les prédictions positives, combien sont vraies ?</p>
+                        <div class="formula" style="font-size: 1.2rem; margin: 1rem 0;">VP / (VP + FP)</div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>📊 Recall (Sensibilité)</h4>
+                        <p>Parmi les vrais positifs, combien sont détectés ?</p>
+                        <div class="formula" style="font-size: 1.2rem; margin: 1rem 0;">VP / (VP + FN)</div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>⚖️ F1-Score</h4>
+                        <p>Moyenne harmonique de Precision et Recall</p>
+                        <div class="formula" style="font-size: 1.2rem; margin: 1rem 0;">2 × (P × R) / (P + R)</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-book"></i> Vocabulaire</h4>
+                    <p>
+                        <strong>VP (Vrai Positif)</strong> : Correctement prédit comme positif<br>
+                        <strong>VN (Vrai Négatif)</strong> : Correctement prédit comme négatif<br>
+                        <strong>FP (Faux Positif)</strong> : Incorrectement prédit comme positif<br>
+                        <strong>FN (Faux Négatif)</strong> : Incorrectement prédit comme négatif
+                    </p>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Démo Interactive -->
+            <div class="content-section">
+                <h2><i class="fas fa-flask"></i> Démo Interactive</h2>
+                
+                <div class="interactive-demo">
+                    <h4>🏠 Prédiction de Prix de Maison (Régression Linéaire)</h4>
+                    <p style="text-align: center; color: var(--gray); margin-bottom: 1.5rem;">
+                        Entrez les caractéristiques d'une maison pour prédire son prix
+                    </p>
+                    
+                    <div class="demo-controls">
+                        <div class="demo-input-group">
+                            <label>Surface (m²)</label>
+                            <input type="number" id="surface" placeholder="Ex: 100" min="30" max="300" value="100">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Nombre de chambres</label>
+                            <input type="number" id="chambres" placeholder="Ex: 3" min="1" max="10" value="3">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Âge (années)</label>
+                            <input type="number" id="age" placeholder="Ex: 5" min="0" max="50" value="5">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Distance centre (km)</label>
+                            <input type="number" id="distance" placeholder="Ex: 3" min="0" max="30" value="3">
+                        </div>
+                    </div>
+                    
+                    <button class="demo-btn" onclick="predictPrice()">
+                        <i class="fas fa-calculator"></i> Calculer le Prix
+                    </button>
+                    
+                    <div class="demo-output" id="priceOutput"></div>
+                </div>
+
+                <div class="interactive-demo" style="margin-top: 2rem;">
+                    <h4>📧 Détection de Spam (Régression Logistique)</h4>
+                    <p style="text-align: center; color: var(--gray); margin-bottom: 1.5rem;">
+                        Analysez les caractéristiques d'un email pour détecter s'il est spam
+                    </p>
+                    
+                    <div class="demo-controls">
+                        <div class="demo-input-group">
+                            <label>Mots urgents</label>
+                            <input type="number" id="urgent" placeholder="Ex: 5" min="0" max="20" value="0">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Nombre de liens</label>
+                            <input type="number" id="liens" placeholder="Ex: 2" min="0" max="20" value="1">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Longueur (mots)</label>
+                            <input type="number" id="longueur" placeholder="Ex: 200" min="10" max="1000" value="200">
+                        </div>
+                        <div class="demo-input-group">
+                            <label>Contient "argent" ?</label>
+                            <select id="argent" style="padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                                <option value="0">Non</option>
+                                <option value="1">Oui</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="demo-btn" onclick="detectSpam()">
+                        <i class="fas fa-shield-alt"></i> Analyser l'Email
+                    </button>
+                    
+                    <div class="demo-output" id="spamOutput"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: Comparaison -->
+            <div class="content-section">
+                <h2><i class="fas fa-balance-scale"></i> Régression Linéaire vs Logistique</h2>
+                
+                <table style="width: 100%; border-collapse: collapse; margin: 2rem 0;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Critère</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Régression Linéaire</th>
+                            <th style="padding: 1rem; text-align: left; border: 1px solid #ddd;">Régression Logistique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Type de problème</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Régression (valeurs continues)</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Classification (catégories)</td>
+                        </tr>
+                        <tr style="background: var(--light);">
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Sortie</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Nombre réel (-∞ à +∞)</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Probabilité (0 à 1)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Fonction</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Linéaire : y = mx + b</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Sigmoïde : σ(z)</td>
+                        </tr>
+                        <tr style="background: var(--light);">
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Fonction de coût</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">MSE (Mean Squared Error)</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Log Loss (Cross-Entropy)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Exemples</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Prix, température, salaire</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Spam/non-spam, malade/sain</td>
+                        </tr>
+                        <tr style="background: var(--light);">
+                            <td style="padding: 1rem; border: 1px solid #ddd; font-weight: 600;">Métriques</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">MSE, RMSE, R², MAE</td>
+                            <td style="padding: 1rem; border: 1px solid #ddd;">Accuracy, Precision, Recall, F1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECTION 7: Quiz -->
+            <div class="quiz-section">
+                <div class="quiz-header">
+                    <h3><i class="fas fa-question-circle"></i> Quiz : Régression Linéaire et Logistique</h3>
+                    <p>Testez vos connaissances sur les algorithmes de régression</p>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-number">1</div>
+                    <div class="question-text">Quelle est l'équation de base de la régression linéaire simple ?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(0, 0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">y = mx + b</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(0, 1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">y = ax² + bx + c</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(0, 2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">y = 1 / (1 + e^-x)</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(0, 3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">y = log(x)</div>
+                        </div>
+                    </div>
+                    <div class="quiz-explanation" id="explanation-0">
+                        <strong>Réponse correcte : A (y = mx + b)</strong><br>
+                        C'est l'équation d'une droite où m est la pente et b l'ordonnée à l'origine. Cette équation modélise une relation linéaire entre x et y.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Quel type de problème résout la régression logistique ?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, 0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">Prédiction de valeurs continues</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, 1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">Classification binaire</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, 2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Clustering</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(1, 3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">Réduction de dimensionnalité</div>
+                        </div>
+                    </div>
+                    <div class="quiz-explanation" id="explanation-1">
+                        <strong>Réponse correcte : B (Classification binaire)</strong><br>
+                        Malgré son nom, la régression logistique est un algorithme de classification utilisé pour prédire des catégories (0 ou 1) en calculant des probabilités.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-number">3</div>
+                    <div class="question-text">Quelle fonction transforme les valeurs en probabilités entre 0 et 1 ?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(2, 0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">Fonction linéaire</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(2, 1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">Fonction sigmoïde</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(2, 2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Fonction quadratique</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(2, 3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">Fonction exponentielle</div>
+                        </div>
+                    </div>
+                                        <div class="quiz-explanation" id="explanation-2">
+                        <strong>Réponse correcte : B (Fonction sigmoïde)</strong><br>
+                        La fonction sigmoïde σ(z) = 1 / (1 + e^-z) transforme n'importe quelle valeur réelle en une probabilité entre 0 et 1, ce qui est essentiel pour la régression logistique.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-number">4</div>
+                    <div class="question-text">Quelle métrique mesure l'erreur moyenne quadratique en régression linéaire ?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(3, 0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">Accuracy</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(3, 1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">MSE (Mean Squared Error)</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(3, 2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Precision</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(3, 3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">F1-Score</div>
+                        </div>
+                    </div>
+                    <div class="quiz-explanation" id="explanation-3">
+                        <strong>Réponse correcte : B (MSE)</strong><br>
+                        Le MSE (Mean Squared Error) calcule la moyenne des carrés des différences entre les valeurs prédites et réelles. C'est la fonction de coût principale pour la régression linéaire.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <div class="question-number">5</div>
+                    <div class="question-text">Qu'est-ce que le coefficient R² (R-carré) mesure ?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectQuizAnswer(4, 0)">
+                            <div class="option-letter">A</div>
+                            <div class="option-text">La précision du modèle de classification</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(4, 1)">
+                            <div class="option-letter">B</div>
+                            <div class="option-text">La proportion de variance expliquée par le modèle</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(4, 2)">
+                            <div class="option-letter">C</div>
+                            <div class="option-text">Le nombre d'erreurs de prédiction</div>
+                        </div>
+                        <div class="quiz-option" onclick="selectQuizAnswer(4, 3)">
+                            <div class="option-letter">D</div>
+                            <div class="option-text">La complexité du modèle</div>
+                        </div>
+                    </div>
+                    <div class="quiz-explanation" id="explanation-4">
+                        <strong>Réponse correcte : B (La proportion de variance expliquée par le modèle)</strong><br>
+                        R² varie entre 0 et 1. Un R² de 0.85 signifie que 85% de la variance des données est expliquée par le modèle. Plus R² est proche de 1, meilleur est le modèle.
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button class="btn-quiz secondary" onclick="resetQuiz()">
+                        <i class="fas fa-redo"></i> Recommencer
+                    </button>
+                    <button class="btn-quiz primary" onclick="submitQuiz()">
+                        <i class="fas fa-paper-plane"></i> Soumettre les réponses
+                    </button>
+                </div>
+
+                <div class="quiz-results" id="quizResults">
+                    <h3><i class="fas fa-trophy"></i> Résultats du Quiz</h3>
+                    <div class="quiz-score" id="quizScore">0/5</div>
+                    <p id="quizMessage" style="font-size: 1.1rem; margin-bottom: 1.5rem;"></p>
+                    <button class="btn-quiz primary" onclick="resetQuiz()">
+                        <i class="fas fa-redo"></i> Réessayer le quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- SECTION 8: Conclusion -->
+            <div class="content-section">
+                <h2><i class="fas fa-graduation-cap"></i> Conclusion et Prochaines Étapes</h2>
+                
+                <h3>🎓 Ce Que Vous Avez Appris</h3>
+                <p>
+                    Félicitations ! Vous maîtrisez maintenant les concepts fondamentaux de la régression linéaire et logistique. Voici un récapitulatif des points clés :
+                </p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>📈 Régression Linéaire</h4>
+                        <ul>
+                            <li>Prédit des valeurs continues</li>
+                            <li>Utilise l'équation y = mx + b</li>
+                            <li>Minimise le MSE</li>
+                            <li>Évalué avec R², RMSE</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>🎯 Régression Logistique</h4>
+                        <ul>
+                            <li>Résout la classification binaire</li>
+                            <li>Utilise la fonction sigmoïde</li>
+                            <li>Calcule des probabilités</li>
+                            <li>Évalué avec Accuracy, Precision, Recall</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🚀 Pour Aller Plus Loin</h3>
+                <p>
+                    Ces algorithmes sont vos premiers pas en Machine Learning. Voici ce que vous pouvez explorer ensuite :
+                </p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-rocket"></i> Prochaines Étapes Recommandées</h4>
+                    <ol>
+                        <li><strong>Régularisation</strong> : Ridge et Lasso pour éviter le surapprentissage</li>
+                        <li><strong>Arbres de Décision</strong> : Un autre type d'algorithme supervisé</li>
+                        <li><strong>Validation Croisée</strong> : Pour mieux évaluer les modèles</li>
+                        <li><strong>Feature Engineering</strong> : Préparer et sélectionner les variables</li>
+                        <li><strong>Régression Polynomiale</strong> : Pour modéliser des relations non-linéaires</li>
+                    </ol>
+                </div>
+
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Conseils Pratiques</h4>
+                    <ul>
+                        <li><strong>Toujours visualiser vos données</strong> avant de choisir un modèle</li>
+                        <li><strong>Diviser vos données</strong> en ensemble d'entraînement et de test</li>
+                        <li><strong>Commencer simple</strong> avec la régression linéaire avant d'essayer des modèles complexes</li>
+                        <li><strong>Comprendre le domaine métier</strong> pour mieux interpréter les résultats</li>
+                    </ul>
+                </div>
+
+                <h3>💡 Projet Pratique Suggéré</h3>
+                <p>
+                    Pour consolider vos connaissances, essayez ce projet : <strong>Prédire les prix des logements à Abidjan</strong>
+                </p>
+                <ul>
+                    <li>Collecter des données sur les prix immobiliers</li>
+                    <li>Nettoyer et préparer les données</li>
+                    <li>Construire un modèle de régression linéaire multiple</li>
+                    <li>Évaluer la performance du modèle</li>
+                    <li>Créer une interface simple pour faire des prédictions</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Variables pour le quiz
+        let quizAnswers = Array(5).fill(null);
+        let quizSubmitted = false;
+
+        // Fonction pour copier le code
+        function copyCode(button) {
+            const codeBlock = button.parentElement.nextElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                button.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'var(--primary)';
+                }, 2000);
+            });
+        }
+
+        // Fonctions pour la démo de prédiction de prix
+        function predictPrice() {
+            const surface = parseFloat(document.getElementById('surface').value) || 100;
+            const chambres = parseFloat(document.getElementById('chambres').value) || 3;
+            const age = parseFloat(document.getElementById('age').value) || 5;
+            const distance = parseFloat(document.getElementById('distance').value) || 3;
+            
+            // Modèle simplifié pour la démo (basé sur une régression linéaire multiple)
+            const prixBase = 50; // intercept
+            const prixSurface = surface * 2.5;
+            const prixChambres = chambres * 25;
+            const prixAge = age * -1.5; // impact négatif
+            const prixDistance = distance * -2; // impact négatif
+            
+            const prixPred = prixBase + prixSurface + prixChambres + prixAge + prixDistance;
+            
+            const output = document.getElementById('priceOutput');
+            output.innerHTML = `
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">🏠 Résultat de la Prédiction</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                        <strong>Surface:</strong> ${surface} m²
+                    </div>
+                    <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                        <strong>Chambres:</strong> ${chambres}
+                    </div>
+                    <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                        <strong>Âge:</strong> ${age} ans
+                    </div>
+                    <div style="background: var(--light); padding: 1rem; border-radius: 8px;">
+                        <strong>Distance centre:</strong> ${distance} km
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <h3 style="margin: 0; font-size: 1.8rem;">Prix estimé: ${prixPred.toFixed(2)} millions FCFA</h3>
+                </div>
+                <p style="margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Cette estimation est basée sur un modèle de démonstration. Les prix réels peuvent varier.
+                </p>
+            `;
+            output.classList.add('active');
+        }
+
+        // Fonctions pour la détection de spam
+        function detectSpam() {
+            const urgent = parseInt(document.getElementById('urgent').value) || 0;
+            const liens = parseInt(document.getElementById('liens').value) || 1;
+            const longueur = parseInt(document.getElementById('longueur').value) || 200;
+            const argent = parseInt(document.getElementById('argent').value) || 0;
+            
+            // Modèle simplifié pour la démo
+            let scoreSpam = 0;
+            
+            // Points pour chaque caractéristique suspecte
+            if (urgent > 3) scoreSpam += urgent * 2;
+            if (liens > 2) scoreSpam += liens * 1.5;
+            if (longueur < 100) scoreSpam += 3;
+            if (longueur > 400) scoreSpam += 2;
+            if (argent === 1) scoreSpam += 5;
+            
+            // Calcul de la probabilité (simplifié)
+            const probabiliteSpam = Math.min(0.95, scoreSpam / 20);
+            const probabiliteNonSpam = 1 - probabiliteSpam;
+            
+            const isSpam = probabiliteSpam >= 0.5;
+            
+            const output = document.getElementById('spamOutput');
+            
+            if (isSpam) {
+                output.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; color: var(--danger); margin-bottom: 1rem;">🚨</div>
+                        <h4 style="color: var(--danger); margin-bottom: 1rem;">SPAM DÉTECTÉ !</h4>
+                        <div style="background: rgba(220, 53, 69, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <strong>Probabilité Spam:</strong> ${(probabiliteSpam * 100).toFixed(1)}%<br>
+                            <strong>Probabilité Non-Spam:</strong> ${(probabiliteNonSpam * 100).toFixed(1)}%
+                        </div>
+                        <p style="color: var(--danger);">
+                            <i class="fas fa-exclamation-triangle"></i> Cet email présente des caractéristiques suspectes. Soyez prudent !
+                        </p>
+                    </div>
+                `;
+            } else {
+                output.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;">✅</div>
+                        <h4 style="color: var(--success); margin-bottom: 1rem;">EMAIL LÉGITIME</h4>
+                        <div style="background: rgba(40, 167, 69, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <strong>Probabilité Non-Spam:</strong> ${(probabiliteNonSpam * 100).toFixed(1)}%<br>
+                            <strong>Probabilité Spam:</strong> ${(probabiliteSpam * 100).toFixed(1)}%
+                        </div>
+                        <p style="color: var(--success);">
+                            <i class="fas fa-check-circle"></i> Cet email semble légitime.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            output.classList.add('active');
+        }
+
+        // Fonctions pour le quiz
+        function selectQuizAnswer(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+            
+            const question = document.querySelectorAll('.quiz-question')[questionIndex];
+            const options = question.querySelectorAll('.quiz-option');
+            const explanation = document.getElementById(`explanation-${questionIndex}`);
+            
+            // Réinitialiser toutes les options de cette question
+            options.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Sélectionner l'option choisie
+            const selectedOption = options[optionIndex];
+            selectedOption.classList.add('selected');
+            
+            // Enregistrer la réponse
+            quizAnswers[questionIndex] = optionIndex;
+            
+            // Si le quiz a été soumis, montrer la bonne réponse
+            if (quizSubmitted) {
+                showCorrectAnswer(questionIndex);
+            }
+        }
+
+        function showCorrectAnswer(questionIndex) {
+            const correctAnswers = [0, 1, 1, 1, 1]; // Index des bonnes réponses
+            const question = document.querySelectorAll('.quiz-question')[questionIndex];
+            const options = question.querySelectorAll('.quiz-option');
+            const explanation = document.getElementById(`explanation-${questionIndex}`);
+            
+            options.forEach((option, index) => {
+                if (index === correctAnswers[questionIndex]) {
+                    option.classList.add('correct');
+                } else if (option.classList.contains('selected') && index !== correctAnswers[questionIndex]) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            explanation.classList.add('active');
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+            
+            const correctAnswers = [0, 1, 1, 1, 1];
+            let score = 0;
+            
+            // Calculer le score
+            quizAnswers.forEach((answer, index) => {
+                if (answer === correctAnswers[index]) {
+                    score++;
+                }
+            });
+            
+            // Afficher les bonnes réponses
+            for (let i = 0; i < 5; i++) {
+                showCorrectAnswer(i);
+            }
+            
+            // Afficher les résultats
+            const results = document.getElementById('quizResults');
+            const scoreElement = document.getElementById('quizScore');
+            const messageElement = document.getElementById('quizMessage');
+            
+            scoreElement.textContent = `${score}/5`;
+            
+            if (score === 5) {
+                messageElement.textContent = "Excellent ! Vous maîtrisez parfaitement les concepts de régression linéaire et logistique.";
+                messageElement.style.color = "var(--success)";
+            } else if (score >= 3) {
+                messageElement.textContent = "Bon travail ! Vous avez une bonne compréhension des bases. Reveyez les questions incorrectes pour améliorer votre score.";
+                messageElement.style.color = "var(--warning)";
+            } else {
+                messageElement.textContent = "Continuez à pratiquer ! Reveyez le cours et réessayez le quiz.";
+                messageElement.style.color = "var(--danger)";
+            }
+            
+            results.classList.add('active');
+            quizSubmitted = true;
+            
+            // Faire défiler jusqu'aux résultats
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            quizAnswers = Array(5).fill(null);
+            quizSubmitted = false;
+            
+            // Réinitialiser toutes les questions
+            document.querySelectorAll('.quiz-question').forEach((question, index) => {
+                const options = question.querySelectorAll('.quiz-option');
+                const explanation = document.getElementById(`explanation-${index}`);
+                
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                explanation.classList.remove('active');
+            });
+            
+            // Cacher les résultats
+            document.getElementById('quizResults').classList.remove('active');
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajouter des animations d'entrée supplémentaires
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
