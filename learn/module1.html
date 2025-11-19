@@ -1552,6 +1552,13 @@ print(classification_report(y_test, y_pred))</code></pre>
             }
         }
 
+
+           function AuthVerifiy() {
+            localStorage.getItem('userToken')&&(window.location.href="connexion.html");
+
+            
+        }
+        AuthVerifiy()
         function prevChapter() {
             if (currentChapter > 0) {
                 loadChapter(currentChapter - 1);

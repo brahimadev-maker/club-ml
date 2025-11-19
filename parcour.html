@@ -99,10 +99,14 @@
             color: var(--primary);
             font-weight: 500;
             text-decoration: none;
-            font-size: 1.3rem;
+            font-size: 1.0rem;
         }
 
         .nav-item:hover {
+            background: var(--gray-light);
+            color: var(--primary);
+        }
+        .active{
             background: var(--gray-light);
             color: var(--primary);
         }
@@ -919,16 +923,16 @@
                 </div>
             </div>
             <div class="navbar-menu">
-                <a href="#" class="nav-item">
-                    <i class="fas fa-home"></i>
+                <a href="#" class="nav-item active" >
+                    <i id="home" class="fas fa-home"></i>
                     <span>Accueil</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fas fa-book"></i>
+                    <i id="book" class="fas fa-book"></i>
                     <span>Modules</span>
                 </a>
                 <a href="#" class="nav-item">
-                    <i class="fas fa-chart-line"></i>
+                    <i id="chart" class="fas fa-chart-line"></i>
                     <span>Stats</span>
                 </a>
                 <div class="user-profile">
@@ -1073,6 +1077,11 @@
                 showEasterEgg();
             }
         });
+
+
+
+        
+
 
         function triggerEasterEgg() {
             clickCount++;
@@ -1568,8 +1577,17 @@
         }
 
         function startModule(moduleId) {
-            location.href='learn.html'
+            location.href='/learn/module0.html'
         }
+const items = document.querySelectorAll('.nav-item'); 
+items.forEach(item => {
+    item.addEventListener('click', () => {
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+    });
+});
+
+
 
         function logout() {
             if (confirm('Se déconnecter ?')) {

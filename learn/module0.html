@@ -2242,6 +2242,16 @@ function exportProgress() {
     URL.revokeObjectURL(url);
 }
 
+
+
+
+   function AuthVerifiy() {
+            localStorage.getItem('userToken')&&(window.location.href="connexion.html");
+
+            
+        }
+        AuthVerifiy()
+
 function calculateQuizScore(chapterId) {
     const chapter = chapters[chapterId];
     const userAnswers = quizAnswers[chapterId] || {};
