@@ -1768,6 +1768,41 @@ print(classification_report(y_test, y_pred))</code></pre>
             }
         }
 
+
+
+        function AuthVerify() {
+    // Vérifier si l'utilisateur est connecté
+    if (!localStorage.getItem('userToken')) {
+        window.location.href = "../connexion.html";
+        return;
+    }
+
+    // Récupérer la progression de l'utilisateur depuis le localStorage
+    const userProgress = JSON.parse(localStorage.getItem('ml_module_progress'));
+
+    // Si aucune progression trouvée, rediriger ou bloquer
+    if (!userProgress) {
+        alert("Aucune progression trouvée. Terminez le Module 0 d'abord !");
+        window.location.href = "module0.html";
+        return;
+    }
+
+    // Vérifier si Module 0 est complet (3 chapitres)
+    const module0ChaptersCompleted = userProgress.completedChapters.filter(chap => chap.module === 0).length;
+
+    if (module0ChaptersCompleted < 3) {
+        alert("Vous devez terminer le Module 0 avant d'accéder au Module 1 !");
+        window.location.href = "module0.html";
+        return;
+    }
+
+    // Si tout est bon, l'utilisateur peut rester sur la page Module 1
+    console.log("Accès au Module 1 autorisé !");
+}
+
+AuthVerify();
+
+
         // Initialisation au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
             // Charger le premier chapitre
