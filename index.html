@@ -1787,7 +1787,17 @@ async function incrementVisit(siteName) {
   return await response.json();
 }
 
+
 incrementVisit("index")
+  .then(data => {
+    console.log("Compteur mis à jour :", data);
+  })
+  .catch(err => {
+    console.error("Erreur :", err.message);
+  });
+
+
+
 function participateModule(moduleId) {
     alert('Inscription au module réussie ! Vous recevrez un email de confirmation.');
     closeModal();

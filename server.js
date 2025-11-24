@@ -122,14 +122,13 @@ app.get('/user/info/:id', authMiddleware, async (req, res) => {
 app.put("/number/:siteName", async (req, res) => {
   const { siteName } = req.params;
 
-  // Liste des colonnes autorisées
   const allowed = ["index", "module0", "module1"];
   if (!allowed.includes(siteName)) {
     return res.status(400).json({ error: "Invalid site name" });
   }
 
   try {
-    // On récupère l’unique ligne (ou la dernière)
+
     const { rows } = await pool.query(
       "SELECT * FROM visite_nb ORDER BY id DESC LIMIT 1"
     );
