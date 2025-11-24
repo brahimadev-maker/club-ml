@@ -1766,7 +1766,28 @@ function openModal(moduleId) {
     
     modal.classList.add('active');
 }
+async function incrementVisit(siteName) {
+  const allowed = ["index", "module0", "module1"];
+  if (!allowed.includes(siteName)) {
+    throw new Error("Nom de site invalide");
+  }
 
+  const response = await fetch(`/number/${siteName}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || "Erreur réseau");
+  }
+
+  return await response.json();
+}
+
+incrementVisit("index")
 function participateModule(moduleId) {
     alert('Inscription au module réussie ! Vous recevrez un email de confirmation.');
     closeModal();

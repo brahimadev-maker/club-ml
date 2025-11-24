@@ -119,6 +119,47 @@ app.get('/user/info/:id', authMiddleware, async (req, res) => {
     }
 });
 
+app.put("/number/:siteName", async (req, res) => {
+  const { siteName } = req.params;
+
+  // Liste des colonnes autorisées
+  const allowed = ["index", "module0", "module1"];
+  if (!allowed.includes(siteName)) {
+    return res.status(400).json({ error: "Invalid site name" });
+  }
+
+  try {
+    // On récupère l’unique ligne (ou la dernière)
+    const { rows } = await pool.query(
+      "SELECT * FROM visite_nb ORDER BY id DESC LIMIT 1"
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "No record found in visite_nb" });
+    }
+
+    const record = rows[0];
+    const newValue = Number(record[siteName]) + 1;
+
+    // Mise à jour
+    await pool.query(
+      `UPDATE visite_nb SET ${siteName} = $1 WHERE id = $2`,
+      [newValue, record.id]
+    );
+
+    return res.json({
+      site: siteName,
+      value: newValue
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+
+
 // ======================== GET USER INFO BY EMAIL ========================
 app.get('/user/info-by-email/:email', authMiddleware, async (req, res) => {
     const { email } = req.params;
