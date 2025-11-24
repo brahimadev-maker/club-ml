@@ -119,6 +119,8 @@ app.get('/user/info/:id', authMiddleware, async (req, res) => {
     }
 });
 
+
+
 app.put("/number/:siteName", async (req, res) => {
   const { siteName } = req.params;
 
@@ -128,34 +130,36 @@ app.put("/number/:siteName", async (req, res) => {
   }
 
   try {
+    const result = await sql`
+      SELECT * FROM visite_nb
+      ORDER BY id DESC
+      LIMIT 1
+    `;
 
-    const { rows } = await pool.query(
-      "SELECT * FROM visite_nb ORDER BY id DESC LIMIT 1"
-    );
-
-    if (rows.length === 0) {
+    if (result.length === 0) {
       return res.status(404).json({ error: "No record found in visite_nb" });
     }
 
-    const record = rows[0];
+    const record = result[0];
     const newValue = Number(record[siteName]) + 1;
 
-    // Mise à jour
-    await pool.query(
-      `UPDATE visite_nb SET ${siteName} = $1 WHERE id = $2`,
-      [newValue, record.id]
-    );
+    await sql`
+      UPDATE visite_nb
+      SET ${sql(siteName)} = ${newValue}
+      WHERE id = ${record.id}
+    `;
 
     return res.json({
       site: siteName,
-      value: newValue
+      value: newValue,
     });
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Database error" });
+    return res.status(500).json({ error: "Database error" });
   }
 });
+
 
 
 
